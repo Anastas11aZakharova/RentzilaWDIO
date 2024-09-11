@@ -57,7 +57,12 @@ export const config: Options.Testrunner = {
             browserName: 'chrome',
             'goog:chromeOptions': {
                 args: ['--disable-infobars', '--window-size=1920,1080']
-            }
+            },
+            // browserName: 'firefox',
+            // 'moz:firefoxOptions': {
+            //     args: ['--width=1000', '--height=600']
+            // }
+
         }
     ],
 
