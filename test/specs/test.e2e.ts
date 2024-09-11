@@ -1,8 +1,8 @@
 import { expect } from "@wdio/globals";
 import MainPage from "../pageobjects/main.page.js";
 
-describe("My Login application", () => {
-  it("should login with valid credentials", async () => {
+describe("Rentzila", () => {
+  it("C214-Verify that all elements on the footer are displayed and all links are clickable", async () => {
     await MainPage.open();
 
     await expect(MainPage.logo).toBeExisting();
