@@ -40,9 +40,48 @@ class MainPage extends Page {
   public get emailLink() {
     return $('a[href="mailto:info@rentzila.com.ua"]');
   }
+  public get orderConsultationButton() {
+    return $("button=Замовити консультацію");
+  }
+  public get errorMessages() {
+    return $$('p[class="ConsultationForm_error_message__jleeD"]');
+  }
+  public get phoneNumberField() {
+    return $('input[id="mobile"]');
+  }
+  public get nameField() {
+    return $('input[name="name"]');
+  }
 
   public open() {
     return super.open();
+  }
+  public async clickOnOrderConsultationButton() {
+    await this.orderConsultationButton.click();
+  }
+
+  public async verifyErrorMessagesDisplayed() {
+    expect(await this.errorMessages.length).toEqual(2);
+    for await (const element of this.errorMessages) {
+      await expect(element).toHaveText("Поле не може бути порожнім");
+    }
+  }
+
+  public async enterPhoneNumber(phoneNumber: string) {
+    await this.phoneNumberField.setValue(phoneNumber);
+  }
+
+  public async enterName(name: string) {
+    await this.nameField.setValue(name);
+  }
+
+  public async clickOkInDialogPopUp() {
+    await browser.waitUntil(async () => await browser.isAlertOpen(), {
+      
+    });
+    let alertText = await browser.getAlertText();
+    await expect(alertText).toEqual("Ви успішно відправили заявку");
+    await browser.acceptAlert();
   }
 }
 
