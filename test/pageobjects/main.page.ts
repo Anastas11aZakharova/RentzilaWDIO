@@ -52,6 +52,23 @@ class MainPage extends Page {
   public get nameField() {
     return $('input[name="name"]');
   }
+  public get telegramCrossButton() {
+    return $('div[data-testid="crossButton"]');
+  }
+  public get proposesTitle() {
+    return $('h2[data-testid="title"]');
+  }
+  public get proposesElements() {
+    return $$(
+      "//section[@data-testid='services']//div[@class='RentzilaProposes_name__DTnwr']"
+    );
+  }
+  public get filterForm() {
+    return $('div[data-testid="filterForm"]');
+  }
+  public get servisesDropDowns() {
+    return $$('div[data-testid="rightArrow"]');
+  }
 
   public open() {
     return super.open();
@@ -76,12 +93,37 @@ class MainPage extends Page {
   }
 
   public async clickOkInDialogPopUp() {
-    await browser.waitUntil(async () => await browser.isAlertOpen(), {
-      
-    });
+    await browser.waitUntil(async () => await browser.isAlertOpen(), {});
     let alertText = await browser.getAlertText();
     await expect(alertText).toEqual("Ви успішно відправили заявку");
     await browser.acceptAlert();
+  }
+
+  public async clickOnTelegramCrossButton() {
+    await this.telegramCrossButton.click();
+  }
+  public async verifyProposesElementsDisplayed(count: number) {
+    expect(await this.proposesElements.length).toEqual(count);
+  }
+
+  public async verifyCheckBoxIsChecked(name: string) {
+    for await (const element of this.servisesDropDowns) {
+      await element.click();
+      var isExpanded = await element.getAttribute("class");
+      if (!isExpanded.includes("ServiceCategory_clicked")) {
+        await element.click();
+      }
+    }
+    await expect(
+      this.filterForm.$("//label[contains(text(),'" + name + "')]/../input")
+    ).toBeExisting();
+    await expect(
+      this.filterForm.$("//label[contains(text(),'" + name + "')]/../input")
+    ).toBeChecked();
+  }
+
+  public async clickOnLogo() {
+    await this.logo.click();
   }
 }
 
