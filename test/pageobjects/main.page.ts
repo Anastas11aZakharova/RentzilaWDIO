@@ -89,6 +89,10 @@ class MainPage extends Page {
     return $("//label[contains(concat(' ',normalize-space(@class),' '),'active_label')]");
   }
 
+  public get cardUnit() {
+    return $('div[data-testid="cardWrapper"]');
+  }
+
   public open() {
     return super.open();
   }
@@ -126,6 +130,7 @@ class MainPage extends Page {
   }
 
   public async verifyCheckBoxIsChecked(name: string) {
+    await browser.pause(2000)
     for await (const element of this.servisesDropDowns) {
       await element.click();
       var isExpanded = await element.getAttribute("class");
@@ -169,6 +174,11 @@ class MainPage extends Page {
     await expect(this.activeEquipmentLabel).toHaveText(equipmentName);
     // await browser.pause(10000);
   }
+
+  public async clickOnCardUnit() {
+    await this.cardUnit.click();
+  }
+
 }
 
 export default new MainPage();
