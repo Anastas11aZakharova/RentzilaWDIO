@@ -56,7 +56,7 @@ class MainPage extends Page {
     return $('div[data-testid="crossButton"]');
   }
   public get proposesTitle() {
-    return $('h2[data-testid="title"]');
+    return $("h2=Послуги");
   }
   public get proposesElements() {
     return $$(
@@ -68,6 +68,29 @@ class MainPage extends Page {
   }
   public get servisesDropDowns() {
     return $$('div[data-testid="rightArrow"]');
+  }
+  public get equipmentTitle() {
+    return $("h2=Спецтехніка");
+  }
+  public get equipmentElements() {
+    return $$(
+      "//section[@data-testid='specialEquipment']//div[@class='RentzilaProposes_name__DTnwr']"
+    );
+  }
+  public get equipmentCategoryLabels() {
+    return $$('img[data-testid="firstCategoryImage"]');
+  }
+
+  public get equipmentCategorySecondLevelLabels() {
+    return $$('img[data-testid="secondCategoryImage"]');
+  }
+
+  public get activeEquipmentLabel() {
+    return $("//label[contains(concat(' ',normalize-space(@class),' '),'active_label')]");
+  }
+
+  public get cardUnit() {
+    return $('div[data-testid="cardWrapper"]');
   }
 
   public open() {
@@ -107,6 +130,7 @@ class MainPage extends Page {
   }
 
   public async verifyCheckBoxIsChecked(name: string) {
+    await browser.pause(2000)
     for await (const element of this.servisesDropDowns) {
       await element.click();
       var isExpanded = await element.getAttribute("class");
@@ -125,6 +149,36 @@ class MainPage extends Page {
   public async clickOnLogo() {
     await this.logo.click();
   }
+
+  public async verifyEquipmentElementsDisplayed(count: number) {
+    expect(await this.equipmentElements.length).toEqual(count);
+  }
+
+  public async verifyEquipmentIsPresent(equipmentName: string) {
+    await browser.pause(2000);
+    for await (const element of this.equipmentCategoryLabels) {
+      await element.click();
+      var isExpanded = await element.getAttribute("class");
+      if (!isExpanded.includes("rotate")) {
+        await element.click();
+      }
+    }
+    for await (const element of this.equipmentCategorySecondLevelLabels) {
+      await element.click();
+      var isExpanded = await element.getAttribute("class");
+      if (!isExpanded.includes("rotate")) {
+        await element.click();
+      }
+    }
+    await expect(this.activeEquipmentLabel).toBeExisting();
+    await expect(this.activeEquipmentLabel).toHaveText(equipmentName);
+    // await browser.pause(10000);
+  }
+
+  public async clickOnCardUnit() {
+    await this.cardUnit.click();
+  }
+
 }
 
 export default new MainPage();
