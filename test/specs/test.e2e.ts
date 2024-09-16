@@ -115,9 +115,11 @@ describe("Rentzila", () => {
 
     await expect(MainPage.proposesTitle).toBeExisting();
     await expect(MainPage.proposesTitle).toHaveText("Послуги");
-    var count: number = 7;
-    await MainPage.verifyProposesElementsDisplayed(count);
-    const proposals = [
+    await expect(MainPage.popularServiceLabel).toBeExisting()
+    await expect(MainPage.agriculturalServiceLabel).toBeExisting()
+    await expect(MainPage.buildingServiceLabel).toBeExisting()
+    await expect(MainPage.otherServiceLabel).toBeExisting()
+    const popularProposals = [
       "Орання землі",
       "Перевезення матеріалів",
       "Рихлення ґрунту",
@@ -126,20 +128,60 @@ describe("Rentzila", () => {
       "Навантаження та розвантаження",
       "Асфальтування",
     ];
+    const agriculturalProposals = [
+      "Орання землі",
+      "Рихлення ґрунту",
+      "Культивація",
+      "Комплекс робіт",
+      "Посів технічних та зернових культур",
+      "Внесення добрив",
+      "Зберігання урожаю"
+    ];
+    const buildingProposals = [
+      "Навантаження та розвантаження",
+      "Асфальтування",
+      "Дорожні роботи",
+      "Риття ям",
+      "Планування та розчищення території під будівельний майданчик",
+      "Навантажування та розвантажування матеріалів",
+      "Буріння"
+    ];
+    const otherProposals = [
+      "Перевезення матеріалів",
+      "Навантаження матеріалів",
+      "Зберігальні ангари",
+      "Підйомні роботи",
+      "Асенізаторські послуги",
+      "Перевезення техніки",
+      "FCHCHFCFB",
+    ];
+    await verifyServices(MainPage.popularServiceLabel, popularProposals)
+    await verifyServices(MainPage.agriculturalServiceLabel, agriculturalProposals)
+    await verifyServices(MainPage.buildingServiceLabel, buildingProposals)
+    await verifyServices(MainPage.otherServiceLabel, otherProposals)
+  });
+
+  async function verifyServices(element: ChainablePromiseElement, serviceNames: string[]) {
+
+    await element.click()
+    var count: number = 7;
+    await MainPage.verifyProposesElementsDisplayed(count);
     var i: number;
-    for (i = 0; i < count; i++) {
+    for (i = 0; i < count; i++) {      
       await expect(MainPage.proposesElements[i]).toBeExisting();
-      await expect(MainPage.proposesElements[i]).toHaveText(proposals[i]);
+      await expect(MainPage.proposesElements[i]).toHaveText(serviceNames[i]);
     }
     for (i = 0; i < count; i++) {
+      await element.click()
       await MainPage.proposesElements[i].click();
-      await MainPage.verifyCheckBoxIsChecked(proposals[i]);
+      await MainPage.verifyCheckBoxIsChecked(serviceNames[i]);
       await expect(MainPage.cardUnit).toBeExisting();
       await MainPage.clickOnCardUnit();
-      await ProductPage.verifyServiceIsVisible(proposals[i]);
+      await ProductPage.verifyServiceIsVisible(serviceNames[i]);
       await MainPage.clickOnLogo();
     }
-  });
+    
+  }
 
   it('C213- Checking ""Спецтехніка"" section on the main page', async () => {
     await MainPage.open();
@@ -170,6 +212,7 @@ describe("Rentzila", () => {
     await expect(MainPage.equipmentElements[6]).toHaveText(equipment7);
     await MainPage.equipmentElements[0].click();
     await MainPage.verifyEquipmentIsPresent("посівна та садильна техніка");
+    await expect(MainPage.cardUnit).toBeExisting();
     await MainPage.clickOnCardUnit();
     await ProductPage.verifyCategoriesIsVisible("посівні комплекси");
     await MainPage.clickOnLogo();

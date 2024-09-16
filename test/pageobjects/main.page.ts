@@ -92,6 +92,19 @@ class MainPage extends Page {
   public get cardUnit() {
     return $('div[data-testid="cardWrapper"]');
   }
+  public get popularServiceLabel() {
+    return $('div[data-testid="services__populyarni"]');
+  }
+  public get agriculturalServiceLabel() {
+    return $('div[data-testid="services__silskogospodarski"]');
+  }
+  public get buildingServiceLabel() {
+    return $('div[data-testid="services__budivelni"]');
+  }
+  public get otherServiceLabel() {
+    return $('div[data-testid="services__inshi"]');
+  }
+
 
   public open() {
     return super.open();
