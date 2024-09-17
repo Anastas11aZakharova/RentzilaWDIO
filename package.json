@@ -1,6 +1,10 @@
 {
   "name": "Rentzila",
   "type": "module",
+  "scripts": {
+    "wdio-all": "npx wdio run ./wdio.conf.ts",
+    "wdio-authorization": "npx wdio run ./wdio.conf.ts --suite authorization"
+  },  
   "devDependencies": {
     "@wdio/allure-reporter": "^9.0.8",
     "@wdio/cli": "^9.0.9",

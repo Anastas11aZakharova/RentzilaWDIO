@@ -26,6 +26,11 @@ export const config: Options.Testrunner = {
     specs: [
         './test/specs/**/*.ts'
     ],
+    suites: {
+        authorization: [
+            './test/specs/authorization.ts'
+        ]
+    },
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'

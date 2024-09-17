@@ -104,6 +104,18 @@ class MainPage extends Page {
   public get otherServiceLabel() {
     return $('div[data-testid="services__inshi"]');
   }
+  public get popularEquipmentLabel() {
+    return $('h3[data-testid="specialEquipment__populyarna"]');
+  }
+  public get agriculturalEquipmentLabel() {
+    return $('h3[data-testid="specialEquipment__silskogospodarska"]');
+  }
+  public get buildingEquipmentLabel() {
+    return $('h3[data-testid="specialEquipment__budivelna"]');
+  }
+  public get otherEquipmentLabel() {
+    return $('h3[data-testid="specialEquipment__insha"]');
+  }
 
 
   public open() {
@@ -140,6 +152,10 @@ class MainPage extends Page {
   }
   public async verifyProposesElementsDisplayed(count: number) {
     expect(await this.proposesElements.length).toEqual(count);
+  }
+
+  public async verifyEquipmentsElementsDisplayed(count: number) {
+    expect(await this.equipmentElements.length).toEqual(count);
   }
 
   public async verifyCheckBoxIsChecked(name: string) {
