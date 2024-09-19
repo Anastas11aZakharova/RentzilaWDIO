@@ -10,7 +10,7 @@ class MainPage extends Page {
   }
   public get footerLogo() {
     return $(
-      "//div[@class='Footer_container__5d2_x']/div[@data-testid='logo']"
+      "//div[contains(concat(' ',normalize-space(@class),' '),'Footer_container')]/div[@data-testid='logo']"
     );
   }
   public get privacyPolicyLink() {
@@ -23,7 +23,7 @@ class MainPage extends Page {
     return $('a[href="/terms-conditions/"]');
   }
   public get forBuyersLabel() {
-    return $('div[class="RentzilaForBuyers_title__k3tHn"]');
+    return $('div[class*="RentzilaForBuyers_title"]');
   }
   public get productsLink() {
     return $('a[href="/products/"]');
@@ -35,7 +35,7 @@ class MainPage extends Page {
     return $('a[href="/requests-map/"]');
   }
   public get contactsLabel() {
-    return $('div[class="RentzilaContacts_title__SxcO7"]');
+    return $('div[class*="RentzilaContacts_title"]');
   }
   public get emailLink() {
     return $('a[href="mailto:info@rentzila.com.ua"]');
@@ -44,7 +44,7 @@ class MainPage extends Page {
     return $("button=Замовити консультацію");
   }
   public get errorMessages() {
-    return $$('p[class="ConsultationForm_error_message__jleeD"]');
+    return $$('p[class*="ConsultationForm_error_message"]');
   }
   public get phoneNumberField() {
     return $('input[id="mobile"]');
@@ -60,38 +60,21 @@ class MainPage extends Page {
   }
   public get proposesElements() {
     return $$(
-      "//section[@data-testid='services']//div[@class='RentzilaProposes_name__DTnwr']"
+      "//section[@data-testid='services']//div[contains(concat(' ',normalize-space(@class),' '),'RentzilaProposes_name')]"
     );
   }
-  public get filterForm() {
-    return $('div[data-testid="filterForm"]');
-  }
-  public get servisesDropDowns() {
-    return $$('div[data-testid="rightArrow"]');
-  }
+  
+  
+  
   public get equipmentTitle() {
     return $("h2=Спецтехніка");
   }
   public get equipmentElements() {
     return $$(
-      "//section[@data-testid='specialEquipment']//div[@class='RentzilaProposes_name__DTnwr']"
+      "//section[@data-testid='specialEquipment']//div[contains(concat(' ',normalize-space(@class),' '),'RentzilaProposes_name')]"
     );
   }
-  public get equipmentCategoryLabels() {
-    return $$('img[data-testid="firstCategoryImage"]');
-  }
-
-  public get equipmentCategorySecondLevelLabels() {
-    return $$('img[data-testid="secondCategoryImage"]');
-  }
-
-  public get activeEquipmentLabel() {
-    return $("//label[contains(concat(' ',normalize-space(@class),' '),'active_label')]");
-  }
-
-  public get cardUnit() {
-    return $('div[data-testid="cardWrapper"]');
-  }
+  
   public get popularServiceLabel() {
     return $('div[data-testid="services__populyarni"]');
   }
@@ -116,6 +99,55 @@ class MainPage extends Page {
   public get otherEquipmentLabel() {
     return $('h3[data-testid="specialEquipment__insha"]');
   }
+  public get loginButton() {
+    return $('div[class*="NavbarAuthBlock_buttonEnter"]');
+  }
+  public get enterButton() {
+    return $("button=Увійти");
+  }
+  public get authorizationFormTitle() {
+    return $('div[data-testid="authorizationTitle"]');
+  }
+  public get emailOrPhoneNumberFieldErrorMessage() {
+    return $('p[class*="CustomReactHookInput_error_message"]');
+  }
+  public get passwordFieldErrorMessage() {
+    return $('p[class*="CustomReactHookInput_error_message"]');
+  }
+  public get emailOrPhoneNumberField() {
+    return $('input[id="email"]');
+  }
+  public get passwordField() {
+    return $('input[id="password"]');
+  }
+  public get authorizationFormCrossButton() {
+    return $('div[data-testid="authClose"]');
+  }
+  public get hiddenPasswordButton() {
+    return $('div[data-testid="reactHookButton"]');
+  }
+  public get userIconDropdown() {
+    return $('div[class*="AvatarCircle_wrapper"]');
+  }
+  public get myProfileItem() {
+    return $('div[data-testid="profile"]');
+  }
+  public get myProfileTitle() {
+    return $('div[class*="OwnerCabinetPage_title"]');
+  }
+  public get logoutButton () {
+    return $('div[data-testid="logout"]');
+  }
+  public get incorrectEmailOrPasswordErrorMessage () {
+    return $('div[data-testid="errorMessage"]');
+  }
+  public get incorrectPasswordErrorMessage () {
+    return $('p[class*="CustomReactHookInput_error_message"]');
+  }
+  
+ 
+
+
 
 
   public open() {
@@ -153,60 +185,47 @@ class MainPage extends Page {
   public async verifyProposesElementsDisplayed(count: number) {
     expect(await this.proposesElements.length).toEqual(count);
   }
-
   public async verifyEquipmentsElementsDisplayed(count: number) {
     expect(await this.equipmentElements.length).toEqual(count);
   }
 
-  public async verifyCheckBoxIsChecked(name: string) {
-    await browser.pause(2000)
-    for await (const element of this.servisesDropDowns) {
-      await element.click();
-      var isExpanded = await element.getAttribute("class");
-      if (!isExpanded.includes("ServiceCategory_clicked")) {
-        await element.click();
-      }
-    }
-    await expect(
-      this.filterForm.$("//label[contains(text(),'" + name + "')]/../input")
-    ).toBeExisting();
-    await expect(
-      this.filterForm.$("//label[contains(text(),'" + name + "')]/../input")
-    ).toBeChecked();
-  }
+
 
   public async clickOnLogo() {
     await this.logo.click();
   }
 
-  public async verifyEquipmentElementsDisplayed(count: number) {
-    expect(await this.equipmentElements.length).toEqual(count);
+  public async clickOnLoginButton() {
+    await this.loginButton.click();
   }
 
-  public async verifyEquipmentIsPresent(equipmentName: string) {
-    await browser.pause(2000);
-    for await (const element of this.equipmentCategoryLabels) {
-      await element.click();
-      var isExpanded = await element.getAttribute("class");
-      if (!isExpanded.includes("rotate")) {
-        await element.click();
-      }
-    }
-    for await (const element of this.equipmentCategorySecondLevelLabels) {
-      await element.click();
-      var isExpanded = await element.getAttribute("class");
-      if (!isExpanded.includes("rotate")) {
-        await element.click();
-      }
-    }
-    await expect(this.activeEquipmentLabel).toBeExisting();
-    await expect(this.activeEquipmentLabel).toHaveText(equipmentName);
-    // await browser.pause(10000);
+  public async clickOnEnterButton() {
+    await this.enterButton.click();
   }
 
-  public async clickOnCardUnit() {
-    await this.cardUnit.click();
+  public async enterEmailInEmailOrPhoneNumberField(email: string) {
+    await this.emailOrPhoneNumberField.setValue(email);
   }
+
+  public async enterPasswordInPasswordField(email: string)  {
+    await this.passwordField.setValue(email);
+  }
+  public async clickOnAuthorizationCrossButton() {
+    await this.authorizationFormCrossButton.click();
+  }
+  public async clickOnHiddenPasswordButton() {
+    await this.hiddenPasswordButton.click();
+  }
+  public async clickOnUserIconDropdown() {
+    await this.userIconDropdown.click();
+  }
+  public async clickOnMyProfile() {
+    await this.myProfileItem.click();
+  }
+  public async clickOnLogoutButton() {
+    await this.logoutButton.click();
+  }
+
 
 }
 
