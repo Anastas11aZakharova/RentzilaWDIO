@@ -1,7 +1,7 @@
 import { $ } from "@wdio/globals";
 import Page from "./page.js";
 
-class ProductPage extends Page {
+class UnitPage extends Page {
   public get servicesList() {
     return $('div[itemprop="services"]');
   }
@@ -9,6 +9,10 @@ class ProductPage extends Page {
   public get categoriesList() {
     return $('div[itemprop="category"]');
   }
+  public get logo() {
+    return $('div[data-testid="logo"]');
+  }
+  
 
   public async verifyServiceIsVisible(serviceName: string) {
     await expect(this.servicesList.$('div='+serviceName)).toBeExisting()
@@ -18,8 +22,12 @@ class ProductPage extends Page {
     await expect(this.categoriesList.$('div='+categoriesName)).toBeExisting()
   }
 
+  public async clickOnLogo() {
+    await this.logo.click();
+  }
+
 
 
 }
 
-export default new ProductPage();
+export default new UnitPage();
