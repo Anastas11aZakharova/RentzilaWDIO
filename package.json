@@ -3,7 +3,8 @@
   "type": "module",
   "scripts": {
     "wdio-all": "npx wdio run ./wdio.conf.ts",
-    "wdio-authorization": "npx wdio run ./wdio.conf.ts --suite authorization"
+    "wdio-authorization": "npx wdio run ./wdio.conf.ts --suite authorization",
+    "wdio-announcement": "npx wdio run ./wdio.conf.ts --suite announcement"
   },  
   "devDependencies": {
     "@wdio/allure-reporter": "^9.0.8",
