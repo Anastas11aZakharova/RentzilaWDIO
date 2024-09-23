@@ -63,6 +63,7 @@ class MainPage extends Page {
       "//section[@data-testid='services']//div[contains(concat(' ',normalize-space(@class),' '),'RentzilaProposes_name')]"
     );
   }
+
   public get equipmentTitle() {
     return $("h2=Спецтехніка");
   }
@@ -71,6 +72,7 @@ class MainPage extends Page {
       "//section[@data-testid='specialEquipment']//div[contains(concat(' ',normalize-space(@class),' '),'RentzilaProposes_name')]"
     );
   }
+
   public get popularServiceLabel() {
     return $('div[data-testid="services__populyarni"]');
   }
@@ -104,6 +106,9 @@ class MainPage extends Page {
   public get emailInUserDropdown() {
     return $('div[data-testid="email"]');
   }
+  public get emailInUserDropdown() {
+    return $('div[data-testid="email"]');
+  }
   public get myProfileItem() {
     return $('div[data-testid="profile"]');
   }
@@ -111,9 +116,10 @@ class MainPage extends Page {
     return $('div[class*="OwnerCabinetPage_title"]');
   }
   public get logoutButton() {
+  public get logoutButton() {
     return $('div[data-testid="logout"]');
   }
-  public get submitAdvertButton() {
+  public get submitAnnouncementButton() {
     return $("a=Подати оголошення");
   }
 
@@ -150,6 +156,12 @@ class MainPage extends Page {
   public async clickOnTelegramCrossButton() {
     await this.telegramCrossButton.click();
   }
+  public async verifyProposesElementsDisplayed(count: number) {
+    expect(await this.proposesElements.length).toEqual(count);
+  }
+  public async verifyEquipmentsElementsDisplayed(count: number) {
+    expect(await this.equipmentElements.length).toEqual(count);
+  }
 
   public async clickOnLogo() {
     await this.logo.click();
@@ -168,8 +180,8 @@ class MainPage extends Page {
   public async clickOnLogoutButton() {
     await this.logoutButton.click();
   }
-  public async clickOnsubmitAdvertButton() {
-    await this.submitAdvertButton.click();
+  public async clickOnsubmitAnnouncementButton() {
+    await this.submitAnnouncementButton.click();
   }
 }
 
