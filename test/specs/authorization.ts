@@ -1,307 +1,229 @@
-//Work in progress...
+import { expect } from "@wdio/globals";
+import MainPage from "../pageobjects/main.page.ts";
+import MyProfilePage from "../pageobjects/my.profile.page.ts";
+import LoginPage from "../pageobjects/login.page.ts";
+import * as testData from "../data/testdata.json";
 
+describe("Rentzila", () => {
+  it("C200- Authorization with empty fields", async () => {
+    await MainPage.open();
 
-// import { expect } from "@wdio/globals";
-// import MainPage from "../pageobjects/main.page.ts";
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.clickOnEnterButton();
+    await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
+      "Поле не може бути порожнім"
+    );
+    await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
+      "Поле не може бути порожнім"
+    );
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(
+      testData.validInputs.email
+    );
+    await LoginPage.clickOnEnterButton();
+    await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
+      "Поле не може бути порожнім"
+    );
+    await LoginPage.clickOnAuthorizationCrossButton();
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterPasswordInPasswordField(testData.validInputs.password);
+    await LoginPage.clickOnEnterButton();
+    await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
+      "Поле не може бути порожнім"
+    );
+  });
+  it("C201-  Authorization with valid email and password", async () => {
+    await MainPage.open();
 
-// describe("Rentzila", () => {
- 
-//   it('C200- Authorization with empty fields', async () => {
-//     await MainPage.open();
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(
+      testData.validInputs.email
+    );
+    await LoginPage.enterPasswordInPasswordField(testData.validInputs.password);
+    await LoginPage.clickOnHiddenPasswordButton();
+    await expect(LoginPage.passwordField).toHaveAttribute("type", "text");
+    await LoginPage.clickOnHiddenPasswordButton();
+    await expect(LoginPage.passwordField).toHaveAttribute("type", "password");
+    await LoginPage.clickOnEnterButton();
+    await expect(MainPage.userIconDropdown).toBeExisting();
+    await expect(MainPage.loginButton).not.toBeExisting();
+    await MainPage.clickOnUserIconDropdown();
+    await expect(MainPage.emailInUserDropdown).toHaveText(
+      testData.validInputs.email
+    );
+    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await MainPage.clickOnLogoutButton();
 
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Поле не може бути порожнім")
-//     await expect(MainPage.passwordFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.passwordFieldErrorMessage).toHaveText("Поле не може бути порожнім")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmail.com")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.passwordFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.passwordFieldErrorMessage).toHaveText("Поле не може бути порожнім")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Поле не може бути порожнім")
+  });
+  it("C202-  Authorization with valid phone and password", async () => {
+    await MainPage.open();
 
-//   });
-//   it('C201-  Authorization with valid email and password', async () => {
-//     await MainPage.open();
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(
+      testData.validInputs.phone
+    );
+    await LoginPage.enterPasswordInPasswordField(testData.validInputs.password);
+    await LoginPage.clickOnEnterButton();
+    await MainPage.clickOnUserIconDropdown();
+    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await MainPage.clickOnMyProfile();
+    await expect(MainPage.myProfileTitle).toHaveText("Мій профіль");
+    let phoneNumberOnProfile = (
+      await MyProfilePage.phoneNumberField.getAttribute("value")
+    ).toString();
+    phoneNumberOnProfile = phoneNumberOnProfile.replace(/\s/g, "");
+    await expect(testData.validInputs.phone).toEqual(phoneNumberOnProfile);
+    await MainPage.clickOnUserIconDropdown();
+    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await MainPage.clickOnLogoutButton();
+    await expect(MainPage.logo).toBeExisting();
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(
+      testData.validInputs.phoneWithoutPlus
+    );
+    await LoginPage.enterPasswordInPasswordField(testData.validInputs.password);
+    await LoginPage.clickOnEnterButton();
+    await MainPage.clickOnUserIconDropdown();
+    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await MainPage.clickOnLogoutButton();
+    await expect(MainPage.logo).toBeExisting();
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(
+      testData.validInputs.phoneWithoutPlus38
+    );
+    await LoginPage.enterPasswordInPasswordField(testData.validInputs.password);
+    await LoginPage.clickOnEnterButton();
+    await MainPage.clickOnUserIconDropdown();
+    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await MainPage.clickOnLogoutButton();
+  });
+  it("C207-  Authorization with invalid phone", async () => {
+    await MainPage.open();
 
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmail.com")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnHiddenPasswordButton()
-//     await MainPage.clickOnHiddenPasswordButton()
-//     await MainPage.clickOnEnterButton()
-//     //todo:complete test
-   
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWithoutPlus380
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWithoutPlus38AndLastNumber
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWithDash
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWithLowerDash
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWithBrackets
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWithBracketsAndWithoutPlus380
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWith11Numbers
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWithOtherCountryCode
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.phoneWithout38
+    );
+  });
 
-//   });
-//   it('C202-  Authorization with valid phone and password', async () => {
-//     await MainPage.open();
+  it("576-  Authorization with invalid email", async () => {
+    await MainPage.open();
 
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("+380991234784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await MainPage.clickOnUserIconDropdown()
-//     await expect(MainPage.myProfileItem).toBeExisting()
-//     await expect(MainPage.myProfileItem).toHaveText("Мій профіль")
-//     await MainPage.clickOnMyProfile()
-//     await expect(MainPage.myProfileTitle).toBeExisting()
-//     await expect(MainPage.myProfileTitle).toHaveText("Мій профіль")
-//     // add check entered phone number previously should be displayed and verified in the ""Номер телефону"" Input.
-//     await MainPage.clickOnUserIconDropdown()
-//     await expect(MainPage.myProfileItem).toBeExisting()
-//     await expect(MainPage.myProfileItem).toHaveText("Мій профіль")
-//     await MainPage.clickOnLogoutButton()
-//     await expect(MainPage.logo).toBeExisting()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("380991234784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await MainPage.clickOnUserIconDropdown()
-//     await expect(MainPage.myProfileItem).toBeExisting()
-//     await expect(MainPage.myProfileItem).toHaveText("Мій профіль")
-//     await MainPage.clickOnLogoutButton()
-//     await expect(MainPage.logo).toBeExisting()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("0991234784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(
+      testData.invalidInputs.emailWithLowerDathes
+    );
+    await LoginPage.enterPasswordInPasswordField(testData.validInputs.password);
+    await LoginPage.clickOnEnterButton();
+    await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
+      "Невірний e-mail або пароль"
+    );
+    await LoginPage.clickOnAuthorizationCrossButton();
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.emailWithCyrillicSymbols
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.emailWithoutEt
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.emailWithoutDot
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.emailWithoutDotCom
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.emailWithoutgmail
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.emailWithoutEtgmailDotCom
+    );
+    await enterInvalidLoginAndVerifyErrorMessage(
+      testData.invalidInputs.emailWith2Ets
+    );
+  });
 
-//   });
-//   it('C207-  Authorization with invalid phone', async () => {
-//     await MainPage.open();
+  it("577-  Authorization with invalid password", async () => {
+    await MainPage.open();
 
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("991234784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("099123478")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("+380-99-123-4784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("+380_99_123_4784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("+380(99)1234784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("(99)1234784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("09912347840")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("+480991234784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("+991234784")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-    
-//   });
-
-//  it('576-  Authorization with invalid email', async () => {
-//     await MainPage.open();
-    
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya___zkhrvvvv@gmail.com")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toBeExisting()
-//     await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toHaveText("Невірний e-mail або пароль")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("еуіегіуккутеяшдф@gmail.com")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvvgmail.com")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmailcom")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmail")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv.com")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-//     await expect(MainPage.authorizationFormTitle).toBeExisting()
-//     await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//     await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@@gmail.com")
-//     await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z")
-//     await MainPage.clickOnEnterButton()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toBeExisting()
-//     await expect(MainPage.emailOrPhoneNumberFieldErrorMessage).toHaveText("Неправильний формат email або номера телефону")
-//     await MainPage.clickOnAuthorizationCrossButton()
-//     await MainPage.clickOnLoginButton()
-
-// });
-
-// it('577-  Authorization with invalid password', async () => {
-//   await MainPage.open();
-  
-//   await MainPage.clickOnLoginButton()
-//   await expect(MainPage.authorizationFormTitle).toBeExisting()
-//   await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//   await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmail.com")
-//   await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82Z___")
-//   await MainPage.clickOnEnterButton()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toBeExisting()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toHaveText("Невірний e-mail або пароль")
-//   await MainPage.clickOnAuthorizationCrossButton()
-//   await MainPage.clickOnLoginButton()
-//   await expect(MainPage.authorizationFormTitle).toBeExisting()
-//   await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//   await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmail.com")
-//   await MainPage.enterPasswordInPasswordField("___4CfzPLpFyzFM82Z")
-//   await MainPage.clickOnEnterButton()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toBeExisting()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toHaveText("Невірний e-mail або пароль")
-//   await MainPage.clickOnAuthorizationCrossButton()
-//   await MainPage.clickOnLoginButton()
-//   await expect(MainPage.authorizationFormTitle).toBeExisting()
-//   await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//   await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmail.com")
-//   await MainPage.enterPasswordInPasswordField("4CfzPLpFyzFM82J")
-//   await MainPage.clickOnEnterButton()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toBeExisting()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toHaveText("Невірний e-mail або пароль")
-//   await MainPage.clickOnAuthorizationCrossButton()
-//   await MainPage.clickOnLoginButton()
-//   await expect(MainPage.authorizationFormTitle).toBeExisting()
-//   await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//   await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmail.com")
-//   await MainPage.enterPasswordInPasswordField("4cfzpLpfyzfm82z")
-//   await MainPage.clickOnEnterButton()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toBeExisting()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toHaveText("Невірний e-mail або пароль")
-//   await MainPage.clickOnAuthorizationCrossButton()
-//   await MainPage.clickOnLoginButton()
-//   await expect(MainPage.authorizationFormTitle).toBeExisting()
-//   await expect(MainPage.authorizationFormTitle).toHaveText("Вхід")
-//   await MainPage.enterEmailInEmailOrPhoneNumberField("nastya.zkhrvvvv@gmail.com")
-//   await MainPage.enterPasswordInPasswordField("4CfZPLPFYZFM82Z")
-//   await MainPage.clickOnEnterButton()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toBeExisting()
-//   await expect(MainPage.incorrectEmailOrPasswordErrorMessage).toHaveText("Невірний e-mail або пароль")
-  
-
-// });
-// });
-
+    await enterInvalidPasswordAndVerifyErrorMessage(
+      testData.invalidInputs.passwordWithLowerDathesInTheEnd
+    );
+    await enterInvalidPasswordAndVerifyErrorMessage(
+      testData.invalidInputs.passwordWithLowerDathesAtTheBeginning
+    );
+    await enterInvalidPasswordAndVerifyErrorMessage(
+      testData.invalidInputs.nonExistentpassword
+    );
+    await enterInvalidPasswordAndVerifyErrorMessage(
+      testData.invalidInputs.passwordWithUppercaseLetters
+    );
+    await enterInvalidPasswordAndVerifyErrorMessage(
+      testData.invalidInputs.passwordWithLowercaseLetters
+    );
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(
+      testData.validInputs.email
+    );
+    await LoginPage.enterPasswordInPasswordField(
+      testData.invalidInputs.emailWithCyrillicSymbols
+    );
+    await LoginPage.clickOnEnterButton();
+    await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
+      "Пароль повинен містити як мінімум 1 цифру, 1 велику літеру і 1 малу літеру, також не повинен містити кирилицю та пробіли"
+    );
+  });
+  async function enterInvalidLoginAndVerifyErrorMessage(login: string) {
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(login);
+    await LoginPage.enterPasswordInPasswordField(testData.validInputs.password);
+    await LoginPage.clickOnEnterButton();
+    await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
+      "Неправильний формат email або номера телефону"
+    );
+    await LoginPage.clickOnAuthorizationCrossButton();
+  }
+  async function enterInvalidPasswordAndVerifyErrorMessage(password: string) {
+    await MainPage.clickOnLoginButton();
+    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await LoginPage.enterEmailInEmailOrPhoneNumberField(
+      testData.validInputs.email
+    );
+    await LoginPage.enterPasswordInPasswordField(password);
+    await LoginPage.clickOnEnterButton();
+    await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
+      "Невірний e-mail або пароль"
+    );
+    await LoginPage.clickOnAuthorizationCrossButton();
+  }
+});
