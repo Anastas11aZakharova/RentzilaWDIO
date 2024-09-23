@@ -1,11 +1,44 @@
 {
     "validInputs": {
+      "phone": "+380991234784",
       "phoneWithoutPlus": "380991234784",
       "phoneWithoutPlus38": "0991234784",
-      "name": "TestAnastasiia"
+      "name": "TestAnastasiia",
+      "email": "nastya.zkhrvvvv@gmail.com",
+      "password": "4CfzPLpFyzFM82Z"
     },
     "invalidInputs": {
       "phoneShort": "+38063111111",
+      "phoneWithoutPlus380":"991234784",
+      "phoneOnesOnly": "+11111111111111",
+      "phoneWithoutPlus38AndLastNumber": "099123478",
+      "phoneWithDash":"+380-99-123-4784",
+      "phoneWithLowerDash": "+380_99_123_4784",
+      "phoneWithBrackets": "+380(99)1234784",
+      "phoneWithBracketsAndWithoutPlus380":"(99)1234784",
+      "phoneWith11Numbers":"09912347840",
+      "phoneWithOtherCountryCode":"+480991234784",
+      "phoneWithout38":"+991234784",
+      "emailWithLowerDathes": "nastya___zkhrvvvv@gmail.com",
+      "emailWithCyrillicSymbols": "еуіегіуккутеяшдф@gmail.com",
+      "emailWithoutDot": "nastya.zkhrvvvv@gmailcom",
+      "emailWithoutDotCom": "nastya.zkhrvvvv@gmail",
+      "emailWithoutEt": "nastya.zkhrvvvvgmail.com",
+      "emailWithoutgmail": "nastya.zkhrvvvv@.com",
+      "emailWithoutEtgmailDotCom": "nastya.zkhrvvvv",
+      "emailWith2Ets": "nastya.zkhrvvvv@@gmail.com",
+      "passwordWithLowerDathesInTheEnd": "4CfzPLpFyzFM82Z___",
+      "passwordWithLowerDathesAtTheBeginning": "___4CfzPLpFyzFM82Z",
+      "nonExistentpassword": "4CfzPLpFyzFM82J",
+      "passwordWithUppercaseLetters": "4cfzpLpfyzfm82z",
+      "passwordWithLowercaseLetters": "4CfZPLPFYZFM82Z",
+      "passwordWithCyrillicSymbols": "4ПО7МВ*оьои9ЛЛ"
+
+
+
+
+
+      
       "phoneWithoutPlus380":"991234784",
       "phoneOnesOnly": "+11111111111111",
       "phoneWithoutPlus38AndLastNumber": "099123478",

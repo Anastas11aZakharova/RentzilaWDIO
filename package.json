@@ -4,6 +4,7 @@
   "scripts": {
     "wdio-all": "npx wdio run ./wdio.conf.ts",
     "wdio-authorization": "npx wdio run ./wdio.conf.ts --suite authorization",
+    "wdio-announcement": "npx wdio run ./wdio.conf.ts --suite announcement",
     "wdio-advert": "npx wdio run ./wdio.conf.ts --suite advert"
   },
   "devDependencies": {
