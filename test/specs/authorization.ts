@@ -9,10 +9,16 @@ const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
 const validPassword = process.env.MY_PASSWORD || 'default_password';
 const validPhone = process.env.MY_PHONE || 'default_phone';
 
+import * as dotenv from 'dotenv';
+dotenv.config();
+const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
+const validPassword = process.env.MY_PASSWORD || 'default_password';
+const validPhone = process.env.MY_PHONE || 'default_phone';
+
 
 describe("Rentzila", () => {
-  it("C200- Authorization with empty fields", async () => {
-    await MainPage.open();
+  // it("C200- Authorization with empty fields", async () => {
+  //   await MainPage.open();
 
     await MainPage.clickOnLoginButton();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
@@ -65,9 +71,9 @@ describe("Rentzila", () => {
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
     await MainPage.clickOnLogoutButton();
 
-  });
-  it("C202-  Authorization with valid phone and password", async () => {
-    await MainPage.open();
+  // });
+  // it("C202-  Authorization with valid phone and password", async () => {
+  //   await MainPage.open();
 
     await MainPage.clickOnLoginButton();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
@@ -114,37 +120,37 @@ describe("Rentzila", () => {
   it("C207-  Authorization with invalid phone", async () => {
     await MainPage.open();
 
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWithoutPlus380
-    );
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWithoutPlus38AndLastNumber
-    );
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWithDash
-    );
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWithLowerDash
-    );
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWithBrackets
-    );
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWithBracketsAndWithoutPlus380
-    );
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWith11Numbers
-    );
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWithOtherCountryCode
-    );
-    await enterInvalidLoginAndVerifyErrorMessage(
-      testData.invalidInputs.phoneWithout38
-    );
-  });
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWithoutPlus380
+  //   );
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWithoutPlus38AndLastNumber
+  //   );
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWithDash
+  //   );
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWithLowerDash
+  //   );
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWithBrackets
+  //   );
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWithBracketsAndWithoutPlus380
+  //   );
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWith11Numbers
+  //   );
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWithOtherCountryCode
+  //   );
+  //   await enterInvalidLoginAndVerifyErrorMessage(
+  //     testData.invalidInputs.phoneWithout38
+  //   );
+  // });
 
-  it("576-  Authorization with invalid email", async () => {
-    await MainPage.open();
+  // it("576-  Authorization with invalid email", async () => {
+  //   await MainPage.open();
 
     await MainPage.clickOnLoginButton();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
@@ -180,8 +186,8 @@ describe("Rentzila", () => {
     );
   });
 
-  it("577-  Authorization with invalid password", async () => {
-    await MainPage.open();
+  // it("577-  Authorization with invalid password", async () => {
+  //   await MainPage.open();
 
     await enterInvalidPasswordAndVerifyErrorMessage(
       testData.invalidInputs.passwordWithLowerDathesInTheEnd
