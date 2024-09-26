@@ -4,8 +4,8 @@
   "scripts": {
     "wdio-all": "npx wdio run ./wdio.conf.ts",
     "wdio-authorization": "npx wdio run ./wdio.conf.ts --suite authorization",
-    "wdio-announcement": "npx wdio run ./wdio.conf.ts --suite announcement"
-  },  
+    "wdio-advert": "npx wdio run ./wdio.conf.ts --suite advert"
+  },
   "devDependencies": {
     "@wdio/allure-reporter": "*",
     "@wdio/cli": "*",
@@ -13,5 +13,8 @@
     "@wdio/mocha-framework": "*",
     "@wdio/spec-reporter": "*",
     "axios": "*"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
   }
 }
