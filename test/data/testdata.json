@@ -1,11 +1,8 @@
 {
     "validInputs": {
-      "phone": "+380991234784",
       "phoneWithoutPlus": "380991234784",
       "phoneWithoutPlus38": "0991234784",
-      "name": "TestAnastasiia",
-      "email": "nastya.zkhrvvvv@gmail.com",
-      "password": "4CfzPLpFyzFM82Z"
+      "name": "TestAnastasiia"
     },
     "invalidInputs": {
       "phoneShort": "+38063111111",
