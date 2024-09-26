@@ -121,7 +121,7 @@ class MainPage extends Page {
   public get logoutButton() {
     return $('div[data-testid="logout"]');
   }
-  public get submitAnnouncementButton() {
+  public get submitAdvertButton() {
     return $("a=Подати оголошення");
   }
 
@@ -179,8 +179,8 @@ class MainPage extends Page {
   public async clickOnLogoutButton() {
     await this.logoutButton.click();
   }
-  public async clickOnsubmitAnnouncementButton() {
-    await this.submitAnnouncementButton.click();
+  public async clickOnsubmitAdvertButton() {
+    await this.submitAdvertButton.click();
   }
 }
 
