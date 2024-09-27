@@ -86,11 +86,11 @@ class AdvertPage extends Page {
   public get producerAsterisk() {
     return $('//div[contains(text(),\'Виробник транспортного засобу\')]/span[text()=\'*\']');
   }
-  public get producerErrorMessage() {
-    return $("div=Це поле обов’язкове");
+  public get producerErrorMessage() { 
+    return $('//input[@placeholder=\'Введіть виробника транспортного засобу\']/../../../following-sibling::div[text()=\'Це поле обов’язкове\']');
   }
   public get producerSearchDropdown() {
-    return $('div[class="CustomSelectWithSearch_searchedServicesCat_wrapper__aOGc3"]');
+    return $('div[class*="CustomSelectWithSearch_searchedServicesCat_wrapper"]');
   }
   public get producerSearchDropdownElement() {
     return $('div[data-testid="item-customSelectWithSearch"]');
@@ -119,28 +119,43 @@ class AdvertPage extends Page {
   public get thirdCategoryLevel() {
     return $$('label[data-testid="thirdCategoryLabel"]');
   }
-
-  // public async printCategories(){
-  //   console.log("\n\n\n\n\nPrinting labels. Count ="+ await this.categories1LvlLabels.length +"\n\n\n\n")
-
-  //   for await (const element of this.categories1LvlLabels) {
-  //     console.log("lvl 1 - "+await element.getText())
-  //     await element.click()
-  //     for await (const element of this.categories2LvlLabels){
-  //       console.log("lvl 2 - "+await element.getText())
-  //       await element.click()
-  //       for await (const element of this.categories3LvlLabels){
-  //         console.log("lvl 3 - "+await element.getText())
-  //       }
-  //     }
-  //   }
-
-  //   console.log("\n\n\n\n")
-
-  // }
-
-
- 
+  public get cancelButton() {
+    return $('button[data-testid="prevButton"]');
+  }
+  public get locationAsterisk() {
+    return $('//div[contains(text(),\'Місце розташування технічного засобу\')]/span[text()=\'*\']');
+  }
+  public get locationLabel() {
+    return $("div=Місце розташування технічного засобу");
+  }
+  public get locationErrorMessage() {
+    return $("div=Виберіть коректне місце на мапі України");
+  }
+  public get chooseOnMapButton() {
+    return $('span[data-testid="choseOnMap"]');
+  }
+  public get mapPopUpMessage() {
+    return $('div[data-testid="div-mapPopup"]');
+  }
+  public get mapPopUpTitle() {
+    return $("div=Техніка на мапі");
+  }
+  public get mapPopUpCrossIcom() {
+    return $('svg[data-testid="crossIcon"]');
+  }
+  public get defaultAddressLine() {
+    return $('div[data-testid="address"]');
+  }
+  public get mapElement() {
+    return $('div[id="map"]');
+  }
+  public get confirmButton() {
+    return $("button=Підтвердити вибір");
+  }
+  public get photoLabel() {
+    return $("button=Підтвердити вибір");
+  }
+  
 
   public async verifyLabelNumberIsCorrect(label: string, number: string) {
     label=label.charAt(0).toUpperCase() + label.slice(1)
@@ -229,7 +244,41 @@ class AdvertPage extends Page {
   public async enterDataInTechnicalCharacteristicsField(text: string) {
     await this.technicalCharacteristicsField.setValue(text);
   }
-  
+  public async enterDataInDetailedDescriptionField(text: string) {
+    await this.detailedDescriptionField.setValue(text);
+  }
+  public async clickOnCancelButton() {
+    await this.cancelButton.click();
+  }
+  public async clickOkInDialogPopUp() {
+    await browser.waitUntil(async () => await browser.isAlertOpen(), {});
+    let alertText = await browser.getAlertText();
+    await expect(alertText).toEqual("Ви впевнені, що хочете перейти на іншу сторінку? Внесені дані не збережуться!");
+    await browser.acceptAlert();
+  }
+  public async verifyLocationFieldBorderIsRed(): Promise<boolean> {
+    let cls=await this.locationField.getAttribute("class")
+    if (cls.includes("Error")) 
+      {
+          return true 
+      } 
+      else
+      {
+          return false
+      }
+      
+  }
+  public async clickOnChooseOnMapButton() {
+    await this.chooseOnMapButton.click();
+  }
+  public async clickOnConfirmButton() {
+    await this.confirmButton.click();
+  }
+  public async clickOnProduserSearchDropdownElement() {
+    await this.producerSearchDropdownElement.click();
+  }
+
 }
+
 
 export default new AdvertPage();
