@@ -1,5 +1,6 @@
 import { $ } from "@wdio/globals";
 import Page from "./page.js";
+import  { Key } from 'webdriverio'
 
 class AdvertPage extends Page {
   public get advertPageTitle() {
@@ -153,9 +154,21 @@ class AdvertPage extends Page {
     return $("button=Підтвердити вибір");
   }
   public get photoLabel() {
-    return $("button=Підтвердити вибір");
+    return $("span=Фотографії");
   }
-  
+  public get errorPopUp() {
+    return $('div[data-testid="errorPopup"]');
+  }
+  public get understandButton() {
+    return $("button=Зрозуміло");
+  }
+  public get unitImages() {
+    return $$('img[data-testid="unitImage"]');
+  }
+  public get backButton() {
+    return $('button[data-testid="prevButton"]');
+  }
+ 
 
   public async verifyLabelNumberIsCorrect(label: string, number: string) {
     label=label.charAt(0).toUpperCase() + label.slice(1)
@@ -254,7 +267,9 @@ class AdvertPage extends Page {
     await browser.waitUntil(async () => await browser.isAlertOpen(), {});
     let alertText = await browser.getAlertText();
     await expect(alertText).toEqual("Ви впевнені, що хочете перейти на іншу сторінку? Внесені дані не збережуться!");
-    await browser.acceptAlert();
+    // await browser.acceptAlert();
+    await browser.keys(Key.Enter)
+
   }
   public async verifyLocationFieldBorderIsRed(): Promise<boolean> {
     let cls=await this.locationField.getAttribute("class")
@@ -277,7 +292,29 @@ class AdvertPage extends Page {
   public async clickOnProduserSearchDropdownElement() {
     await this.producerSearchDropdownElement.click();
   }
-
+  public async clickOnPhotoLabel() {
+    await this.photoLabel.click();
+  }
+  public async clickOnUnderstandButton() {
+    await this.understandButton.click();
+  }
+  public async checkOnlyOneImageIsUploaded(){
+    for (let i = 0; i < await this.unitImages.length; i++) {
+      if (i==0){
+        expect(await this.unitImages[i].getAttribute("src")).not.toEqual("")
+      } else {
+        expect(await this.unitImages[i].getAttribute("src")).toEqual("")
+      }
+    }
+  }
+  public async checkNoFileIsUploaded(){
+    for (let i = 0; i < await this.unitImages.length; i++) {
+        expect(await this.unitImages[i].getAttribute("src")).toEqual("")
+    }
+  }
+  public async clickOnBackButton() {
+    await this.backButton.click();
+  }
 }
 
 

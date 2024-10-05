@@ -14,6 +14,9 @@ export const config: Options.Testrunner = {
         ],
         advert: [
             './test/specs/advert.ts'
+        ],
+        photo: [
+             './test/specs/photo.tab.ts'
         ]
     },
     exclude: [

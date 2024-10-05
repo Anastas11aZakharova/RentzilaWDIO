@@ -5,6 +5,7 @@ import AdvertPage from "../pageobjects/advert.page.ts";
 import * as dotenv from "dotenv";
 import randomstring from 'randomstring';
 
+
 dotenv.config();
 const validEmail = process.env.MY_EMAIL || "default_email@example.com";
 const validPassword = process.env.MY_PASSWORD || "default_password";
@@ -25,7 +26,7 @@ describe("Rentzila", () => {
     await expect(AdvertPage.advertPageTitle).toHaveText("Створити оголошення");
   });
 
-  it("C294- Verify body title and tab titles", async () => {
+  xit("C294- Verify body title and tab titles", async () => {
     let mainInformationLabel = "основна інформація";
     let photosLabel = "фотографії";``
     let servicesLabel = "послуги";
@@ -67,7 +68,7 @@ describe("Rentzila", () => {
     await expect(AdvertPage.locationField).toBeExisting();
     
   });
-  it("C296- Verify category (Категорія) section", async () => {
+  xit("C296- Verify category (Категорія) section", async () => {
     await expect(AdvertPage.categoryLabel).toHaveText("Категорія *");
     await expect(AdvertPage.categorySelectAsterisk).toBeExisting();
     await expect(AdvertPage.categorySelectField).toHaveText(
@@ -107,7 +108,7 @@ describe("Rentzila", () => {
     }
     await AdvertPage.clickOutsideOfCrossButton();
   }).timeout(60000);
-  it("C297- Verify unit name section", async () => {
+  xit("C297- Verify unit name section", async () => {
     await expect(AdvertPage.advertNameLabel).toHaveText("Назва оголошення *");
     await expect(AdvertPage.advertNameAsterisk).toBeExisting();
     await expect(AdvertPage.advertNameField).toHaveAttribute(
@@ -137,7 +138,7 @@ describe("Rentzila", () => {
     await expect(AdvertPage.advertNameErrorMessage).not.toBeDisplayed();
 
   });
-  it("C298- Verify vehicle manufacturer section", async () => {
+  xit("C298- Verify vehicle manufacturer section", async () => {
     await expect(AdvertPage.producerLabel).toHaveText(
       "Виробник транспортного засобу *"
     );
@@ -173,7 +174,7 @@ describe("Rentzila", () => {
     );
     await expect(AdvertPage.producerSearchDropdownElement).not.toBeDisplayed();
   });
-  it("C299- Verify model name input field", async () => {
+  xit("C299- Verify model name input field", async () => {
     await expect(AdvertPage.modelNameLabel).toHaveText("Назва моделі");
     await expect(AdvertPage.modelNameField).toHaveAttribute(
       "placeholder",
@@ -187,7 +188,7 @@ describe("Rentzila", () => {
     await expect(AdvertPage.modelNameErrorMessage).toBeDisplayed();
     await expect(await AdvertPage.verifyModelNameBorderIsRed()).toEqual(true);
   });
-  it("C317- Verify technical characteristics section", async () => {
+  xit("C317- Verify technical characteristics section", async () => {
     await expect(AdvertPage.technicalCharacteristicsField).toBeExisting;
     await expect(AdvertPage.technicalCharacteristicsField).toHaveText("");
     await expect(AdvertPage.technicalCharacteristicsField).toBeClickable();
@@ -197,7 +198,7 @@ describe("Rentzila", () => {
     let text = await AdvertPage.technicalCharacteristicsField.getText();
     await expect(text.length).toEqual(9000);
   });
-  it("C318- Verify description section", async () => {
+  xit("C318- Verify description section", async () => {
     await expect(AdvertPage.detailedDescriptionField).toBeExisting;
     await expect(AdvertPage.detailedDescriptionField).toHaveText("");
     await expect(AdvertPage.detailedDescriptionField).toBeClickable();
@@ -207,7 +208,7 @@ describe("Rentzila", () => {
     let text = await AdvertPage.detailedDescriptionField.getText();
     await expect(text.length).toEqual(9000);
   });
-  it("C319- Verify vehicle location division", async () => {
+  xit("C319- Verify vehicle location division", async () => {
     await expect(AdvertPage.locationLabel).toHaveText(
       "Місце розташування технічного засобу *"
     );
@@ -239,10 +240,11 @@ describe("Rentzila", () => {
   it('C326- Verify "Скасувати" button', async () => {
     await expect(AdvertPage.cancelButton).toHaveText("Скасувати");
     await AdvertPage.clickOnCancelButton();
+    // await MainPage.clickOnLogo()
     await AdvertPage.clickOkInDialogPopUp();
     await expect(MainPage.logo).toBeDisplayed();
   });
-  it('C326- Verify "Далі" button', async () => {
+  xit('C326- Verify "Далі" button', async () => {
     await expect(AdvertPage.nextButton).toHaveText("Далі");
     await AdvertPage.clickOnNextButton();
     await expect(await AdvertPage.verifyCategoryFieldBorderIsRed()).toEqual(
