@@ -1,8 +1,11 @@
 import { expect } from "@wdio/globals";
 import axios from "axios";
 import MainPage from "../pageobjects/main.page.ts";
-import * as testData from "../data/testdata.json"
-
+import * as testData from "../data/testdata.json";
+import AdminLoginPage from "../pageobjects/admin.login.page.ts";
+import AdminMainPage from "../pageobjects/admin.main.page.ts";
+import AdminFeedbacksPage from "../pageobjects/admin.feedbacks.page.ts";
+import FeedbackItemPage from "../pageobjects/feedback.item.ts";
 
 describe("Rentzila", () => {
   it("C214-Verify that all elements on the footer are displayed and all links are clickable", async () => {
@@ -78,13 +81,62 @@ describe("Rentzila", () => {
     );
     await MainPage.enterPhoneNumber(validPhoneNumber);
     await MainPage.clickOnOrderConsultationButton();
+    const currentDate: Date = new Date();
     await MainPage.clickOkInDialogPopUp();
+    await AdminLoginPage.open();
+    await expect(AdminLoginPage.adminLoginPageHeader).toHaveText(
+      "Django administration"
+    );
+    await expect(AdminLoginPage.emailField).toBeExisting();
+    await AdminLoginPage.enterEmailInEmailField("test@test.test");
+    await expect(AdminLoginPage.passwordField).toBeExisting();
+    await AdminLoginPage.enterPasswordInPasswordlField("admin");
+    await expect(AdminLoginPage.logInButton).toBeExisting();
+    await AdminLoginPage.clickOnLogInButton();
+    await expect(AdminMainPage.adminMainPageTitle).toHaveText(
+      "Site administration"
+    );
+    await expect(AdminMainPage.feedbacksCategory).toHaveText("Feedbacks");
+    await AdminMainPage.clickOnFeedbacksCategory();
+    await expect(AdminFeedbacksPage.adminFeedbacksPageTitle).toHaveText(
+      "Select Feedback to change"
+    );
+    await AdminFeedbacksPage.clickOnFeedbackLink();
+    await expect(FeedbackItemPage.feedbackItemPageTitle).toHaveText(
+      "Change Feedback"
+    );
+    await expect(
+      await FeedbackItemPage.nameField.getAttribute("value")
+    ).toEqual(validName);
+    await expect(
+      await FeedbackItemPage.phoneField.getAttribute("value")
+    ).toEqual(validPhoneNumber);
+
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+      timeZone: "Europe/Kyiv",
+    };
+
+    let formattedDate = new Intl.DateTimeFormat("en-US", options)
+      .format(currentDate)
+      .replace(/([A-Za-z]+)\s/, "$1. ")
+      .replace("AM", "a.m.")
+      .replace("PM", "p.m.");
+
+    await expect(await FeedbackItemPage.createdDateField.getText()).toEqual(
+      formattedDate
+    );
 
     const bodyParameters = {
       email: "txt2021@ukr.net",
       password: "Qwerty123+",
     };
-    
+
     let response = await axios.post(
       "https://dev.rentzila.com.ua/api/auth/jwt/create/",
       bodyParameters
@@ -107,8 +159,5 @@ describe("Rentzila", () => {
         isFound = true;
       }
     });
-
+  });
 });
-  
-});
-

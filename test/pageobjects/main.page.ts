@@ -63,9 +63,6 @@ class MainPage extends Page {
       "//section[@data-testid='services']//div[contains(concat(' ',normalize-space(@class),' '),'RentzilaProposes_name')]"
     );
   }
-  
-  
-  
   public get equipmentTitle() {
     return $("h2=Спецтехніка");
   }
@@ -74,7 +71,6 @@ class MainPage extends Page {
       "//section[@data-testid='specialEquipment']//div[contains(concat(' ',normalize-space(@class),' '),'RentzilaProposes_name')]"
     );
   }
-  
   public get popularServiceLabel() {
     return $('div[data-testid="services__populyarni"]');
   }
@@ -135,24 +131,20 @@ class MainPage extends Page {
   public get myProfileTitle() {
     return $('div[class*="OwnerCabinetPage_title"]');
   }
-  public get logoutButton () {
+  public get logoutButton() {
     return $('div[data-testid="logout"]');
   }
-  public get incorrectEmailOrPasswordErrorMessage () {
+  public get incorrectEmailOrPasswordErrorMessage() {
     return $('div[data-testid="errorMessage"]');
   }
-  public get incorrectPasswordErrorMessage () {
+  public get incorrectPasswordErrorMessage() {
     return $('p[class*="CustomReactHookInput_error_message"]');
   }
-  
- 
-
-
-
 
   public open() {
     return super.open();
   }
+
   public async clickOnOrderConsultationButton() {
     await this.orderConsultationButton.click();
   }
@@ -182,14 +174,6 @@ class MainPage extends Page {
   public async clickOnTelegramCrossButton() {
     await this.telegramCrossButton.click();
   }
-  public async verifyProposesElementsDisplayed(count: number) {
-    expect(await this.proposesElements.length).toEqual(count);
-  }
-  public async verifyEquipmentsElementsDisplayed(count: number) {
-    expect(await this.equipmentElements.length).toEqual(count);
-  }
-
-
 
   public async clickOnLogo() {
     await this.logo.click();
@@ -207,26 +191,29 @@ class MainPage extends Page {
     await this.emailOrPhoneNumberField.setValue(email);
   }
 
-  public async enterPasswordInPasswordField(email: string)  {
+  public async enterPasswordInPasswordField(email: string) {
     await this.passwordField.setValue(email);
   }
+
   public async clickOnAuthorizationCrossButton() {
     await this.authorizationFormCrossButton.click();
   }
+
   public async clickOnHiddenPasswordButton() {
     await this.hiddenPasswordButton.click();
   }
+
   public async clickOnUserIconDropdown() {
     await this.userIconDropdown.click();
   }
+
   public async clickOnMyProfile() {
     await this.myProfileItem.click();
   }
+
   public async clickOnLogoutButton() {
     await this.logoutButton.click();
   }
-
-
 }
 
 export default new MainPage();

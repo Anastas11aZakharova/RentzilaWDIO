@@ -36,6 +36,25 @@ describe("Rentzila", () => {
       testData.equipment.other.namesInUnitPage
     );
   });
+  /**
+   * Verifies the equipment names, filter names, and categories by interacting with the UI elements.
+   *
+   * This function performs the following actions:
+   * 1. Clicks on a provided UI element.
+   * 2. Verifies that a certain number of equipment elements are displayed on the page.
+   * 3. Ensures that each equipment element is existing and matches the provided equipment names.
+   * 4. Iterates through each equipment, clicking on it, and verifying that the appropriate equipment is present in the filter.
+   * 5. Verifies that the card unit is displayed, and checks the equipment's category on the Unit page.
+   *
+   * @async
+   * @function
+   * @param {ChainablePromiseElement} element - The UI element to interact with, typically representing a clickable object on the page.
+   * @param {string[]} equipmentsNames - An array of equipment names to validate against the equipment elements displayed on the page.
+   * @param {string[]} equipmentsNamesInFilter - An array of equipment names to verify against the filtered results on the Products page.
+   * @param {string[]} equipmentsCategoryInProductsPage - An array of equipment categories to verify on the Unit page for each piece of equipment.
+   *
+   * @returns {Promise<void>} A Promise that resolves when the equipment verification process completes.
+   */
   async function verifyEquipment(
     element: ChainablePromiseElement,
     equipmentsNames: string[],
@@ -44,7 +63,8 @@ describe("Rentzila", () => {
   ) {
     await element.click();
     var count: number = 7;
-    await MainPage.verifyEquipmentsElementsDisplayed(count);
+    expect(await MainPage.equipmentElements.length).toEqual(count);
+    // await MainPage.verifyEquipmentsElementsDisplayed(count);
     var i: number;
     for (i = 0; i < count; i++) {
       await expect(MainPage.equipmentElements[i]).toBeExisting();

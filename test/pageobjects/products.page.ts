@@ -12,7 +12,6 @@ class ProductsPage extends Page {
   public get cardUnit() {
     return $('div[data-testid="cardWrapper"]');
   }
-
   public get equipmentCategoryLabels() {
     return $$('img[data-testid="firstCategoryImage"]');
   }
@@ -22,14 +21,6 @@ class ProductsPage extends Page {
   public get activeEquipmentLabel() {
     return $("//label[contains(concat(' ',normalize-space(@class),' '),'active_label')]");
   }
-
-  
-
- 
-
-
-
-
 
   public async verifyCheckBoxIsChecked(name: string) {
     await browser.pause(2000);
@@ -47,6 +38,7 @@ class ProductsPage extends Page {
       this.filterForm.$("//label[contains(text(),'" + name + "')]/../input")
     ).toBeChecked();
   }
+  
   public async clickOnCardUnit() {
     await this.cardUnit.click();
   }
