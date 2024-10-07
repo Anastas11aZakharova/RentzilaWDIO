@@ -1,11 +1,14 @@
 import { expect } from "@wdio/globals";
-import MainPage from "../pageobjects/main.page.ts";
-import LoginPage from "../pageobjects/login.page.ts";
-import AdvertPage from "../pageobjects/advert.page.ts";
+import MainPage from "../../pageobjects/main.page.ts";
+import LoginPage from "../../pageobjects/login.page.ts";
+import AdvertPage from "../../pageobjects/advert.page.ts";
 import * as dotenv from "dotenv";
 const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
 const validPassword = process.env.MY_PASSWORD || 'default_password';
 dotenv.config();
+const duplicateImageError = "Ви не можете завантажити двічі один файл.";
+const formatError = "Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.";
+const clueMessage = "Додайте в оголошення від 1 до 12 фото технічного засобу розміром до 20 МВ у форматі .jpg, .jpeg, .png. Перше фото буде основним."
 
 describe("Rentzila", () => {
   beforeEach(async () => {
@@ -28,17 +31,17 @@ describe("Rentzila", () => {
     const filePath = 'test/data/photo1.jpg'
     await uploadFile(filePath)
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Ви не можете завантажити двічі один файл.")
+    await expect(AdvertPage.errorPopUp).toHaveText(duplicateImageError)
     await AdvertPage.clickOnCrossButton()
     await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
     await AdvertPage.checkOnlyOneImageIsUploaded()
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Ви не можете завантажити двічі один файл.")
+    await expect(AdvertPage.errorPopUp).toHaveText(duplicateImageError)
     await AdvertPage.clickOnUnderstandButton()
     await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
     await AdvertPage.checkOnlyOneImageIsUploaded()
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Ви не можете завантажити двічі один файл.")
+    await expect(AdvertPage.errorPopUp).toHaveText(duplicateImageError)
     await AdvertPage.clickOutsideOfCrossButton()
     await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
     await AdvertPage.checkOnlyOneImageIsUploaded()
@@ -54,16 +57,16 @@ describe("Rentzila", () => {
   it("C401-Verify uploading of invalid file type", async () => {
     const filePath = 'test/data/photo1.avp'
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.")
+    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
     await AdvertPage.checkNoFileIsUploaded()
     await AdvertPage.clickOnCrossButton()
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.")
+    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
     await AdvertPage.clickOnUnderstandButton()
     await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
     await AdvertPage.checkNoFileIsUploaded()
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.")
+    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
     await AdvertPage.clickOutsideOfCrossButton()
     await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
     await AdvertPage.checkNoFileIsUploaded()
@@ -71,16 +74,16 @@ describe("Rentzila", () => {
   it("C405-Verify uploading of invalid size file", async () => {
     const filePath = 'test/data/30mb.jpg'
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.")
+    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
     await AdvertPage.checkNoFileIsUploaded()
     await AdvertPage.clickOnCrossButton()
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.")
+    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
     await AdvertPage.clickOnUnderstandButton()
     await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
     await AdvertPage.checkNoFileIsUploaded()
     await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText("Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.")
+    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
     await AdvertPage.clickOutsideOfCrossButton()
     await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
     await AdvertPage.checkNoFileIsUploaded()
@@ -181,7 +184,7 @@ describe("Rentzila", () => {
   it("C593- Upload multiple images", async () => {
     await expect(AdvertPage.photoParagraph).toHaveText("Фото технічного засобу *")
     await expect(AdvertPage.photoParagraphAsterisk).toBeDisplayed()
-    await expect(AdvertPage.clueText).toHaveText("Додайте в оголошення від 1 до 12 фото технічного засобу розміром до 20 МВ у форматі .jpg, .jpeg, .png. Перше фото буде основним.")
+    await expect(AdvertPage.clueText).toHaveText(clueMessage)
     let filePath = 'test/data/photo1.jpg'
     await uploadFile(filePath)
     filePath = 'test/data/photo2.jpg'
@@ -195,7 +198,7 @@ describe("Rentzila", () => {
   it("C594- Drag and drop images", async () => {
     await expect(AdvertPage.photoParagraph).toHaveText("Фото технічного засобу *")
     await expect(AdvertPage.photoParagraphAsterisk).toBeDisplayed()
-    await expect(AdvertPage.clueText).toHaveText("Додайте в оголошення від 1 до 12 фото технічного засобу розміром до 20 МВ у форматі .jpg, .jpeg, .png. Перше фото буде основним.")
+    await expect(AdvertPage.clueText).toHaveText(clueMessage)
     let filePath = 'test/data/photo1.jpg'
     await uploadFile(filePath)
     filePath = 'test/data/photo2.jpg'
