@@ -1,8 +1,8 @@
 import { expect } from "@wdio/globals";
-import MainPage from "../pageobjects/main.page.ts";
-import UnitPage from "../pageobjects/unit.page.ts";
-import ProductsPage from "../pageobjects/products.page.ts";
-import * as testData from "../data/testdata.json";
+import MainPage from "../../pageobjects/main.page.ts";
+import UnitPage from "../../pageobjects/unit.page.ts";
+import ProductsPage from "../../pageobjects/products.page.ts";
+import * as testData from "../../data/testdata.json";
 
 describe("Rentzila", () => {
   it('C213- Checking ""Спецтехніка"" section on the main page', async () => {
@@ -64,7 +64,6 @@ describe("Rentzila", () => {
     await element.click();
     var count: number = 7;
     expect(await MainPage.equipmentElements.length).toEqual(count);
-    // await MainPage.verifyEquipmentsElementsDisplayed(count);
     var i: number;
     for (i = 0; i < count; i++) {
       await expect(MainPage.equipmentElements[i]).toBeExisting();

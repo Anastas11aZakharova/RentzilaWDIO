@@ -1,8 +1,8 @@
 import { expect } from "@wdio/globals";
-import MainPage from "../pageobjects/main.page.ts";
-import UnitPage from "../pageobjects/unit.page.ts";
-import ProductsPage from "../pageobjects/products.page.ts";
-import * as testData from "../data/testdata.json";
+import MainPage from "../../pageobjects/main.page.ts";
+import UnitPage from "../../pageobjects/unit.page.ts";
+import ProductsPage from "../../pageobjects/products.page.ts";
+import * as testData from "../../data/testdata.json";
 
 describe("Rentzila", () => {
   it('C212- Checking "Послуги" section on the main page', async () => {
