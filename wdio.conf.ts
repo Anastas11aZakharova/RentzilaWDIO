@@ -37,7 +37,7 @@ export const config: Options.Testrunner = {
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
     framework: 'mocha',
-    reporters: [['allure', {outputDir: 'allure-results'}]],
+    reporters: ['spec',['allure', {outputDir: 'allure-results'}]],
     mochaOpts: {
         ui: 'bdd',
         timeout: 600000

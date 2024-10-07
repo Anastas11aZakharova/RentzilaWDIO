@@ -3,7 +3,7 @@ import MainPage from "../pageobjects/main.page.ts";
 import LoginPage from "../pageobjects/login.page.ts";
 import AdvertPage from "../pageobjects/advert.page.ts";
 import * as dotenv from "dotenv";
-import randomstring from 'randomstring';
+import randomstring from 'randomstring'
 
 
 dotenv.config();
@@ -28,7 +28,7 @@ describe("Rentzila", () => {
 
   xit("C294- Verify body title and tab titles", async () => {
     let mainInformationLabel = "основна інформація";
-    let photosLabel = "фотографії";``
+    let photosLabel = "фотографії";
     let servicesLabel = "послуги";
     let priceLabel = "вартість";
     let contactsLabel = "контакти";
