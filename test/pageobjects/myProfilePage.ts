@@ -7,11 +7,6 @@ class MyProfilePage extends Page {
     return $('input[id="mobile"]');
   }
   
-
-//   public async verifyServiceIsVisible(serviceName: string) {
-//     await expect(this.servicesList.$('div='+serviceName)).toBeExisting()
-//   }
-
 }
 
 export default new MyProfilePage();

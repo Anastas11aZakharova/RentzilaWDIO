@@ -33,7 +33,7 @@ export const config: Options.Testrunner = {
         ui: 'bdd',
         timeout: 600000
     },
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+    afterTest: async function(passed) {
         if (!passed) {
             await browser.takeScreenshot();
         }

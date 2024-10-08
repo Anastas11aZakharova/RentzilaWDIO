@@ -1,11 +1,11 @@
 import { expect } from "@wdio/globals";
 import axios from "axios";
-import MainPage from "../../pageobjects/main.page.ts";
-import * as testData from "../../data/testdata.json";
-import AdminLoginPage from "../../pageobjects/admin.login.page.ts";
-import AdminMainPage from "../../pageobjects/admin.main.page.ts";
-import AdminFeedbacksPage from "../../pageobjects/admin.feedbacks.page.ts";
-import FeedbackItemPage from "../../pageobjects/feedback.item.ts";
+import MainPage from "../../pageobjects/mainPage.ts";
+import * as testData from "../../../data/testdata.json";
+import AdminLoginPage from "../../pageobjects/adminLoginPage.ts";
+import AdminMainPage from "../../pageobjects/adminMainPage.ts";
+import AdminFeedbacksPage from "../../pageobjects/adminFeedbacksPage.ts";
+import FeedbackItemPage from "../../pageobjects/feedbackItem.ts";
 import * as dotenv from "dotenv";
 dotenv.config();
 const adminEmail = process.env.ADMIN_EMAIL || "default_email@example.com";
@@ -14,7 +14,7 @@ const validPhone = process.env.MY_PHONE || "default_phone";
 const baseUrl = process.env.BASE_URL || "base_url";
 
 describe("Rentzila", () => {
-  it("C214-Verify that all elements on the footer are displayed and all links are clickable", async () => {
+  it("C214 - Verify that all elements on the footer are displayed and all links are clickable", async () => {
     await MainPage.open();
 
     await expect(MainPage.logo).toBeExisting();
@@ -57,7 +57,7 @@ describe("Rentzila", () => {
     );
   });
 
-  it('C226-"У Вас залишилися питання?" form', async () => {
+  it('C226 -"У Вас залишилися питання?" form', async () => {
     await MainPage.open();
 
     await expect(MainPage.logo).toBeExisting();
@@ -142,7 +142,6 @@ describe("Rentzila", () => {
       email: adminEmail,
       password: adminPassword
     };
-    await console.log(baseUrl + "api/auth/jwt/create/");
     let response = await axios.post(
       baseUrl + "api/auth/jwt/create/",
       bodyParameters
@@ -162,5 +161,6 @@ describe("Rentzila", () => {
         isFound = true;
       }
     });
+    await expect(isFound).toEqual(true);
   });
 });

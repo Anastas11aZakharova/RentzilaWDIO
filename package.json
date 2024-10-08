@@ -2,18 +2,17 @@
   "name": "Rentzila",
   "type": "module",
   "scripts": {
-    "wdio-all": "npx wdio run ./wdio.conf.ts",
-    "wdio-authorization": "npx wdio run ./wdio.conf.ts --suite authorization"
+    "wdio-all-chrome": "npx wdio run ./wdio.conf.ts",
+    "wdio-authorization-chrome": "npx wdio run ./wdio.conf.ts --suite authorization",
+    "allure-generate": "allure generate --clean && allure open"
   },
-  "devDependencies": {
+  "dependencies": {
     "@wdio/allure-reporter": "*",
     "@wdio/cli": "*",
     "@wdio/local-runner": "*",
     "@wdio/mocha-framework": "*",
     "@wdio/spec-reporter": "*",
-    "axios": "*"
-  },
-  "dependencies": {
+    "axios": "*",
     "dotenv": "*"
   }
 }

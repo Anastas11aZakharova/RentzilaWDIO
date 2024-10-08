@@ -119,10 +119,6 @@ class MainPage extends Page {
     return $("a=Подати оголошення");
   }
 
-  public open() {
-    return super.open();
-  }
-
   public async clickOnOrderConsultationButton() {
     await this.orderConsultationButton.click();
   }
