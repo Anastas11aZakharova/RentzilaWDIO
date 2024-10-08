@@ -66,7 +66,6 @@ describe("Rentzila", () => {
     await MainPage.clickOnOrderConsultationButton();
     await MainPage.verifyErrorMessagesDisplayed();
     let validPhoneNumber = validPhone;
-    let validPhoneNumber = validPhone;
     await MainPage.enterPhoneNumber(validPhoneNumber);
     await MainPage.clickOnOrderConsultationButton();
     await expect(MainPage.errorMessages[0]).toBeExisting();
@@ -141,9 +140,7 @@ describe("Rentzila", () => {
 
     const bodyParameters = {
       email: adminEmail,
-      password: adminPassword,
-      email: adminEmail,
-      password: adminPassword,
+      password: adminPassword
     };
     await console.log(baseUrl + "api/auth/jwt/create/");
     let response = await axios.post(

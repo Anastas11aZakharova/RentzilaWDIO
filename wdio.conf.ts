@@ -11,14 +11,8 @@ export const config: Options.Testrunner = {
     suites: {
         authorization: [
             './test/specs/authorization.ts'
-        ],
-        advert: [
-            './test/specs/advert.ts'
         ]
     },
-    exclude: [
-        // 'path/to/excluded/files'
-    ],
     maxInstances: 10,
     capabilities: [
         {
