@@ -1,8 +1,8 @@
 import { expect } from "@wdio/globals";
-import MainPage from "../pageobjects/main.page.ts";
-import MyProfilePage from "../pageobjects/my.profile.page.ts";
-import LoginPage from "../pageobjects/login.page.ts";
-import * as testData from "../data/testdata.json";
+import MainPage from "../pageobjects/mainPage.ts";
+import MyProfilePage from "../pageobjects/myProfilePage.ts";
+import LoginPage from "../pageobjects/loginPage.ts";
+import * as testData from "../../data/testdata.json";
 import * as dotenv from 'dotenv';
 dotenv.config();
 const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
@@ -17,7 +17,7 @@ const validPhone = process.env.MY_PHONE || 'default_phone';
 
 
 describe("Rentzila", () => {
-  it("C200- Authorization with empty fields", async () => {
+  it("C200 - Authorization with empty fields", async () => {
     await MainPage.open();
 
     await MainPage.clickOnLoginButton();
@@ -46,7 +46,7 @@ describe("Rentzila", () => {
       "Поле не може бути порожнім"
     );
   });
-  it("C201-  Authorization with valid email and password", async () => {
+  it("C201 - Authorization with valid email and password", async () => {
     await MainPage.open();
 
     await MainPage.clickOnLoginButton();
@@ -72,7 +72,7 @@ describe("Rentzila", () => {
     await MainPage.clickOnLogoutButton();
 
   });
-  it("C202-  Authorization with valid phone and password", async () => {
+  it("C202 - Authorization with valid phone and password", async () => {
     await MainPage.open();
 
     await MainPage.clickOnLoginButton();
@@ -117,7 +117,7 @@ describe("Rentzila", () => {
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
     await MainPage.clickOnLogoutButton();
   });
-  it("C207-  Authorization with invalid phone", async () => {
+  it("C207 - Authorization with invalid phone", async () => {
     await MainPage.open();
 
     await enterInvalidLoginAndVerifyErrorMessage(
@@ -149,7 +149,7 @@ describe("Rentzila", () => {
     );
   });
 
-  it("576-  Authorization with invalid email", async () => {
+  it("C576 - Authorization with invalid email", async () => {
     await MainPage.open();
 
     await MainPage.clickOnLoginButton();
@@ -186,7 +186,7 @@ describe("Rentzila", () => {
     );
   });
 
-  it("577-  Authorization with invalid password", async () => {
+  it("C577 - Authorization with invalid password", async () => {
     await MainPage.open();
 
     await enterInvalidPasswordAndVerifyErrorMessage(

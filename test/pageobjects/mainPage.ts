@@ -106,9 +106,6 @@ class MainPage extends Page {
   public get emailInUserDropdown() {
     return $('div[data-testid="email"]');
   }
-  public get emailInUserDropdown() {
-    return $('div[data-testid="email"]');
-  }
   public get myProfileItem() {
     return $('div[data-testid="profile"]');
   }
@@ -116,15 +113,10 @@ class MainPage extends Page {
     return $('div[class*="OwnerCabinetPage_title"]');
   }
   public get logoutButton() {
-  public get logoutButton() {
     return $('div[data-testid="logout"]');
   }
   public get submitAdvertButton() {
     return $("a=Подати оголошення");
-  }
-
-  public open() {
-    return super.open("");
   }
 
   public async clickOnOrderConsultationButton() {
@@ -155,12 +147,6 @@ class MainPage extends Page {
 
   public async clickOnTelegramCrossButton() {
     await this.telegramCrossButton.click();
-  }
-  public async verifyProposesElementsDisplayed(count: number) {
-    expect(await this.proposesElements.length).toEqual(count);
-  }
-  public async verifyEquipmentsElementsDisplayed(count: number) {
-    expect(await this.equipmentElements.length).toEqual(count);
   }
 
   public async clickOnLogo() {
