@@ -17,7 +17,10 @@ export const config: Options.Testrunner = {
         ],
         photo: [
              './test/specs/advert/*photoTab.ts'
-        ]
+        ],
+        price: [
+            './test/specs/advert/*priceTab.ts'
+       ]
     },
     exclude: [
         // 'path/to/excluded/files'

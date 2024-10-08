@@ -5,7 +5,8 @@
     "wdio-all": "npx wdio run ./wdio.conf.ts",
     "wdio-authorization": "npx wdio run ./wdio.conf.ts --suite authorization",
     "wdio-advert": "npx wdio run ./wdio.conf.ts --suite advert",
-    "wdio-photo": "npx wdio run ./wdio.conf.ts --suite photo"
+    "wdio-photo": "npx wdio run ./wdio.conf.ts --suite photo",
+    "wdio-price": "npx wdio run ./wdio.conf.ts --suite price"
   },
   "devDependencies": {
     "@types/randomstring": "^1.3.0",

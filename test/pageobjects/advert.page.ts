@@ -186,6 +186,18 @@ class AdvertPage extends Page {
   public get imageBlock() {
     return $('div[data-testid="imageBlock"]');
   }
+  public get paymentTypeTitle() {
+    return $('div[class*="PricesUnitFlow_paragraph"]');
+  }
+  public get paymentTypeAsterisk() {
+    return $('span[class*="PricesUnitFlow_required__TX1WU"]');
+  }
+  public get paymentField() {
+    return $('div[data-testid="div_CustomSelect"]');
+  }
+  public get paymentTypeDropdownElements() {
+    return $$('li[data-testid="item-customSelect"]');
+  }
  
  
  
@@ -345,6 +357,12 @@ class AdvertPage extends Page {
       {
           return false
       }
+  }
+  public async clickOnPriceLabelButton() {
+    await this.priceLabel.click();
+  }
+  public async clickOnPaymentTypeField() {
+    await this.paymentField.click();
   }
 }
 
