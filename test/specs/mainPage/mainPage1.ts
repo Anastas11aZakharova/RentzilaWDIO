@@ -5,11 +5,11 @@ import ProductsPage from "../../pageobjects/products.page.ts";
 import * as testData from "../../data/testdata.json";
 
 describe("Rentzila", () => {
-  // it('C213- Checking ""Спецтехніка"" section on the main page', async () => {
-  //   await MainPage.open();
+  it('C213- Checking ""Спецтехніка"" section on the main page', async () => {
+    await MainPage.open();
 
-  //   await expect(MainPage.equipmentTitle).toBeExisting();
-  //   await expect(MainPage.equipmentTitle).toHaveText("Спецтехніка");
+    await expect(MainPage.equipmentTitle).toBeExisting();
+    await expect(MainPage.equipmentTitle).toHaveText("Спецтехніка");
 
     await verifyEquipment(
       MainPage.popularEquipmentLabel,

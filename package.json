@@ -12,6 +12,6 @@
     "@wdio/mocha-framework": "^9.2.2",
     "@wdio/spec-reporter": "^9.2.2",
     "axios": "^1.7.7",
-    "dotenv": "^16.4.5"
+    "dotenv": "*"
   }
 }
