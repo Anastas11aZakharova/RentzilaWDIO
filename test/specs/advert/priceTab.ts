@@ -46,6 +46,25 @@ describe("Rentzila", () => {
     await expect(AdvertPage.paymentField).toHaveText("Безготівковий розрахунок (з ПДВ)")
     
   });
+  it("C418-Verify \"Вартість мінімального замовлення\" section", async () => {
+    await expect(AdvertPage.minimumOrderCoastTitle).toHaveText("Вартість мінімального замовлення *")
+    await expect(AdvertPage.paymentTypeAsterisk).toBeDisplayed()
+    // await expect(AdvertPage.paymentField).toHaveText("Готівкою / на картку")
+    // await AdvertPage.clickOnPaymentTypeField()
+    // await expect(AdvertPage.paymentTypeDropdownElements[0]).toHaveText("Готівкою / на картку")
+    // await expect(AdvertPage.paymentTypeDropdownElements[1]).toHaveText("Безготівковий розрахунок (без ПДВ)")
+    // await expect(AdvertPage.paymentTypeDropdownElements[2]).toHaveText("Безготівковий розрахунок (з ПДВ)")
+    // await AdvertPage.paymentTypeDropdownElements[0].click()
+    // await expect(AdvertPage.paymentField).toHaveText("Готівкою / на картку")
+    // await AdvertPage.clickOnPaymentTypeField()
+    // await AdvertPage.paymentTypeDropdownElements[1].click()
+    // await expect(AdvertPage.paymentField).toHaveText("Безготівковий розрахунок (без ПДВ)")
+    // await AdvertPage.clickOnPaymentTypeField()
+    // await AdvertPage.paymentTypeDropdownElements[2].click()
+    // await expect(AdvertPage.paymentField).toHaveText("Безготівковий розрахунок (з ПДВ)")
+    
+  });
+
 
 
 });

@@ -190,13 +190,19 @@ class AdvertPage extends Page {
     return $('div[class*="PricesUnitFlow_paragraph"]');
   }
   public get paymentTypeAsterisk() {
-    return $('span[class*="PricesUnitFlow_required__TX1WU"]');
+    return $('span[class*="PricesUnitFlow_required"]');
   }
   public get paymentField() {
     return $('div[data-testid="div_CustomSelect"]');
   }
   public get paymentTypeDropdownElements() {
     return $$('li[data-testid="item-customSelect"]');
+  }
+  public get minimumOrderCoastTitle() {
+    return $('div[class*="PricesUnitFlow_paragraph"]');
+  }
+  public get minimumOrderCoastAsterisk() {
+    return $('div[class*="PricesUnitFlow_required"]');
   }
  
  
