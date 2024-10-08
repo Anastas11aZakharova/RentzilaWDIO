@@ -1,0 +1,15 @@
+{
+  "name": "Rentzila",
+  "type": "module",
+  "scripts": {
+    "wdio-all": "npx wdio run ./wdio.conf.ts"
+  },
+  "devDependencies": {
+    "@wdio/allure-reporter": "*",
+    "@wdio/cli": "*",
+    "@wdio/local-runner": "*",
+    "@wdio/mocha-framework": "*",
+    "@wdio/spec-reporter": "*",
+    "axios": "*"
+  }
+}
