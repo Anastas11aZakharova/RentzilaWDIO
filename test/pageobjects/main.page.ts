@@ -63,6 +63,7 @@ class MainPage extends Page {
       "//section[@data-testid='services']//div[contains(concat(' ',normalize-space(@class),' '),'RentzilaProposes_name')]"
     );
   }
+
   public get equipmentTitle() {
     return $("h2=Спецтехніка");
   }
@@ -71,6 +72,7 @@ class MainPage extends Page {
       "//section[@data-testid='specialEquipment']//div[contains(concat(' ',normalize-space(@class),' '),'RentzilaProposes_name')]"
     );
   }
+
   public get popularServiceLabel() {
     return $('div[data-testid="services__populyarni"]');
   }
