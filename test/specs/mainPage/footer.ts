@@ -1,14 +1,21 @@
 import { expect } from "@wdio/globals";
 import axios from "axios";
-import MainPage from "../pageobjects/main.page.ts";
-import * as testData from "../data/testdata.json";
-import AdminLoginPage from "../pageobjects/admin.login.page.ts";
-import AdminMainPage from "../pageobjects/admin.main.page.ts";
-import AdminFeedbacksPage from "../pageobjects/admin.feedbacks.page.ts";
-import FeedbackItemPage from "../pageobjects/feedback.item.ts";
+import MainPage from "../../pageobjects/mainPage.ts";
+import * as testData from "../../../data/testdata.json";
+import AdminLoginPage from "../../pageobjects/adminLoginPage.ts";
+import AdminMainPage from "../../pageobjects/adminMainPage.ts";
+import AdminFeedbacksPage from "../../pageobjects/adminFeedbacksPage.ts";
+import FeedbackItemPage from "../../pageobjects/feedbackItem.ts";
+import * as dotenv from "dotenv";
+import * as stringConstants from "../../../data/stringConstants.json";
+dotenv.config();
+const adminEmail = process.env.ADMIN_EMAIL || "default_email@example.com";
+const adminPassword = process.env.ADMIN_PASSWORD || "default_password";
+const validPhone = process.env.MY_PHONE || "default_phone";
+const baseUrl = process.env.BASE_URL || "base_url";
 
 describe("Rentzila", () => {
-  it("C214-Verify that all elements on the footer are displayed and all links are clickable", async () => {
+  it("C214 - Verify that all elements on the footer are displayed and all links are clickable", async () => {
     await MainPage.open();
 
     await expect(MainPage.logo).toBeExisting();
@@ -51,7 +58,7 @@ describe("Rentzila", () => {
     );
   });
 
-  it('C226-"У Вас залишилися питання?" form', async () => {
+  it('C226 -"У Вас залишилися питання?" form', async () => {
     await MainPage.open();
 
     await expect(MainPage.logo).toBeExisting();
@@ -59,30 +66,30 @@ describe("Rentzila", () => {
     await expect(MainPage.orderConsultationButton).toBeExisting();
     await MainPage.clickOnOrderConsultationButton();
     await MainPage.verifyErrorMessagesDisplayed();
-    let validPhoneNumber = testData.validInputs.phone;
+    let validPhoneNumber = validPhone;
     await MainPage.enterPhoneNumber(validPhoneNumber);
     await MainPage.clickOnOrderConsultationButton();
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Поле не може бути порожнім"
+      stringConstants.footer.emptyField
     );
     let validName = testData.validInputs.name;
     await MainPage.enterName(validName);
     await MainPage.enterPhoneNumber(testData.invalidInputs.phoneShort);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Телефон не пройшов валідацію"
+      stringConstants.footer.phoneValidation
     );
     await MainPage.enterName(validName);
     await MainPage.enterPhoneNumber(testData.invalidInputs.phoneOnesOnly);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Телефон не пройшов валідацію"
+      stringConstants.footer.phoneValidation
     );
     await MainPage.enterPhoneNumber(validPhoneNumber);
     await MainPage.clickOnOrderConsultationButton();
     const currentDate: Date = new Date();
-    await MainPage.clickOkInDialogPopUp();
+    // await MainPage.clickOkInDialogPopUp();
     await AdminLoginPage.open();
     await expect(AdminLoginPage.adminLoginPageHeader).toHaveText(
       "Django administration"
@@ -133,12 +140,11 @@ describe("Rentzila", () => {
     );
 
     const bodyParameters = {
-      email: "txt2021@ukr.net",
-      password: "Qwerty123+",
+      email: adminEmail,
+      password: adminPassword
     };
-
     let response = await axios.post(
-      "https://dev.rentzila.com.ua/api/auth/jwt/create/",
+      baseUrl + "api/auth/jwt/create/",
       bodyParameters
     );
     let token = response.data.access;
@@ -146,10 +152,7 @@ describe("Rentzila", () => {
     const config = {
       headers: { Authorization: `Bearer ` + token },
     };
-    response = await axios.get(
-      "https://dev.rentzila.com.ua/api/backcall/",
-      config
-    );
+    response = await axios.get(baseUrl + "api/backcall/", config);
 
     const records = response.data;
     let isFound = false;
@@ -159,5 +162,6 @@ describe("Rentzila", () => {
         isFound = true;
       }
     });
+    await expect(isFound).toEqual(true);
   });
 });
