@@ -7,6 +7,7 @@ import AdminMainPage from "../../pageobjects/adminMainPage.ts";
 import AdminFeedbacksPage from "../../pageobjects/adminFeedbacksPage.ts";
 import FeedbackItemPage from "../../pageobjects/feedbackItem.ts";
 import * as dotenv from "dotenv";
+import * as stringConstants from "../../../data/stringConstants.json";
 dotenv.config();
 const adminEmail = process.env.ADMIN_EMAIL || "default_email@example.com";
 const adminPassword = process.env.ADMIN_PASSWORD || "default_password";
@@ -70,20 +71,20 @@ describe("Rentzila", () => {
     await MainPage.clickOnOrderConsultationButton();
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Поле не може бути порожнім"
+      stringConstants.footer.emptyField
     );
     let validName = testData.validInputs.name;
     await MainPage.enterName(validName);
     await MainPage.enterPhoneNumber(testData.invalidInputs.phoneShort);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Телефон не пройшов валідацію"
+      stringConstants.footer.phoneValidation
     );
     await MainPage.enterName(validName);
     await MainPage.enterPhoneNumber(testData.invalidInputs.phoneOnesOnly);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Телефон не пройшов валідацію"
+      stringConstants.footer.phoneValidation
     );
     await MainPage.enterPhoneNumber(validPhoneNumber);
     await MainPage.clickOnOrderConsultationButton();
