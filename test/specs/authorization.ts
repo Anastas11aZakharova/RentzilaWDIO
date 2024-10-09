@@ -4,6 +4,7 @@ import MyProfilePage from "../pageobjects/myProfilePage.ts";
 import LoginPage from "../pageobjects/loginPage.ts";
 import * as testData from "../../data/testdata.json";
 import * as dotenv from 'dotenv';
+import * as stringConstants from "../../data/stringConstants.json";
 dotenv.config();
 const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
 const validPassword = process.env.MY_PASSWORD || 'default_password';
@@ -24,10 +25,10 @@ describe("Rentzila", () => {
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
     await LoginPage.clickOnEnterButton();
     await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-      "Поле не може бути порожнім"
+      stringConstants.footer.emptyField
     );
     await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
-      "Поле не може бути порожнім"
+      stringConstants.footer.emptyField
     );
     
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
@@ -35,7 +36,7 @@ describe("Rentzila", () => {
     );
     await LoginPage.clickOnEnterButton();
     await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
-      "Поле не може бути порожнім"
+      stringConstants.footer.emptyField
     );
     await LoginPage.clickOnAuthorizationCrossButton();
     await MainPage.clickOnLoginButton();
@@ -43,7 +44,7 @@ describe("Rentzila", () => {
     await LoginPage.enterPasswordInPasswordField(validPassword);
     await LoginPage.clickOnEnterButton();
     await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-      "Поле не може бути порожнім"
+      stringConstants.footer.emptyField
     );
   });
   it("C201 - Authorization with valid email and password", async () => {
@@ -70,6 +71,7 @@ describe("Rentzila", () => {
     );
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
     await MainPage.clickOnLogoutButton();
+    await expect(MainPage.loginButton).toBeDisplayed();
 
   });
   it("C202 - Authorization with valid phone and password", async () => {
@@ -116,6 +118,7 @@ describe("Rentzila", () => {
     await MainPage.clickOnUserIconDropdown();
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
     await MainPage.clickOnLogoutButton();
+    await expect(MainPage.loginButton).toBeDisplayed();
   });
   it("C207 - Authorization with invalid phone", async () => {
     await MainPage.open();
@@ -160,7 +163,7 @@ describe("Rentzila", () => {
     await LoginPage.enterPasswordInPasswordField(validPassword);
     await LoginPage.clickOnEnterButton();
     await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
-      "Невірний e-mail або пароль"
+      stringConstants.authorization.invalidCredentials
     );
     await LoginPage.clickOnAuthorizationCrossButton();
     await enterInvalidLoginAndVerifyErrorMessage(
@@ -214,7 +217,7 @@ describe("Rentzila", () => {
     );
     await LoginPage.clickOnEnterButton();
     await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
-      "Пароль повинен містити як мінімум 1 цифру, 1 велику літеру і 1 малу літеру, також не повинен містити кирилицю та пробіли"
+      stringConstants.authorization.passwordValidation
     );
   });
   async function enterInvalidLoginAndVerifyErrorMessage(login: string) {
@@ -224,7 +227,7 @@ describe("Rentzila", () => {
     await LoginPage.enterPasswordInPasswordField(validPassword);
     await LoginPage.clickOnEnterButton();
     await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-      "Неправильний формат email або номера телефону"
+      stringConstants.authorization.invalidFormat
     );
     await LoginPage.clickOnAuthorizationCrossButton();
   }
@@ -237,7 +240,7 @@ describe("Rentzila", () => {
     await LoginPage.enterPasswordInPasswordField(password);
     await LoginPage.clickOnEnterButton();
     await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
-      "Невірний e-mail або пароль"
+      stringConstants.authorization.invalidCredentials
     );
     await LoginPage.clickOnAuthorizationCrossButton();
   }
