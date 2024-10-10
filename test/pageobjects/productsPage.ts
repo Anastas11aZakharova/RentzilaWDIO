@@ -26,7 +26,7 @@ class ProductsPage extends Page {
     await this.servisesDropDowns[0].waitForDisplayed({ timeout: 2000 });
     for await (const element of this.servisesDropDowns) {
       await element.click();
-      var isExpanded = await element.getAttribute("class");
+      let isExpanded = await element.getAttribute("class");
       if (!isExpanded.includes("ServiceCategory_clicked")) {
         await element.click();
       }
@@ -47,14 +47,14 @@ class ProductsPage extends Page {
     await this.equipmentCategoryLabels[0].waitForDisplayed({ timeout: 2000 })
     for await (const element of this.equipmentCategoryLabels) {
       await element.click();
-      var isExpanded = await element.getAttribute("class");
+      let isExpanded = await element.getAttribute("class");
       if (!isExpanded.includes("rotate")) {
         await element.click();
       }
     }
     for await (const element of this.equipmentCategorySecondLevelLabels) {
       await element.click();
-      var isExpanded = await element.getAttribute("class");
+      let isExpanded = await element.getAttribute("class");
       if (!isExpanded.includes("rotate")) {
         await element.click();
       }
