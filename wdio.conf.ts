@@ -1,13 +1,18 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import type { Options } from '@wdio/types'
 export const config: Options.Testrunner = {
+    baseUrl: process.env.BASE_URL || 'https://defaulturl.com',
     runner: 'local',
     tsConfigPath: './tsconfig.json',
     specs: [
         './test/specs/**/*.ts'
     ],
-    exclude: [
-        // 'path/to/excluded/files'
-    ],
+    suites: {
+        authorization: [
+            './test/specs/authorization.ts'
+        ]
+    },
     maxInstances: 10,
     capabilities: [
         {
@@ -28,7 +33,7 @@ export const config: Options.Testrunner = {
         ui: 'bdd',
         timeout: 600000
     },
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+    afterTest: async function(passed) {
         if (!passed) {
             await browser.takeScreenshot();
         }
