@@ -1,11 +1,11 @@
 import { expect } from "@wdio/globals";
 import axios from "axios";
-import MainPage from "../pageobjects/main.page.ts";
-import * as testData from "../data/testdata.json";
-import AdminLoginPage from "../pageobjects/admin.login.page.ts";
-import AdminMainPage from "../pageobjects/admin.main.page.ts";
-import AdminFeedbacksPage from "../pageobjects/admin.feedbacks.page.ts";
-import FeedbackItemPage from "../pageobjects/feedback.item.ts";
+import MainPage from "../../pageobjects/main.page.ts";
+import * as testData from "../../data/testdata.json";
+import AdminLoginPage from "../../pageobjects/admin.login.page.ts";
+import AdminMainPage from "../../pageobjects/admin.main.page.ts";
+import AdminFeedbacksPage from "../../pageobjects/admin.feedbacks.page.ts";
+import FeedbackItemPage from "../../pageobjects/feedback.item.ts";
 
 describe("Rentzila", () => {
   it("C214-Verify that all elements on the footer are displayed and all links are clickable", async () => {

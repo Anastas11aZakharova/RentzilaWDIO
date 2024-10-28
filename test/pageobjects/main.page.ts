@@ -142,7 +142,7 @@ class MainPage extends Page {
   }
 
   public open() {
-    return super.open();
+    return super.open("");
   }
 
   public async clickOnOrderConsultationButton() {

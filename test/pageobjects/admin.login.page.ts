@@ -16,7 +16,7 @@ class AdminLoginPage extends Page {
   }
 
   public open() {
-    return browser.url(`https://dev.rentzila.com.ua/api/admin/`);
+    return super.open('api/admin/');
   }
   public async enterEmailInEmailField(email: string) {
     await this.emailField.setValue(email);
