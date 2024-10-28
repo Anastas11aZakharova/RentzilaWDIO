@@ -187,10 +187,10 @@ class AdvertPage extends Page {
     return $('div[data-testid="imageBlock"]');
   }
   public get paymentTypeTitle() {
-    return $('div[class*="PricesUnitFlow_paragraph"]');
+    return $("div=Спосіб оплати  ");
   }
   public get paymentTypeAsterisk() {
-    return $('span[class*="PricesUnitFlow_required"]');
+    return $('//div[text()=\'Спосіб оплати \']//span');
   }
   public get paymentField() {
     return $('div[data-testid="div_CustomSelect"]');
@@ -198,11 +198,26 @@ class AdvertPage extends Page {
   public get paymentTypeDropdownElements() {
     return $$('li[data-testid="item-customSelect"]');
   }
-  public get minimumOrderCoastTitle() {
-    return $('div[class*="PricesUnitFlow_paragraph"]');
+  public get minimumOrderCostTitle() {
+    return $("div=Вартість мінімального замовлення ");
   }
-  public get minimumOrderCoastAsterisk() {
-    return $('div[class*="PricesUnitFlow_required"]');
+  public get minimumOrderCostAsterisk() {
+    return $('//div[text()=\'Вартість мінімального замовлення \']//span');
+  }
+  public get minimumOrderCostField() {
+    return $('input[placeholder="Наприклад, 1000"]');
+  }
+  public get currencyField() {
+    return $("//div[contains(concat(' ',normalize-space(@class),' '),'currency')]/input");
+  }
+  public get costOfYourServicesLine() {
+    return $("div=Вартість Ваших послуг");
+  }
+  public get costOfYourServicesLineAsterisk() {
+    return $('//div[text()=\'Вартість Ваших послуг \']//span');
+  }
+  public get costOfYourServicesText() {
+    return $('div=За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб');
   }
  
  
@@ -369,6 +384,20 @@ class AdvertPage extends Page {
   }
   public async clickOnPaymentTypeField() {
     await this.paymentField.click();
+  }
+  public async enterDataInminimumOrderCostField(text: string) {
+    await this.minimumOrderCostField.setValue(text);
+  }
+  public async verifyMinimumOrderCostFieldBorderIsRed(): Promise<boolean> {
+    let cls=await this.minimumOrderCostField.getAttribute("class")
+    if (cls.includes("error")) 
+      {
+          return true 
+      } 
+      else
+      {
+          return false
+      }
   }
 }
 
