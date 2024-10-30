@@ -10,6 +10,30 @@ const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
 const validPassword = process.env.MY_PASSWORD || 'default_password';
 const validPhone = process.env.MY_PHONE || 'default_phone';
 
+async function enterInvalidLoginAndVerifyErrorMessage(login: string) {
+  await MainPage.clickOnLoginButton();
+  await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+  await LoginPage.enterEmailInEmailOrPhoneNumberField(login);
+  await LoginPage.enterPasswordInPasswordField(validPassword);
+  await LoginPage.clickOnEnterButton();
+  await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
+    stringConstants.authorization.invalidFormat
+  );
+  await LoginPage.clickOnAuthorizationCrossButton();
+}
+async function enterInvalidPasswordAndVerifyErrorMessage(password: string) {
+  await MainPage.clickOnLoginButton();
+  await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+  await LoginPage.enterEmailInEmailOrPhoneNumberField(
+    validEmail
+  );
+  await LoginPage.enterPasswordInPasswordField(password);
+  await LoginPage.clickOnEnterButton();
+  await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
+    stringConstants.authorization.invalidCredentials
+  );
+  await LoginPage.clickOnAuthorizationCrossButton();
+}
 
 describe("Rentzila", () => {
   it("C200 - Authorization with empty fields", async () => {
@@ -214,28 +238,4 @@ describe("Rentzila", () => {
       stringConstants.authorization.passwordValidation
     );
   });
-  async function enterInvalidLoginAndVerifyErrorMessage(login: string) {
-    await MainPage.clickOnLoginButton();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
-    await LoginPage.enterEmailInEmailOrPhoneNumberField(login);
-    await LoginPage.enterPasswordInPasswordField(validPassword);
-    await LoginPage.clickOnEnterButton();
-    await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-      stringConstants.authorization.invalidFormat
-    );
-    await LoginPage.clickOnAuthorizationCrossButton();
-  }
-  async function enterInvalidPasswordAndVerifyErrorMessage(password: string) {
-    await MainPage.clickOnLoginButton();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
-    await LoginPage.enterEmailInEmailOrPhoneNumberField(
-      validEmail
-    );
-    await LoginPage.enterPasswordInPasswordField(password);
-    await LoginPage.clickOnEnterButton();
-    await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
-      stringConstants.authorization.invalidCredentials
-    );
-    await LoginPage.clickOnAuthorizationCrossButton();
-  }
 });

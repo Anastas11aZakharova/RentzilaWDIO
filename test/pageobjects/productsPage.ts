@@ -23,7 +23,7 @@ class ProductsPage extends Page {
   }
 
   public async verifyCheckBoxIsChecked(name: string) {
-    await this.servisesDropDowns[0].waitForDisplayed({ timeout: 2000 });
+    await this.servisesDropDowns[0].waitForDisplayed();
     for await (const element of this.servisesDropDowns) {
       await element.click();
       let isExpanded = await element.getAttribute("class");
@@ -44,7 +44,7 @@ class ProductsPage extends Page {
   }
 
   public async verifyEquipmentIsPresent(equipmentName: string) {
-    await this.equipmentCategoryLabels[0].waitForDisplayed({ timeout: 2000 })
+    await this.equipmentCategoryLabels[0].waitForDisplayed()
     for await (const element of this.equipmentCategoryLabels) {
       await element.click();
       let isExpanded = await element.getAttribute("class");
