@@ -156,10 +156,6 @@ class MainPage extends Page {
     return $("a=Подати оголошення");
   }
 
-  public async clickOnOrderConsultationButton() {
-    await this.orderConsultationButton.click();
-  }
-
   public async verifyErrorMessagesDisplayed() {
     expect(await this.errorMessages.length).toEqual(2);
     for await (const element of this.errorMessages) {
@@ -180,34 +176,6 @@ class MainPage extends Page {
     let alertText = await browser.getAlertText();
     await expect(alertText).toEqual("Ви успішно відправили заявку");
     await browser.acceptAlert();
-  }
-
-  public async clickOnTelegramCrossButton() {
-    await this.telegramCrossButton.click();
-  }
-
-  public async clickOnLogo() {
-    await this.logo.click();
-  }
-
-  public async clickOnLoginButton() {
-    await this.loginButton.click();
-  }
-
-  public async clickOnUserIconDropdown() {
-    await this.userIconDropdown.click();
-  }
-
-  public async clickOnMyProfile() {
-    await this.myProfileItem.click();
-  }
-
-  public async clickOnLogoutButton() {
-    await this.logoutButton.click();
-  }
-  
-  public async clickOnsubmitAdvertButton() {
-    await this.submitAdvertButton.click();
   }
 }
 

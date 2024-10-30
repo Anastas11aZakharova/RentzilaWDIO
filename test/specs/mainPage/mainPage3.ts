@@ -38,9 +38,9 @@ async function verifyServices(
     await MainPage.proposesElements[i].click();
     await ProductsPage.verifyCheckBoxIsChecked(serviceNames[i]);
     await expect(ProductsPage.cardUnit).toBeExisting();
-    await ProductsPage.clickOnCardUnit();
+    await ProductsPage.cardUnit.click();
     await UnitPage.verifyServiceIsVisible(serviceNames[i]);
-    await UnitPage.clickOnLogo();
+    await UnitPage.logo.click();
   }
 }
 

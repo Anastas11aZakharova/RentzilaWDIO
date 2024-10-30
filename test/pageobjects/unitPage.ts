@@ -21,10 +21,6 @@ class UnitPage extends Page {
   public async verifyCategoriesIsVisible(categoriesName: string) {
     await expect(this.categoriesList.$("div=" + categoriesName)).toBeDisplayed();
   }
-
-  public async clickOnLogo() {
-    await this.logo.click();
-  }
 }
 
 export default new UnitPage();

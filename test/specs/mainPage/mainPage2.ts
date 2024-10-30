@@ -61,13 +61,13 @@ describe("Rentzila", () => {
     await MainPage.open();
 
     await expect(MainPage.logo).toBeExisting();
-    await MainPage.clickOnTelegramCrossButton();
+    await MainPage.telegramCrossButton.click();
     await expect(MainPage.orderConsultationButton).toBeExisting();
-    await MainPage.clickOnOrderConsultationButton();
+    await MainPage.orderConsultationButton.click();
     await MainPage.verifyErrorMessagesDisplayed();
     let validPhoneNumber = validPhone;
     await MainPage.enterPhoneNumber(validPhoneNumber);
-    await MainPage.clickOnOrderConsultationButton();
+    await MainPage.orderConsultationButton.click();
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
       "Поле не може бути порожнім"
@@ -86,7 +86,7 @@ describe("Rentzila", () => {
       "Телефон не пройшов валідацію"
     );
     await MainPage.enterPhoneNumber(validPhoneNumber);
-    await MainPage.clickOnOrderConsultationButton();
+    await MainPage.orderConsultationButton.click();
     const currentDate: Date = new Date();
     // await MainPage.clickOkInDialogPopUp();
     await AdminLoginPage.open();
@@ -98,16 +98,16 @@ describe("Rentzila", () => {
     await expect(AdminLoginPage.passwordField).toBeExisting();
     await AdminLoginPage.enterPasswordInPasswordlField("admin");
     await expect(AdminLoginPage.logInButton).toBeExisting();
-    await AdminLoginPage.clickOnLogInButton();
+    await AdminLoginPage.logInButton.click();
     await expect(AdminMainPage.adminMainPageTitle).toHaveText(
       "Site administration"
     );
     await expect(AdminMainPage.feedbacksCategory).toHaveText("Feedbacks");
-    await AdminMainPage.clickOnFeedbacksCategory();
+    await AdminMainPage.feedbacksCategory.click();
     await expect(AdminFeedbacksPage.adminFeedbacksPageTitle).toHaveText(
       "Select Feedback to change"
     );
-    await AdminFeedbacksPage.clickOnFeedbackLink();
+    await AdminFeedbacksPage.feedbackLink.click();
     await expect(FeedbackItemPage.feedbackItemPageTitle).toHaveText(
       "Change Feedback"
     );

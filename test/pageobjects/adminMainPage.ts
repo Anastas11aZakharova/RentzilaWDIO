@@ -9,10 +9,6 @@ class AdminMainPage extends Page {
   public get feedbacksCategory() {
     return $("a=Feedbacks");
   }
-
-  public async clickOnFeedbacksCategory() {
-    await this.feedbacksCategory.click();
-  }
 }
 
 export default new AdminMainPage();

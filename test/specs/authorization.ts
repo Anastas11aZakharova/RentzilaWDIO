@@ -11,38 +11,38 @@ const validPassword = process.env.MY_PASSWORD || 'default_password';
 const validPhone = process.env.MY_PHONE || 'default_phone';
 
 async function enterInvalidLoginAndVerifyErrorMessage(login: string) {
-  await MainPage.clickOnLoginButton();
+  await MainPage.loginButton.click();
   await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
   await LoginPage.enterEmailInEmailOrPhoneNumberField(login);
   await LoginPage.enterPasswordInPasswordField(validPassword);
-  await LoginPage.clickOnEnterButton();
+  await LoginPage.enterButton.click();
   await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
     stringConstants.authorization.invalidFormat
   );
-  await LoginPage.clickOnAuthorizationCrossButton();
+  await LoginPage.authorizationFormCrossButton.click();
 }
 
 async function enterInvalidPasswordAndVerifyErrorMessage(password: string) {
-  await MainPage.clickOnLoginButton();
+  await MainPage.loginButton.click();
   await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
   await LoginPage.enterEmailInEmailOrPhoneNumberField(
     validEmail
   );
   await LoginPage.enterPasswordInPasswordField(password);
-  await LoginPage.clickOnEnterButton();
+  await LoginPage.enterButton.click();
   await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
     stringConstants.authorization.invalidCredentials
   );
-  await LoginPage.clickOnAuthorizationCrossButton();
+  await LoginPage.authorizationFormCrossButton.click();
 }
 
 describe("Rentzila", () => {
   it("C200 - Authorization with empty fields", async () => {
     await MainPage.open();
 
-    await MainPage.clickOnLoginButton();
+    await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
-    await LoginPage.clickOnEnterButton();
+    await LoginPage.enterButton.click();
     await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
       stringConstants.footer.emptyField
     );
@@ -53,15 +53,15 @@ describe("Rentzila", () => {
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       validEmail
     );
-    await LoginPage.clickOnEnterButton();
+    await LoginPage.enterButton.click();
     await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
       stringConstants.footer.emptyField
     );
-    await LoginPage.clickOnAuthorizationCrossButton();
-    await MainPage.clickOnLoginButton();
+    await LoginPage.authorizationFormCrossButton.click();
+    await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
     await LoginPage.enterPasswordInPasswordField(validPassword);
-    await LoginPage.clickOnEnterButton();
+    await LoginPage.enterButton.click();
     await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
       stringConstants.footer.emptyField
     );
@@ -70,7 +70,7 @@ describe("Rentzila", () => {
   it("C201 - Authorization with valid email and password", async () => {
     await MainPage.open();
 
-    await MainPage.clickOnLoginButton();
+    await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
 
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
@@ -78,66 +78,66 @@ describe("Rentzila", () => {
     );
     const password = process.env.MY_PASSWORD || 'default_password';
     await LoginPage.enterPasswordInPasswordField(password);
-    await LoginPage.clickOnHiddenPasswordButton();
+    await LoginPage.hiddenPasswordButton.click();
     await expect(LoginPage.passwordField).toHaveAttribute("type", "text");
-    await LoginPage.clickOnHiddenPasswordButton();
+    await LoginPage.hiddenPasswordButton.click();
     await expect(LoginPage.passwordField).toHaveAttribute("type", "password");
-    await LoginPage.clickOnEnterButton();
+    await LoginPage.enterButton.click();
     await expect(MainPage.userIconDropdown).toBeExisting();
     await expect(MainPage.loginButton).not.toBeExisting();
-    await MainPage.clickOnUserIconDropdown();
+    await MainPage.userIconDropdown.click();
     await expect(MainPage.emailInUserDropdown).toHaveText(
      validEmail
     );
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
-    await MainPage.clickOnLogoutButton();
+    await MainPage.logoutButton.click();
     await expect(MainPage.loginButton).toBeDisplayed();
   });
 
   it("C202 - Authorization with valid phone and password", async () => {
     await MainPage.open();
 
-    await MainPage.clickOnLoginButton();
+    await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
      validPhone
     );
     await LoginPage.enterPasswordInPasswordField(validPassword);
-    await LoginPage.clickOnEnterButton();
-    await MainPage.clickOnUserIconDropdown();
+    await LoginPage.enterButton.click();
+    await MainPage.userIconDropdown.click();
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
-    await MainPage.clickOnMyProfile();
+    await MainPage.myProfileItem.click();
     await expect(MainPage.myProfileTitle).toHaveText("Мій профіль");
     let phoneNumberOnProfile = (
       await MyProfilePage.phoneNumberField.getAttribute("value")
     ).toString();
     phoneNumberOnProfile = phoneNumberOnProfile.replace(/\s/g, "");
     await expect(validPhone).toEqual(phoneNumberOnProfile);
-    await MainPage.clickOnUserIconDropdown();
+    await MainPage.userIconDropdown.click();
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
-    await MainPage.clickOnLogoutButton();
+    await MainPage.logoutButton.click();
     await expect(MainPage.logo).toBeExisting();
-    await MainPage.clickOnLoginButton();
+    await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       testData.validInputs.phoneWithoutPlus
     );
     await LoginPage.enterPasswordInPasswordField(validPassword);
-    await LoginPage.clickOnEnterButton();
-    await MainPage.clickOnUserIconDropdown();
+    await LoginPage.enterButton.click();
+    await MainPage.userIconDropdown.click();
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
-    await MainPage.clickOnLogoutButton();
+    await MainPage.logoutButton.click();
     await expect(MainPage.logo).toBeExisting();
-    await MainPage.clickOnLoginButton();
+    await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       testData.validInputs.phoneWithoutPlus38
     );
     await LoginPage.enterPasswordInPasswordField(validPassword);
-    await LoginPage.clickOnEnterButton();
-    await MainPage.clickOnUserIconDropdown();
+    await LoginPage.enterButton.click();
+    await MainPage.userIconDropdown.click();
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
-    await MainPage.clickOnLogoutButton();
+    await MainPage.logoutButton.click();
     await expect(MainPage.loginButton).toBeDisplayed();
   });
 
@@ -176,17 +176,17 @@ describe("Rentzila", () => {
   it("C576 - Authorization with invalid email", async () => {
     await MainPage.open();
 
-    await MainPage.clickOnLoginButton();
+    await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       testData.invalidInputs.emailWithLowerDathes
     );
     await LoginPage.enterPasswordInPasswordField(validPassword);
-    await LoginPage.clickOnEnterButton();
+    await LoginPage.enterButton.click();
     await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
       stringConstants.authorization.invalidCredentials
     );
-    await LoginPage.clickOnAuthorizationCrossButton();
+    await LoginPage.authorizationFormCrossButton.click();
     await enterInvalidLoginAndVerifyErrorMessage(
       testData.invalidInputs.emailWithCyrillicSymbols
     );
@@ -228,7 +228,7 @@ describe("Rentzila", () => {
     await enterInvalidPasswordAndVerifyErrorMessage(
       testData.invalidInputs.passwordWithLowercaseLetters
     );
-    await MainPage.clickOnLoginButton();
+    await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       validEmail
@@ -236,7 +236,7 @@ describe("Rentzila", () => {
     await LoginPage.enterPasswordInPasswordField(
       testData.invalidInputs.emailWithCyrillicSymbols
     );
-    await LoginPage.clickOnEnterButton();
+    await LoginPage.enterButton.click();
     await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
       stringConstants.authorization.passwordValidation
     );

@@ -44,11 +44,11 @@ import * as testData from "../../../data/testdata.json";
       await MainPage.equipmentElements[i].click();
       await ProductsPage.verifyEquipmentIsPresent(equipmentsNamesInFilter[i]);
       await expect(ProductsPage.cardUnit).toBeExisting();
-      await ProductsPage.clickOnCardUnit();
+      await ProductsPage.cardUnit.click();
       await UnitPage.verifyCategoriesIsVisible(
         equipmentsCategoryInProductsPage[i]
       );
-      await UnitPage.clickOnLogo();
+      await UnitPage.logo.click();
     }
   }
 

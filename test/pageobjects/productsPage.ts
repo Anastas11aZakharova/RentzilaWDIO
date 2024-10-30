@@ -43,10 +43,6 @@ class ProductsPage extends Page {
       this.filterForm.$("//label[contains(text(),'" + name + "')]/../input")
     ).toBeChecked();
   }
-  
-  public async clickOnCardUnit() {
-    await this.cardUnit.click();
-  }
 
   public async verifyEquipmentIsPresent(equipmentName: string) {
     await this.equipmentCategoryLabels[0].waitForDisplayed()

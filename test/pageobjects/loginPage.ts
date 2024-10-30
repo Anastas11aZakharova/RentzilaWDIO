@@ -45,18 +45,6 @@ class LoginPage extends Page {
   public async enterPasswordInPasswordField(email: string) {
     await this.passwordField.setValue(email);
   }
-
-  public async clickOnAuthorizationCrossButton() {
-    await this.authorizationFormCrossButton.click();
-  }
-  
-  public async clickOnHiddenPasswordButton() {
-    await this.hiddenPasswordButton.click();
-  }
-
-  public async clickOnEnterButton() {
-    await this.enterButton.click();
-  }
 }
 
 export default new LoginPage();

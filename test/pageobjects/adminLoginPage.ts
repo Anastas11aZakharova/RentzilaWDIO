@@ -29,10 +29,6 @@ class AdminLoginPage extends Page {
   public async enterPasswordInPasswordlField(password: string) {
     await this.passwordField.setValue(password);
   }
-  
-  public async clickOnLogInButton() {
-    await this.logInButton.click();
-  }
 }
 
 export default new AdminLoginPage();

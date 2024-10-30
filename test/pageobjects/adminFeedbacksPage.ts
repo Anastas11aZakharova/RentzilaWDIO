@@ -9,10 +9,6 @@ class AdminFeedbacksPage extends Page {
   public get feedbackLink() {
     return $('//table[@id="result_list"]//a[1]');
   }
-
-  public async clickOnFeedbackLink() {
-    await this.feedbackLink.click();
-  }
 }
 
 export default new AdminFeedbacksPage();
