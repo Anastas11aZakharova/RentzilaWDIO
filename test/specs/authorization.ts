@@ -4,7 +4,7 @@ import MyProfilePage from "../pageobjects/myProfilePage.ts";
 import LoginPage from "../pageobjects/loginPage.ts";
 import * as testData from "../../data/testdata.json";
 import * as dotenv from 'dotenv';
-import * as stringConstants from "../../data/stringConstants.json";
+import * as stringConstants from "../../data/constants.json";
 dotenv.config();
 const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
 const validPassword = process.env.MY_PASSWORD || 'default_password';
@@ -140,7 +140,7 @@ describe("Rentzila", () => {
     await MainPage.clickOnLogoutButton();
     await expect(MainPage.loginButton).toBeDisplayed();
   });
-  
+
   it("C207 - Authorization with invalid phone", async () => {
     await MainPage.open();
 
