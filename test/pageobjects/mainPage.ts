@@ -2,6 +2,9 @@ import { $ } from "@wdio/globals";
 import Page from "./page.js";
 
 class MainPage extends Page {
+  public open() {
+    return super.open("");
+  }
   public get logo() {
     return $('div[data-testid="logo"]');
   }
