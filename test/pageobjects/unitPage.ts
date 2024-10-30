@@ -9,6 +9,7 @@ class UnitPage extends Page {
   public get categoriesList() {
     return $('div[itemprop="category"]');
   }
+  
   public get logo() {
     return $('div[data-testid="logo"]');
   }

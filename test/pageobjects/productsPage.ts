@@ -6,18 +6,23 @@ class ProductsPage extends Page {
   public get servisesDropDowns() {
     return $$('div[data-testid="rightArrow"]');
   }
+
   public get filterForm() {
     return $('div[data-testid="filterForm"]');
   }
+
   public get cardUnit() {
     return $('div[data-testid="cardWrapper"]');
   }
+
   public get equipmentCategoryLabels() {
     return $$('img[data-testid="firstCategoryImage"]');
   }
+
   public get equipmentCategorySecondLevelLabels() {
     return $$('img[data-testid="secondCategoryImage"]');
   }
+  
   public get activeEquipmentLabel() {
     return $("//label[contains(concat(' ',normalize-space(@class),' '),'active_label')]");
   }
