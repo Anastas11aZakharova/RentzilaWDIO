@@ -6,7 +6,6 @@ class MyProfilePage extends Page {
   public get phoneNumberField() {
     return $('input[id="mobile"]');
   }
-  
 }
 
 export default new MyProfilePage();

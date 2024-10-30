@@ -21,6 +21,7 @@ async function enterInvalidLoginAndVerifyErrorMessage(login: string) {
   );
   await LoginPage.clickOnAuthorizationCrossButton();
 }
+
 async function enterInvalidPasswordAndVerifyErrorMessage(password: string) {
   await MainPage.clickOnLoginButton();
   await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
@@ -65,6 +66,7 @@ describe("Rentzila", () => {
       stringConstants.footer.emptyField
     );
   });
+
   it("C201 - Authorization with valid email and password", async () => {
     await MainPage.open();
 
@@ -90,8 +92,8 @@ describe("Rentzila", () => {
     await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
     await MainPage.clickOnLogoutButton();
     await expect(MainPage.loginButton).toBeDisplayed();
-
   });
+
   it("C202 - Authorization with valid phone and password", async () => {
     await MainPage.open();
 
@@ -138,6 +140,7 @@ describe("Rentzila", () => {
     await MainPage.clickOnLogoutButton();
     await expect(MainPage.loginButton).toBeDisplayed();
   });
+  
   it("C207 - Authorization with invalid phone", async () => {
     await MainPage.open();
 
