@@ -10,12 +10,6 @@ const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
 const validPassword = process.env.MY_PASSWORD || 'default_password';
 const validPhone = process.env.MY_PHONE || 'default_phone';
 
-import * as dotenv from 'dotenv';
-dotenv.config();
-const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
-const validPassword = process.env.MY_PASSWORD || 'default_password';
-const validPhone = process.env.MY_PHONE || 'default_phone';
-
 
 describe("Rentzila", () => {
   it("C200 - Authorization with empty fields", async () => {

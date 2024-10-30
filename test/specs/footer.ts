@@ -1,16 +1,21 @@
 import { expect } from "@wdio/globals";
 import axios from "axios";
-import MainPage from "../pageobjects/main.page.ts";
-import * as testData from "../data/testdata.json"
-import * as dotenv from 'dotenv';
+import MainPage from "../../pageobjects/mainPage.ts";
+import * as testData from "../../../data/testdata.json";
+import AdminLoginPage from "../../pageobjects/adminLoginPage.ts";
+import AdminMainPage from "../../pageobjects/adminMainPage.ts";
+import AdminFeedbacksPage from "../../pageobjects/adminFeedbacksPage.ts";
+import FeedbackItemPage from "../../pageobjects/feedbackItem.ts";
+import * as dotenv from "dotenv";
+import * as stringConstants from "../../../data/stringConstants.json";
 dotenv.config();
-const adminEmail = process.env.ADMIN_EMAIL || 'default_email@example.com';
-const adminPassword = process.env.ADMIN_PASSWORD || 'default_password';
-const validPhone = process.env.MY_PHONE || 'default_phone';
-const baseUrl =  process.env.BASE_URL || 'base_url';
+const adminEmail = process.env.ADMIN_EMAIL || "default_email@example.com";
+const adminPassword = process.env.ADMIN_PASSWORD || "default_password";
+const validPhone = process.env.MY_PHONE || "default_phone";
+const baseUrl = process.env.BASE_URL || "base_url";
 
 describe("Rentzila", () => {
-  it("C214-Verify that all elements on the footer are displayed and all links are clickable", async () => {
+  it("C214 - Verify that all elements on the footer are displayed and all links are clickable", async () => {
     await MainPage.open();
 
     await expect(MainPage.logo).toBeExisting();
@@ -53,7 +58,7 @@ describe("Rentzila", () => {
     );
   });
 
-  it('C226-"У Вас залишилися питання?" form', async () => {
+  it('C226 -"У Вас залишилися питання?" form', async () => {
     await MainPage.open();
 
     await expect(MainPage.logo).toBeExisting();
@@ -66,32 +71,80 @@ describe("Rentzila", () => {
     await MainPage.clickOnOrderConsultationButton();
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Поле не може бути порожнім"
+      stringConstants.footer.emptyField
     );
     let validName = testData.validInputs.name;
     await MainPage.enterName(validName);
     await MainPage.enterPhoneNumber(testData.invalidInputs.phoneShort);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Телефон не пройшов валідацію"
+      stringConstants.footer.phoneValidation
     );
     await MainPage.enterName(validName);
     await MainPage.enterPhoneNumber(testData.invalidInputs.phoneOnesOnly);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Телефон не пройшов валідацію"
+      stringConstants.footer.phoneValidation
     );
     await MainPage.enterPhoneNumber(validPhoneNumber);
     await MainPage.clickOnOrderConsultationButton();
+    const currentDate: Date = new Date();
     // await MainPage.clickOkInDialogPopUp();
+    await AdminLoginPage.open();
+    await expect(AdminLoginPage.adminLoginPageHeader).toHaveText(
+      "Django administration"
+    );
+    await expect(AdminLoginPage.emailField).toBeExisting();
+    await AdminLoginPage.enterEmailInEmailField("test@test.test");
+    await expect(AdminLoginPage.passwordField).toBeExisting();
+    await AdminLoginPage.enterPasswordInPasswordlField("admin");
+    await expect(AdminLoginPage.logInButton).toBeExisting();
+    await AdminLoginPage.clickOnLogInButton();
+    await expect(AdminMainPage.adminMainPageTitle).toHaveText(
+      "Site administration"
+    );
+    await expect(AdminMainPage.feedbacksCategory).toHaveText("Feedbacks");
+    await AdminMainPage.clickOnFeedbacksCategory();
+    await expect(AdminFeedbacksPage.adminFeedbacksPageTitle).toHaveText(
+      "Select Feedback to change"
+    );
+    await AdminFeedbacksPage.clickOnFeedbackLink();
+    await expect(FeedbackItemPage.feedbackItemPageTitle).toHaveText(
+      "Change Feedback"
+    );
+    await expect(
+      await FeedbackItemPage.nameField.getAttribute("value")
+    ).toEqual(validName);
+    await expect(
+      await FeedbackItemPage.phoneField.getAttribute("value")
+    ).toEqual(validPhoneNumber);
+
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+      timeZone: "Europe/Kyiv",
+    };
+
+    let formattedDate = new Intl.DateTimeFormat("en-US", options)
+      .format(currentDate)
+      .replace(/([A-Za-z]+)\s/, "$1. ")
+      .replace("AM", "a.m.")
+      .replace("PM", "p.m.");
+
+    await expect(await FeedbackItemPage.createdDateField.getText()).toEqual(
+      formattedDate
+    );
 
     const bodyParameters = {
       email: adminEmail,
-      password: adminPassword,
+      password: adminPassword
     };
-    await console.log(baseUrl+"api/auth/jwt/create/")
     let response = await axios.post(
-      baseUrl+"api/auth/jwt/create/",
+      baseUrl + "api/auth/jwt/create/",
       bodyParameters
     );
     let token = response.data.access;
@@ -99,10 +152,7 @@ describe("Rentzila", () => {
     const config = {
       headers: { Authorization: `Bearer ` + token },
     };
-    response = await axios.get(
-      baseUrl+"api/backcall/",
-      config
-    );
+    response = await axios.get(baseUrl + "api/backcall/", config);
 
     const records = response.data;
     let isFound = false;
@@ -112,8 +162,7 @@ describe("Rentzila", () => {
         isFound = true;
       }
     });
-
-});
-  
+    await expect(isFound).toEqual(true);
+  });
 });
 

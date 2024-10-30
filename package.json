@@ -9,20 +9,13 @@
     "wdio-authorization-chrome": "npx wdio run ./wdio.conf.ts --suite authorization",
     "allure-generate": "allure generate --clean && allure open"
   },
-  "devDependencies": {
-    "@wdio/allure-reporter": "^9.0.8",
-    "@wdio/cli": "^9.0.9",
-    "@wdio/local-runner": "^9.0.9",
-    "@wdio/mocha-framework": "^9.0.8",
-    "axios": "^1.7.7"
-  },
   "dependencies": {
-    "@wdio/allure-reporter": "^9.2.2",
-    "@wdio/cli": "^9.2.2",
-    "@wdio/local-runner": "^9.2.2",
-    "@wdio/mocha-framework": "^9.2.2",
-    "@wdio/spec-reporter": "^9.2.2",
-    "axios": "^1.7.7",
+    "@wdio/allure-reporter": "*",
+    "@wdio/cli": "*",
+    "@wdio/local-runner": "*",
+    "@wdio/mocha-framework": "*",
+    "@wdio/spec-reporter": "*",
+    "axios": "*",
     "dotenv": "*"
   }
 }
