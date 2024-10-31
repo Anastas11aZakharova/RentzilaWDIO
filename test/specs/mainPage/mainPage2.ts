@@ -7,6 +7,7 @@ import AdminMainPage from "../../pageobjects/adminMainPage.ts";
 import AdminFeedbacksPage from "../../pageobjects/adminFeedbacksPage.ts";
 import FeedbackItemPage from "../../pageobjects/feedbackItem.ts";
 import * as dotenv from "dotenv";
+import * as constants from "../../../data/constants.json";
 dotenv.config();
 const adminEmail = process.env.ADMIN_EMAIL || "default_email@example.com";
 const adminPassword = process.env.ADMIN_PASSWORD || "default_password";
@@ -38,7 +39,7 @@ describe("Rentzila", () => {
       "/terms-conditions/"
     );
     await expect(MainPage.forBuyersLabel).toBeExisting();
-    await expect(MainPage.forBuyersLabel).toHaveText("Користувачам");
+    await expect(MainPage.forBuyersLabel).toHaveText(constants.mainPage.forBuyersLabel);
     await expect(MainPage.productsLink).toBeExisting();
     await expect(MainPage.productsLink).toHaveAttribute("href", "/products/");
     await expect(MainPage.tendersLink).toBeExisting();
@@ -49,7 +50,7 @@ describe("Rentzila", () => {
       "/requests-map/"
     );
     await expect(MainPage.contactsLabel).toBeExisting();
-    await expect(MainPage.contactsLabel).toHaveText("Контакти");
+    await expect(MainPage.contactsLabel).toHaveText(constants.mainPage.contactsLabel);
     await expect(MainPage.emailLink).toBeExisting();
     await expect(MainPage.emailLink).toHaveAttribute(
       "href",
@@ -70,20 +71,20 @@ describe("Rentzila", () => {
     await MainPage.orderConsultationButton.click();
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Поле не може бути порожнім"
+      constants.mainPage.emptyFieldErrorMesage
     );
     let validName = testData.validInputs.name;
     await MainPage.enterName(validName);
     await MainPage.enterPhoneNumber(testData.invalidInputs.phoneShort);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Телефон не пройшов валідацію"
+      constants.mainPage.phoneValidationErrorMessage
     );
     await MainPage.enterName(validName);
     await MainPage.enterPhoneNumber(testData.invalidInputs.phoneOnesOnly);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
-      "Телефон не пройшов валідацію"
+      constants.mainPage.phoneValidationErrorMessage
     );
     await MainPage.enterPhoneNumber(validPhoneNumber);
     await MainPage.orderConsultationButton.click();
@@ -91,7 +92,7 @@ describe("Rentzila", () => {
     // await MainPage.clickOkInDialogPopUp();
     await AdminLoginPage.open();
     await expect(AdminLoginPage.adminLoginPageHeader).toHaveText(
-      "Django administration"
+      constants.mainPage.adminLoginPageHeader
     );
     await expect(AdminLoginPage.emailField).toBeExisting();
     await AdminLoginPage.enterEmailInEmailField("test@test.test");
@@ -100,16 +101,16 @@ describe("Rentzila", () => {
     await expect(AdminLoginPage.logInButton).toBeExisting();
     await AdminLoginPage.logInButton.click();
     await expect(AdminMainPage.adminMainPageTitle).toHaveText(
-      "Site administration"
+      constants.mainPage.adminMainPageTitle
     );
     await expect(AdminMainPage.feedbacksCategory).toHaveText("Feedbacks");
     await AdminMainPage.feedbacksCategory.click();
     await expect(AdminFeedbacksPage.adminFeedbacksPageTitle).toHaveText(
-      "Select Feedback to change"
+      constants.mainPage.adminFeedbacksPageTitle
     );
     await AdminFeedbacksPage.feedbackLink.click();
     await expect(FeedbackItemPage.feedbackItemPageTitle).toHaveText(
-      "Change Feedback"
+      constants.mainPage.feedbackItemPageTitle
     );
     await expect(
       await FeedbackItemPage.nameField.getAttribute("value")

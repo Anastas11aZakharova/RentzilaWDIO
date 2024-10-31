@@ -4,7 +4,7 @@ import MyProfilePage from "../pageobjects/myProfilePage.ts";
 import LoginPage from "../pageobjects/loginPage.ts";
 import * as testData from "../../data/testdata.json";
 import * as dotenv from 'dotenv';
-import * as stringConstants from "../../data/constants.json";
+import * as constants from "../../data/constants.json";
 dotenv.config();
 const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
 const validPassword = process.env.MY_PASSWORD || 'default_password';
@@ -12,26 +12,26 @@ const validPhone = process.env.MY_PHONE || 'default_phone';
 
 async function enterInvalidLoginAndVerifyErrorMessage(login: string) {
   await MainPage.loginButton.click();
-  await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+  await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
   await LoginPage.enterEmailInEmailOrPhoneNumberField(login);
   await LoginPage.enterPasswordInPasswordField(validPassword);
   await LoginPage.enterButton.click();
   await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-    stringConstants.authorization.invalidFormat
+    constants.authorization.invalidFormat
   );
   await LoginPage.authorizationFormCrossButton.click();
 }
 
 async function enterInvalidPasswordAndVerifyErrorMessage(password: string) {
   await MainPage.loginButton.click();
-  await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+  await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
   await LoginPage.enterEmailInEmailOrPhoneNumberField(
     validEmail
   );
   await LoginPage.enterPasswordInPasswordField(password);
   await LoginPage.enterButton.click();
   await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
-    stringConstants.authorization.invalidCredentials
+    constants.authorization.invalidCredentials
   );
   await LoginPage.authorizationFormCrossButton.click();
 }
@@ -41,13 +41,13 @@ describe("Rentzila", () => {
     await MainPage.open();
 
     await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
     await LoginPage.enterButton.click();
     await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-      stringConstants.footer.emptyField
+      constants.footer.emptyField
     );
     await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
-      stringConstants.footer.emptyField
+      constants.footer.emptyField
     );
     
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
@@ -55,15 +55,15 @@ describe("Rentzila", () => {
     );
     await LoginPage.enterButton.click();
     await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
-      stringConstants.footer.emptyField
+      constants.footer.emptyField
     );
     await LoginPage.authorizationFormCrossButton.click();
     await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
     await LoginPage.enterPasswordInPasswordField(validPassword);
     await LoginPage.enterButton.click();
     await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-      stringConstants.footer.emptyField
+      constants.footer.emptyField
     );
   });
 
@@ -71,7 +71,7 @@ describe("Rentzila", () => {
     await MainPage.open();
 
     await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
 
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       validEmail
@@ -89,7 +89,7 @@ describe("Rentzila", () => {
     await expect(MainPage.emailInUserDropdown).toHaveText(
      validEmail
     );
-    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await expect(MainPage.myProfileItem).toHaveText(constants.authorization.myProfile);
     await MainPage.logoutButton.click();
     await expect(MainPage.loginButton).toBeDisplayed();
   });
@@ -98,45 +98,45 @@ describe("Rentzila", () => {
     await MainPage.open();
 
     await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
      validPhone
     );
     await LoginPage.enterPasswordInPasswordField(validPassword);
     await LoginPage.enterButton.click();
     await MainPage.userIconDropdown.click();
-    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await expect(MainPage.myProfileItem).toHaveText(constants.authorization.myProfile);
     await MainPage.myProfileItem.click();
-    await expect(MainPage.myProfileTitle).toHaveText("Мій профіль");
+    await expect(MainPage.myProfileTitle).toHaveText(constants.authorization.myProfile);
     let phoneNumberOnProfile = (
       await MyProfilePage.phoneNumberField.getAttribute("value")
     ).toString();
     phoneNumberOnProfile = phoneNumberOnProfile.replace(/\s/g, "");
     await expect(validPhone).toEqual(phoneNumberOnProfile);
     await MainPage.userIconDropdown.click();
-    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await expect(MainPage.myProfileItem).toHaveText(constants.authorization.myProfile);
     await MainPage.logoutButton.click();
     await expect(MainPage.logo).toBeExisting();
     await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       testData.validInputs.phoneWithoutPlus
     );
     await LoginPage.enterPasswordInPasswordField(validPassword);
     await LoginPage.enterButton.click();
     await MainPage.userIconDropdown.click();
-    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await expect(MainPage.myProfileItem).toHaveText(constants.authorization.myProfile);
     await MainPage.logoutButton.click();
     await expect(MainPage.logo).toBeExisting();
     await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       testData.validInputs.phoneWithoutPlus38
     );
     await LoginPage.enterPasswordInPasswordField(validPassword);
     await LoginPage.enterButton.click();
     await MainPage.userIconDropdown.click();
-    await expect(MainPage.myProfileItem).toHaveText("Мій профіль");
+    await expect(MainPage.myProfileItem).toHaveText(constants.authorization.myProfile);
     await MainPage.logoutButton.click();
     await expect(MainPage.loginButton).toBeDisplayed();
   });
@@ -177,14 +177,14 @@ describe("Rentzila", () => {
     await MainPage.open();
 
     await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       testData.invalidInputs.emailWithLowerDathes
     );
     await LoginPage.enterPasswordInPasswordField(validPassword);
     await LoginPage.enterButton.click();
     await expect(LoginPage.incorrectEmailOrPasswordErrorMessage).toHaveText(
-      stringConstants.authorization.invalidCredentials
+      constants.authorization.invalidCredentials
     );
     await LoginPage.authorizationFormCrossButton.click();
     await enterInvalidLoginAndVerifyErrorMessage(
@@ -229,7 +229,7 @@ describe("Rentzila", () => {
       testData.invalidInputs.passwordWithLowercaseLetters
     );
     await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText("Вхід");
+    await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
     await LoginPage.enterEmailInEmailOrPhoneNumberField(
       validEmail
     );
@@ -238,7 +238,7 @@ describe("Rentzila", () => {
     );
     await LoginPage.enterButton.click();
     await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
-      stringConstants.authorization.passwordValidation
+      constants.authorization.passwordValidation
     );
   });
 });

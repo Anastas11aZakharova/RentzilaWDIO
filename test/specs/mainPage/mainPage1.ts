@@ -3,6 +3,7 @@ import MainPage from "../../pageobjects/mainPage.ts";
 import UnitPage from "../../pageobjects/unitPage.ts";
 import ProductsPage from "../../pageobjects/productsPage.ts";
 import * as testData from "../../../data/testdata.json";
+import * as constants from "../../../data/constants.json";
 
   /**
    * Verifies the equipment names, filter names, and categories by interacting with the UI elements.
@@ -57,7 +58,7 @@ describe("Rentzila", () => {
     await MainPage.open();
 
     await expect(MainPage.equipmentTitle).toBeExisting();
-    await expect(MainPage.equipmentTitle).toHaveText("Спецтехніка");
+    await expect(MainPage.equipmentTitle).toHaveText(constants.mainPage.equipmentTitle);
 
     await verifyEquipment(
       MainPage.popularEquipmentLabel,
