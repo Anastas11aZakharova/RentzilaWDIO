@@ -15,9 +15,11 @@ const validPhone = process.env.MY_PHONE || "default_phone";
 const baseUrl = process.env.BASE_URL || "base_url";
 
 describe("Rentzila", () => {
-  it("C214 - Verify that all elements on the footer are displayed and all links are clickable", async () => {
-    await MainPage.open();
+  beforeEach(async () => {
+    await MainPage.open("");
+  });
 
+  it("C214 - Verify that all elements on the footer are displayed and all links are clickable", async () => {
     await expect(MainPage.logo).toBeExisting();
     await expect(MainPage.footerLogo).toBeExisting();
     await expect(MainPage.footerLogo).not.toBeClickable();
@@ -59,34 +61,32 @@ describe("Rentzila", () => {
   });
 
   it('C226 -"У Вас залишилися питання?" form', async () => {
-    await MainPage.open();
-
     await expect(MainPage.logo).toBeExisting();
     await MainPage.telegramCrossButton.click();
     await expect(MainPage.orderConsultationButton).toBeExisting();
     await MainPage.orderConsultationButton.click();
     await MainPage.verifyErrorMessagesDisplayed();
     let validPhoneNumber = validPhone;
-    await MainPage.enterPhoneNumber(validPhoneNumber);
+    await MainPage.phoneNumberField.setValue(validPhoneNumber);
     await MainPage.orderConsultationButton.click();
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
       constants.mainPage.emptyFieldErrorMesage
     );
     let validName = testData.validInputs.name;
-    await MainPage.enterName(validName);
-    await MainPage.enterPhoneNumber(testData.invalidInputs.phoneShort);
+    await MainPage.nameField.setValue(validName);
+    await MainPage.phoneNumberField.setValue(testData.invalidInputs.phoneShort);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
       constants.mainPage.phoneValidationErrorMessage
     );
-    await MainPage.enterName(validName);
-    await MainPage.enterPhoneNumber(testData.invalidInputs.phoneOnesOnly);
+    await MainPage.nameField.setValue(validName);
+    await MainPage.phoneNumberField.setValue(testData.invalidInputs.phoneOnesOnly);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
       constants.mainPage.phoneValidationErrorMessage
     );
-    await MainPage.enterPhoneNumber(validPhoneNumber);
+    await MainPage.phoneNumberField.setValue(validPhoneNumber);
     await MainPage.orderConsultationButton.click();
     const currentDate: Date = new Date();
     // await MainPage.clickOkInDialogPopUp();
@@ -95,9 +95,9 @@ describe("Rentzila", () => {
       constants.mainPage.adminLoginPageHeader
     );
     await expect(AdminLoginPage.emailField).toBeExisting();
-    await AdminLoginPage.enterEmailInEmailField("test@test.test");
+    await AdminLoginPage.emailField.setValue("test@test.test");
     await expect(AdminLoginPage.passwordField).toBeExisting();
-    await AdminLoginPage.enterPasswordInPasswordlField("admin");
+    await AdminLoginPage.passwordField.setValue("admin");
     await expect(AdminLoginPage.logInButton).toBeExisting();
     await AdminLoginPage.logInButton.click();
     await expect(AdminMainPage.adminMainPageTitle).toHaveText(

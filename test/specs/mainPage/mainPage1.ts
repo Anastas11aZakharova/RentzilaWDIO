@@ -55,7 +55,7 @@ import * as constants from "../../../data/constants.json";
 
 describe("Rentzila", () => {
   it('C213- Checking ""Спецтехніка"" section on the main page', async () => {
-    await MainPage.open();
+    await MainPage.open("");
 
     await expect(MainPage.equipmentTitle).toBeExisting();
     await expect(MainPage.equipmentTitle).toHaveText(constants.mainPage.equipmentTitle);

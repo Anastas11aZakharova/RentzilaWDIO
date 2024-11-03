@@ -47,7 +47,7 @@ async function verifyServices(
 
 describe("Rentzila", () => {
   it('C212- Checking "Послуги" section on the main page', async () => {
-    await MainPage.open();
+    await MainPage.open("");
 
     await expect(MainPage.proposesTitle).toBeExisting();
     await expect(MainPage.proposesTitle).toHaveText(constants.mainPage.proposes);

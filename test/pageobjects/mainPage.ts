@@ -2,10 +2,6 @@ import { $ } from "@wdio/globals";
 import Page from "./page.js";
 
 class MainPage extends Page {
-  public open() {
-    return super.open("");
-  }
-
   public get logo() {
     return $('div[data-testid="logo"]');
   }
@@ -161,14 +157,6 @@ class MainPage extends Page {
     for await (const element of this.errorMessages) {
       await expect(element).toHaveText("Поле не може бути порожнім");
     }
-  }
-
-  public async enterPhoneNumber(phoneNumber: string) {
-    await this.phoneNumberField.setValue(phoneNumber);
-  }
-
-  public async enterName(name: string) {
-    await this.nameField.setValue(name);
   }
 
   public async clickOkInDialogPopUp() {

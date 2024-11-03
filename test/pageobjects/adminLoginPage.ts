@@ -21,14 +21,6 @@ class AdminLoginPage extends Page {
   public open() {
     return super.open('api/admin/');
   }
-
-  public async enterEmailInEmailField(email: string) {
-    await this.emailField.setValue(email);
-  }
-
-  public async enterPasswordInPasswordlField(password: string) {
-    await this.passwordField.setValue(password);
-  }
 }
 
 export default new AdminLoginPage();

@@ -37,14 +37,6 @@ class LoginPage extends Page {
   public get enterButton() {
     return $("button=Увійти");
   }
-
-  public async enterEmailInEmailOrPhoneNumberField(email: string) {
-    await this.emailOrPhoneNumberField.setValue(email);
-  }
-
-  public async enterPasswordInPasswordField(email: string) {
-    await this.passwordField.setValue(email);
-  }
 }
 
 export default new LoginPage();
