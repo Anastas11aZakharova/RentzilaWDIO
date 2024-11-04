@@ -54,7 +54,9 @@ import * as constants from "../../../data/constants.json";
   }
 
 describe("Rentzila", () => {
+  //Will fail due the known issue (This is expected because of the data issue in the dev environment. Multiple categories do not have actual units assigned to them, hence the check fails)
   it('C213- Checking ""Спецтехніка"" section on the main page', async () => {
+    
     await MainPage.open("");
 
     await expect(MainPage.equipmentTitle).toBeExisting();
