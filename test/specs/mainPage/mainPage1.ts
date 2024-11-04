@@ -5,7 +5,7 @@ import ProductsPage from "../../pageobjects/products.page.ts";
 import * as testData from "../../data/testdata.json";
 
 describe("Rentzila", () => {
-  //Will failed due the known issue (This is expected because of the data issue in the dev environment. Multiple categories do not have actual units assigned to them, hence the check fails)
+  //Will fail due the known issue (This is expected because of the data issue in the dev environment. Multiple categories do not have actual units assigned to them, hence the check fails)
   it('C213- Checking ""Спецтехніка"" section on the main page', async () => {
     await MainPage.open();
 
