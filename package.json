@@ -2,14 +2,20 @@
   "name": "Rentzila",
   "type": "module",
   "scripts": {
-    "wdio-all": "npx wdio run ./wdio.conf.ts"
+    "wdio:all:chrome": "npx wdio run ./wdio.conf.ts",
+    "wdio:all:chrome:headless": "npx wdio run ./wdio.conf.headless.ts",
+    "wdio:footer:only:chrome": "npx wdio run ./wdio.conf.ts --spec ./test/specs/mainPage/mainPage2.ts",
+    "wdio:C214:chrome": "npx wdio run ./wdio.conf.ts --mochaOpts.grep C214",
+    "wdio:authorization:chrome": "npx wdio run ./wdio.conf.ts --suite authorization",
+    "allure:generate": "allure generate --clean && allure open"
   },
-  "devDependencies": {
+  "dependencies": {
     "@wdio/allure-reporter": "^9.2.2",
     "@wdio/cli": "^9.2.2",
     "@wdio/local-runner": "^9.2.2",
     "@wdio/mocha-framework": "^9.2.2",
     "@wdio/spec-reporter": "^9.2.2",
-    "axios": "^1.7.7"
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5"
   }
 }

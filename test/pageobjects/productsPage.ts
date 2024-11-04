@@ -6,27 +6,32 @@ class ProductsPage extends Page {
   public get servisesDropDowns() {
     return $$('div[data-testid="rightArrow"]');
   }
+
   public get filterForm() {
     return $('div[data-testid="filterForm"]');
   }
+
   public get cardUnit() {
     return $('div[data-testid="cardWrapper"]');
   }
+
   public get equipmentCategoryLabels() {
     return $$('img[data-testid="firstCategoryImage"]');
   }
+
   public get equipmentCategorySecondLevelLabels() {
     return $$('img[data-testid="secondCategoryImage"]');
   }
+  
   public get activeEquipmentLabel() {
     return $("//label[contains(concat(' ',normalize-space(@class),' '),'active_label')]");
   }
 
   public async verifyCheckBoxIsChecked(name: string) {
-    await browser.pause(2000);
+    await this.servisesDropDowns[0].waitForDisplayed();
     for await (const element of this.servisesDropDowns) {
       await element.click();
-      var isExpanded = await element.getAttribute("class");
+      let isExpanded = await element.getAttribute("class");
       if (!isExpanded.includes("ServiceCategory_clicked")) {
         await element.click();
       }
@@ -38,23 +43,19 @@ class ProductsPage extends Page {
       this.filterForm.$("//label[contains(text(),'" + name + "')]/../input")
     ).toBeChecked();
   }
-  
-  public async clickOnCardUnit() {
-    await this.cardUnit.click();
-  }
 
   public async verifyEquipmentIsPresent(equipmentName: string) {
-    await browser.pause(2000);
+    await this.equipmentCategoryLabels[0].waitForDisplayed()
     for await (const element of this.equipmentCategoryLabels) {
       await element.click();
-      var isExpanded = await element.getAttribute("class");
+      let isExpanded = await element.getAttribute("class");
       if (!isExpanded.includes("rotate")) {
         await element.click();
       }
     }
     for await (const element of this.equipmentCategorySecondLevelLabels) {
       await element.click();
-      var isExpanded = await element.getAttribute("class");
+      let isExpanded = await element.getAttribute("class");
       if (!isExpanded.includes("rotate")) {
         await element.click();
       }

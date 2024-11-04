@@ -9,25 +9,18 @@ class UnitPage extends Page {
   public get categoriesList() {
     return $('div[itemprop="category"]');
   }
+  
   public get logo() {
     return $('div[data-testid="logo"]');
   }
-  
 
   public async verifyServiceIsVisible(serviceName: string) {
-    await expect(this.servicesList.$('div='+serviceName)).toBeExisting()
+    await expect(this.servicesList.$("div=" + serviceName)).toBeDisplayed();
   }
 
   public async verifyCategoriesIsVisible(categoriesName: string) {
-    await expect(this.categoriesList.$('div='+categoriesName)).toBeExisting()
+    await expect(this.categoriesList.$("div=" + categoriesName)).toBeDisplayed();
   }
-
-  public async clickOnLogo() {
-    await this.logo.click();
-  }
-
-
-
 }
 
 export default new UnitPage();
