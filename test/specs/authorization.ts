@@ -5,6 +5,7 @@ import LoginPage from "../pageobjects/loginPage.ts";
 import * as testData from "../../data/testdata.json";
 import * as dotenv from "dotenv";
 import * as constants from "../../data/constants.json";
+
 dotenv.config();
 const validEmail = process.env.MY_EMAIL || "default_email@example.com";
 const validPassword = process.env.MY_PASSWORD || "default_password";

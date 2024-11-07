@@ -5,9 +5,9 @@
     "wdio:all:chrome": "npx wdio run ./wdio.conf.ts",
     "wdio:all:chrome:headless": "npx wdio run ./wdio.conf.headless.ts",
     "wdio:footer:only:chrome": "npx wdio run ./wdio.conf.ts --spec ./test/specs/mainPage/mainPage2.ts",
-    "wdio:C214:chrome": "npx wdio run ./wdio.conf.ts --mochaOpts.grep C214",
+    "wdio:C214:chrome": "npx wdio run ./wdio.conf.ts --mochaOpts.grep C327",
     "wdio:authorization:chrome": "npx wdio run ./wdio.conf.ts --suite authorization",
-    "wdio-advert": "npx wdio run ./wdio.conf.ts --suite advert",
+    "wdio:advert:chrome": "npx wdio run ./wdio.conf.ts --suite advert",
     "allure:generate": "allure generate --clean && allure open"
   },
   "dependencies": {

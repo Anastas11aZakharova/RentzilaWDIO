@@ -21,5 +21,29 @@
     "adminFeedbacksPageTitle": "Select Feedback to change",
     "feedbackItemPageTitle": "Change Feedback",
     "proposes": "Послуги"
+  },
+  "advert":{
+    "advertPageTitle": "Створити оголошення",
+    "categoryLabel": "Категорія *",
+    "categorySelectField": "Виберіть категорію",
+    "advertNameField": "Введіть назву оголошення",
+    "advertNameFieldErrorMessage": "Це поле обов’язкове",
+    "advertNameSymbolsErrorMessage": "У назві оголошення може бути не більше 100 символів",
+    "producerLabel": "Виробник транспортного засобу *",
+    "producerField": "Введіть виробника транспортного засобу",
+    "advertNameLabel":"Назва оголошення *",
+    "modelNameLabel": "Назва моделі",
+    "modelNameField": "Введіть назву моделі",
+    "locationField": "Виберіть на мапі",
+    "locationLabel": "Місце розташування технічного засобу *",
+    "locationErrorMessage": "Виберіть коректне місце на мапі України",
+    "mapPopUpTitle": "Техніка на мапі",
+    "cancelButton": "Скасувати",
+    "nextButton": "Далі",
+    "mainInformationLabel": "основна інформація",
+    "photoLabel": "фотографії",
+    "servicesLabel": "послуги",
+    "priceLabel": "вартість",
+    "contactsLabel": "контакти"
   }
 }
