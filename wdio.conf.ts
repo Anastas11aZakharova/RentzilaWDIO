@@ -11,14 +11,8 @@ export const config: Options.Testrunner = {
     suites: {
         authorization: [
             './test/specs/authorization.ts'
-        ],
-        advert: [
-            './test/specs/advert.ts'
         ]
     },
-    exclude: [
-        // 'path/to/excluded/files'
-    ],
     maxInstances: 10,
     capabilities: [
         {
@@ -34,12 +28,12 @@ export const config: Options.Testrunner = {
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
     framework: 'mocha',
-    reporters: [['allure', {outputDir: 'allure-results'}]],
+    reporters: ['spec', ['allure', {outputDir: 'allure-results'}]],
     mochaOpts: {
         ui: 'bdd',
         timeout: 600000
     },
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+    afterTest: async function(passed) {
         if (!passed) {
             await browser.takeScreenshot();
         }
