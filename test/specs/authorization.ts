@@ -15,43 +15,12 @@ describe("Rentzila", () => {
   beforeEach(async () => {
     await MainPage.open("");
   });
-  
-  it("C200 - Authorization with empty fields", async () => {
-    await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText(
-      constants.authorization.login
-    );
-    await LoginPage.enterButton.click();
-    await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-      constants.footer.emptyField
-    );
-    await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
-      constants.footer.emptyField
-    );
-
-    await LoginPage.emailOrPhoneNumberField.setValue(validEmail);
-    await LoginPage.enterButton.click();
-    await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
-      constants.footer.emptyField
-    );
-    await LoginPage.authorizationFormCrossButton.click();
-    await MainPage.loginButton.click();
-    await expect(LoginPage.authorizationFormTitle).toHaveText(
-      constants.authorization.login
-    );
-    await LoginPage.passwordField.setValue(validPassword);
-    await LoginPage.enterButton.click();
-    await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
-      constants.footer.emptyField
-    );
-  });
 
   it("C201 - Authorization with valid email and password", async () => {
     await MainPage.loginButton.click();
     await expect(LoginPage.authorizationFormTitle).toHaveText(
       constants.authorization.login
     );
-
     await LoginPage.emailOrPhoneNumberField.setValue(validEmail);
     const password = process.env.MY_PASSWORD || "default_password";
     await LoginPage.passwordField.setValue(password);
@@ -128,6 +97,35 @@ describe("Rentzila", () => {
     );
     await MainPage.logoutButton.click();
     await expect(MainPage.loginButton).toBeDisplayed();
+  });
+
+  it("C200 - Authorization with empty fields", async () => {
+    await MainPage.loginButton.click();
+    await expect(LoginPage.authorizationFormTitle).toHaveText(
+      constants.authorization.login
+    );
+    await LoginPage.enterButton.click();
+    await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
+      constants.footer.emptyField
+    );
+    await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
+      constants.footer.emptyField
+    );
+    await LoginPage.emailOrPhoneNumberField.setValue(validEmail);
+    await LoginPage.enterButton.click();
+    await expect(LoginPage.passwordFieldErrorMessage).toHaveText(
+      constants.footer.emptyField
+    );
+    await LoginPage.authorizationFormCrossButton.click();
+    await MainPage.loginButton.click();
+    await expect(LoginPage.authorizationFormTitle).toHaveText(
+      constants.authorization.login
+    );
+    await LoginPage.passwordField.setValue(validPassword);
+    await LoginPage.enterButton.click();
+    await expect(LoginPage.emailOrPhoneNumberFieldErrorMessage).toHaveText(
+      constants.footer.emptyField
+    );
   });
 
   it("C207 - Authorization with invalid phone", async () => {

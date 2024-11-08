@@ -8,6 +8,7 @@ import AdminFeedbacksPage from "../../pageobjects/adminFeedbacksPage.ts";
 import FeedbackItemPage from "../../pageobjects/feedbackItem.ts";
 import * as dotenv from "dotenv";
 import * as constants from "../../../data/constants.json";
+
 dotenv.config();
 const adminEmail = process.env.ADMIN_EMAIL || "default_email@example.com";
 const adminPassword = process.env.ADMIN_PASSWORD || "default_password";
@@ -41,7 +42,9 @@ describe("Rentzila", () => {
       "/terms-conditions/"
     );
     await expect(MainPage.forBuyersLabel).toBeExisting();
-    await expect(MainPage.forBuyersLabel).toHaveText(constants.mainPage.forBuyersLabel);
+    await expect(MainPage.forBuyersLabel).toHaveText(
+      constants.mainPage.forBuyersLabel
+    );
     await expect(MainPage.productsLink).toBeExisting();
     await expect(MainPage.productsLink).toHaveAttribute("href", "/products/");
     await expect(MainPage.tendersLink).toBeExisting();
@@ -52,7 +55,9 @@ describe("Rentzila", () => {
       "/requests-map/"
     );
     await expect(MainPage.contactsLabel).toBeExisting();
-    await expect(MainPage.contactsLabel).toHaveText(constants.mainPage.contactsLabel);
+    await expect(MainPage.contactsLabel).toHaveText(
+      constants.mainPage.contactsLabel
+    );
     await expect(MainPage.emailLink).toBeExisting();
     await expect(MainPage.emailLink).toHaveAttribute(
       "href",
@@ -66,30 +71,29 @@ describe("Rentzila", () => {
     await expect(MainPage.orderConsultationButton).toBeExisting();
     await MainPage.orderConsultationButton.click();
     await MainPage.verifyErrorMessagesDisplayed();
-    let validPhoneNumber = validPhone;
-    await MainPage.phoneNumberField.setValue(validPhoneNumber);
+    await MainPage.phoneNumberField.setValue(validPhone);
     await MainPage.orderConsultationButton.click();
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
       constants.mainPage.emptyFieldErrorMesage
     );
-    let validName = testData.validInputs.name;
-    await MainPage.nameField.setValue(validName);
+    await MainPage.nameField.setValue(testData.validInputs.name);
     await MainPage.phoneNumberField.setValue(testData.invalidInputs.phoneShort);
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
       constants.mainPage.phoneValidationErrorMessage
     );
-    await MainPage.nameField.setValue(validName);
-    await MainPage.phoneNumberField.setValue(testData.invalidInputs.phoneOnesOnly);
+    await MainPage.nameField.setValue(testData.validInputs.name);
+    await MainPage.phoneNumberField.setValue(
+      testData.invalidInputs.phoneOnesOnly
+    );
     await expect(MainPage.errorMessages[0]).toBeExisting();
     await expect(MainPage.errorMessages[0]).toHaveText(
       constants.mainPage.phoneValidationErrorMessage
     );
-    await MainPage.phoneNumberField.setValue(validPhoneNumber);
+    await MainPage.phoneNumberField.setValue(validPhone);
     await MainPage.orderConsultationButton.click();
     const currentDate: Date = new Date();
-    // await MainPage.clickOkInDialogPopUp();
     await AdminLoginPage.open();
     await expect(AdminLoginPage.adminLoginPageHeader).toHaveText(
       constants.mainPage.adminLoginPageHeader
@@ -114,10 +118,10 @@ describe("Rentzila", () => {
     );
     await expect(
       await FeedbackItemPage.nameField.getAttribute("value")
-    ).toEqual(validName);
+    ).toEqual(testData.validInputs.name);
     await expect(
       await FeedbackItemPage.phoneField.getAttribute("value")
-    ).toEqual(validPhoneNumber);
+    ).toEqual(validPhone);
 
     const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
@@ -141,7 +145,7 @@ describe("Rentzila", () => {
 
     const bodyParameters = {
       email: adminEmail,
-      password: adminPassword
+      password: adminPassword,
     };
     let response = await axios.post(
       baseUrl + "api/auth/jwt/create/",
@@ -158,7 +162,10 @@ describe("Rentzila", () => {
     let isFound = false;
 
     records.forEach((record: { name: string; phone: string }) => {
-      if (record.name === validName && record.phone === validPhoneNumber) {
+      if (
+        record.name === testData.validInputs.name &&
+        record.phone === validPhone
+      ) {
         isFound = true;
       }
     });
