@@ -26,36 +26,31 @@ describe("Rentzila", () => {
   });
 
   it("C294- Verify body title and tab titles", async () => {
-    let mainInformationLabel = constants.advert.mainInformationLabel;
-    let photosLabel = constants.advert.photoLabel;
-    let servicesLabel = constants.advert.servicesLabel;
-    let priceLabel = constants.advert.priceLabel;
-    let contactsLabel = constants.advert.contactsLabel;
     await expect(AdvertPage.mainInformationLabel).toHaveText(
-      mainInformationLabel
+      constants.advert.mainInformationLabel
     );
-    await AdvertPage.verifyLabelNumberIsCorrect(mainInformationLabel, "1");
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.mainInformationLabel, "1");
     await expect(
-      await AdvertPage.verifyLabelIsActive(mainInformationLabel)
+      await AdvertPage.verifyLabelIsActive(constants.advert.mainInformationLabel)
     ).toEqual(true);
-    await expect(AdvertPage.photosLabel).toHaveText(photosLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(photosLabel, "2");
-    await expect(await AdvertPage.verifyLabelIsActive(photosLabel)).toEqual(
+    await expect(AdvertPage.photosLabel).toHaveText(constants.advert.photoLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.photoLabel, "2");
+    await expect(await AdvertPage.verifyLabelIsActive(constants.advert.photoLabel)).toEqual(
       false
     );
-    await expect(AdvertPage.servicesLabel).toHaveText(servicesLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(servicesLabel, "3");
-    await expect(await AdvertPage.verifyLabelIsActive(servicesLabel)).toEqual(
+    await expect(AdvertPage.servicesLabel).toHaveText(constants.advert.servicesLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.servicesLabel, "3");
+    await expect(await AdvertPage.verifyLabelIsActive(constants.advert.servicesLabel)).toEqual(
       false
     );
-    await expect(AdvertPage.priceLabel).toHaveText(priceLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(priceLabel, "4");
-    await expect(await AdvertPage.verifyLabelIsActive(priceLabel)).toEqual(
+    await expect(AdvertPage.priceLabel).toHaveText(constants.advert.priceLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.priceLabel, "4");
+    await expect(await AdvertPage.verifyLabelIsActive(constants.advert.priceLabel)).toEqual(
       false
     );
-    await expect(AdvertPage.contactsLabel).toHaveText(contactsLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(contactsLabel, "5");
-    await expect(await AdvertPage.verifyLabelIsActive(contactsLabel)).toEqual(
+    await expect(AdvertPage.contactsLabel).toHaveText(constants.advert.contactsLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.contactsLabel, "5");
+    await expect(await AdvertPage.verifyLabelIsActive(constants.advert.contactsLabel)).toEqual(
       false
     );
     await expect(AdvertPage.categorySelectField).toBeExisting();
@@ -287,37 +282,32 @@ describe("Rentzila", () => {
     await AdvertPage.confirmButton.click();
     await expect(AdvertPage.locationField).toHaveText(newAddress);
     await AdvertPage.nextButton.click();
-    let mainInformationLabel = constants.advert.mainInformationLabel;
-    let photosLabel = constants.advert.photoLabel;
-    let servicesLabel = constants.advert.servicesLabel;
-    let priceLabel = constants.advert.priceLabel;
-    let contactsLabel = constants.advert.contactsLabel;
     await expect(AdvertPage.advertPageTitle).toHaveText(constants.advert.advertPageTitle);
     await expect(AdvertPage.mainInformationLabel).toHaveText(
-      mainInformationLabel
+      constants.advert.mainInformationLabel
     );
-    await AdvertPage.verifyLabelNumberIsCorrect(mainInformationLabel, "1");
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.mainInformationLabel, "1");
     await expect(
-      await AdvertPage.verifyLabelIsActive(mainInformationLabel)
+      await AdvertPage.verifyLabelIsActive(constants.advert.mainInformationLabel)
     ).toEqual(false);
-    await expect(AdvertPage.photosLabel).toHaveText(photosLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(photosLabel, "2");
-    await expect(await AdvertPage.verifyLabelIsActive(photosLabel)).toEqual(
+    await expect(AdvertPage.photosLabel).toHaveText(constants.advert.photoLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.photoLabel, "2");
+    await expect(await AdvertPage.verifyLabelIsActive(constants.advert.photoLabel)).toEqual(
       true
     );
-    await expect(AdvertPage.servicesLabel).toHaveText(servicesLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(servicesLabel, "3");
-    await expect(await AdvertPage.verifyLabelIsActive(servicesLabel)).toEqual(
+    await expect(AdvertPage.servicesLabel).toHaveText(constants.advert.servicesLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.servicesLabel, "3");
+    await expect(await AdvertPage.verifyLabelIsActive(constants.advert.servicesLabel)).toEqual(
       false
     );
-    await expect(AdvertPage.priceLabel).toHaveText(priceLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(priceLabel, "4");
-    await expect(await AdvertPage.verifyLabelIsActive(priceLabel)).toEqual(
+    await expect(AdvertPage.priceLabel).toHaveText(constants.advert.priceLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.priceLabel, "4");
+    await expect(await AdvertPage.verifyLabelIsActive(constants.advert.priceLabel)).toEqual(
       false
     );
-    await expect(AdvertPage.contactsLabel).toHaveText(contactsLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(contactsLabel, "5");
-    await expect(await AdvertPage.verifyLabelIsActive(contactsLabel)).toEqual(
+    await expect(AdvertPage.contactsLabel).toHaveText(constants.advert.contactsLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(constants.advert.contactsLabel, "5");
+    await expect(await AdvertPage.verifyLabelIsActive(constants.advert.contactsLabel)).toEqual(
       false
     );
   });

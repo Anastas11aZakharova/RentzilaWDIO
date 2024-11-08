@@ -1,5 +1,12 @@
 import { $ } from "@wdio/globals";
 import Page from "./page.js";
+import MainPage from "./mainPage.ts";
+import * as constants from "../../data/constants.json"
+import * as dotenv from "dotenv";
+
+dotenv.config();
+const validEmail = process.env.MY_EMAIL || "default_email@example.com";
+const validPassword = process.env.MY_PASSWORD || "default_password";
 
 class LoginPage extends Page {
   public get emailOrPhoneNumberFieldErrorMessage() {
@@ -36,6 +43,34 @@ class LoginPage extends Page {
 
   public get enterButton() {
     return $("button=Увійти");
+  }
+
+  public async enterInvalidLoginAndVerifyErrorMessage(login: string) {
+    await MainPage.loginButton.click();
+    await expect(this.authorizationFormTitle).toHaveText(
+      constants.authorization.login
+    );
+    await this.emailOrPhoneNumberField.setValue(login);
+    await this.passwordField.setValue(validPassword);
+    await this.enterButton.click();
+    await expect(this.emailOrPhoneNumberFieldErrorMessage).toHaveText(
+      constants.authorization.invalidFormat
+    );
+    await this.authorizationFormCrossButton.click();
+  }
+
+  public async enterInvalidPasswordAndVerifyErrorMessage(password: string) {
+    await MainPage.loginButton.click();
+    await expect(this.authorizationFormTitle).toHaveText(
+      constants.authorization.login
+    );
+    await this.emailOrPhoneNumberField.setValue(validEmail);
+    await this.passwordField.setValue(password);
+    await this.enterButton.click();
+    await expect(this.incorrectEmailOrPasswordErrorMessage).toHaveText(
+      constants.authorization.invalidCredentials
+    );
+    await this.authorizationFormCrossButton.click();
   }
 }
 
