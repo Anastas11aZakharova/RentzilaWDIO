@@ -10,7 +10,7 @@
     "login": "Вхід",
     "myProfile": "Мій профіль"
   },
-  "mainPage":{
+  "mainPage": {
     "equipmentTitle": "Спецтехніка",
     "forBuyersLabel": "Користувачам",
     "contactsLabel": "Контакти",
@@ -22,7 +22,7 @@
     "feedbackItemPageTitle": "Change Feedback",
     "proposes": "Послуги"
   },
-  "advert":{
+  "advert": {
     "advertPageTitle": "Створити оголошення",
     "categoryLabel": "Категорія *",
     "categorySelectField": "Виберіть категорію",
@@ -31,7 +31,7 @@
     "advertNameSymbolsErrorMessage": "У назві оголошення може бути не більше 100 символів",
     "producerLabel": "Виробник транспортного засобу *",
     "producerField": "Введіть виробника транспортного засобу",
-    "advertNameLabel":"Назва оголошення *",
+    "advertNameLabel": "Назва оголошення *",
     "modelNameLabel": "Назва моделі",
     "modelNameField": "Введіть назву моделі",
     "locationField": "Виберіть на мапі",
@@ -45,5 +45,13 @@
     "servicesLabel": "послуги",
     "priceLabel": "вартість",
     "contactsLabel": "контакти"
+  },
+  "photoTab": {
+    "duplicateImageError": "Ви не можете завантажити двічі один файл.",
+    "formatError": "Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.",
+    "clueMessage": "Додайте в оголошення від 1 до 12 фото технічного засобу розміром до 20 МВ у форматі .jpg, .jpeg, .png. Перше фото буде основним.",
+    "backButton": "Назад",
+    "potoParagraph": "Фото технічного засобу *",
+    "mainImageLabel": "Головне"
   }
 }

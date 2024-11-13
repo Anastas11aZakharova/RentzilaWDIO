@@ -219,7 +219,7 @@ class AdvertPage extends Page {
   }
 
   public get photoLabel() {
-    return $("button=Підтвердити вибір");
+    return $("span=Фотографії");
   }
 
   public get errorPopUp() {
@@ -327,7 +327,7 @@ class AdvertPage extends Page {
       return false;
     }
   }
-  
+
   public async checkOnlyOneImageIsUploaded(){
     for (let i = 0; i < await this.unitImages.length; i++) {
       if (i==0){
@@ -354,6 +354,21 @@ class AdvertPage extends Page {
       {
           return false
       }
+  }
+
+  
+  public async uploadFile(filePath: string) {
+    const remoteFilePath = await browser.uploadFile(filePath);
+    browser.execute(function () {
+      document.evaluate(
+        "//input[@type='file']",
+        document,
+        null,
+        XPathResult.FIRST_ORDERED_NODE_TYPE,
+        null
+      ).singleNodeValue.style.display = "block";
+    });
+    await $("//input[@type='file']").setValue(remoteFilePath);
   }
 }
 

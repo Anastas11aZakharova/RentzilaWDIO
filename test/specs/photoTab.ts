@@ -5,12 +5,9 @@ import AdvertPage from "../pageobjects/advertPage.ts";
 import * as dotenv from "dotenv";
 import * as constants from "../../data/constants.json";
 
-const validEmail = process.env.MY_EMAIL || 'default_email@example.com';
-const validPassword = process.env.MY_PASSWORD || 'default_password';
+const validEmail = process.env.MY_EMAIL || "default_email@example.com";
+const validPassword = process.env.MY_PASSWORD || "default_password";
 dotenv.config();
-const duplicateImageError = "Ви не можете завантажити двічі один файл.";
-const formatError = "Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ.";
-const clueMessage = "Додайте в оголошення від 1 до 12 фото технічного засобу розміром до 20 МВ у форматі .jpg, .jpeg, .png. Перше фото буде основним."
 
 describe("Rentzila", () => {
   beforeEach(async () => {
@@ -18,115 +15,152 @@ describe("Rentzila", () => {
 
     if (await MainPage.loginButton.isDisplayed()) {
       await MainPage.loginButton.click();
-      await expect(LoginPage.authorizationFormTitle).toHaveText(constants.authorization.login);
+      await expect(LoginPage.authorizationFormTitle).toHaveText(
+        constants.authorization.login
+      );
       await LoginPage.emailOrPhoneNumberField.setValue(validEmail);
       await LoginPage.passwordField.setValue(validPassword);
       await LoginPage.enterButton.click();
       await expect(MainPage.logo).toBeExisting();
     }
     await MainPage.submitAdvertButton.click();
-    await expect(AdvertPage.advertPageTitle).toHaveText(constants.advert.advertPageTitle);
-    await AdvertPage.photoLabel.click()
+    await expect(AdvertPage.advertPageTitle).toHaveText(
+      constants.advert.advertPageTitle
+    );
+    await AdvertPage.photoLabel.click();
   });
 
   it("C384-Verify same images uploading", async () => {
-    const filePath = 'test/data/photo1.jpg'
-    await uploadFile(filePath)
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(duplicateImageError)
-    await AdvertPage.crossButton.click()
-    await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
-    await AdvertPage.checkOnlyOneImageIsUploaded()
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(duplicateImageError)
-    await AdvertPage.understandButton.click()
-    await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
-    await AdvertPage.checkOnlyOneImageIsUploaded()
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(duplicateImageError)
+    const filePath = "data/photo1.jpg";
+    await AdvertPage.uploadFile(filePath);
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.duplicateImageError
+    );
+    await AdvertPage.crossButton.click();
+    await expect(AdvertPage.errorPopUp).not.toBeDisplayed();
+    await AdvertPage.checkOnlyOneImageIsUploaded();
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.duplicateImageError
+    );
+    await AdvertPage.understandButton.click();
+    await expect(AdvertPage.errorPopUp).not.toBeDisplayed();
+    await AdvertPage.checkOnlyOneImageIsUploaded();
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.duplicateImageError
+    );
     await AdvertPage.crossButton.click({ x: 100 });
-    await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
-    await AdvertPage.checkOnlyOneImageIsUploaded()
+    await expect(AdvertPage.errorPopUp).not.toBeDisplayed();
+    await AdvertPage.checkOnlyOneImageIsUploaded();
   });
 
-  async function uploadFile(filePath: string) {
-    const remoteFilePath = await browser.uploadFile(filePath)
-    browser.execute(function (){
-      document.evaluate("//input[@type='file']", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.style.display = 'block'
-    })
-    await $("//input[@type='file']").setValue(remoteFilePath)
-  }
   it("C401-Verify uploading of invalid file type", async () => {
-    const filePath = 'test/data/photo1.avp'
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
-    await AdvertPage.checkNoFileIsUploaded()
-    await AdvertPage.crossButton.click()
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
-    await AdvertPage.understandButton.click()
-    await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
-    await AdvertPage.checkNoFileIsUploaded()
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
+    const filePath = "data/photo1.avp";
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.formatError
+    );
+    await AdvertPage.checkNoFileIsUploaded();
+    await AdvertPage.crossButton.click();
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.formatError
+    );
+    await AdvertPage.understandButton.click();
+    await expect(AdvertPage.errorPopUp).not.toBeDisplayed();
+    await AdvertPage.checkNoFileIsUploaded();
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.formatError
+    );
     await AdvertPage.crossButton.click({ x: 100 });
-    await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
-    await AdvertPage.checkNoFileIsUploaded()
+    await expect(AdvertPage.errorPopUp).not.toBeDisplayed();
+    await AdvertPage.checkNoFileIsUploaded();
   });
+
   it("C405-Verify uploading of invalid size file", async () => {
-    const filePath = 'test/data/30mb.jpg'
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
-    await AdvertPage.checkNoFileIsUploaded()
-    await AdvertPage.crossButton.click()
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
-    await AdvertPage.understandButton.click()
-    await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
-    await AdvertPage.checkNoFileIsUploaded()
-    await uploadFile(filePath)
-    await expect(AdvertPage.errorPopUp).toHaveText(formatError)
+    const filePath = "data/30mb.jpg";
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.formatError
+    );
+    await AdvertPage.checkNoFileIsUploaded();
+    await AdvertPage.crossButton.click();
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.formatError
+    );
+    await AdvertPage.understandButton.click();
+    await expect(AdvertPage.errorPopUp).not.toBeDisplayed();
+    await AdvertPage.checkNoFileIsUploaded();
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.errorPopUp).toHaveText(
+      constants.photoTab.formatError
+    );
     await AdvertPage.crossButton.click({ x: 100 });
-    await expect(AdvertPage.errorPopUp).not.toBeDisplayed()
-    await AdvertPage.checkNoFileIsUploaded()
+    await expect(AdvertPage.errorPopUp).not.toBeDisplayed();
+    await AdvertPage.checkNoFileIsUploaded();
   });
-  it("C390-Verify \"Назад\" button", async () => {
-    await MainPage.telegramCrossButton.click()
-    await expect(AdvertPage.backButton).toHaveText("Назад")
-    await AdvertPage.backButton.click()
-    await expect(AdvertPage.advertPageTitle).toBeDisplayed()
-    let mainInformationLabel = "основна інформація";
-    let photosLabel = "фотографії";``
-    let servicesLabel = "послуги";
-    let priceLabel = "вартість";
-    let contactsLabel = "контакти";
+
+  it('C390-Verify "Назад" button', async () => {
+    await MainPage.telegramCrossButton.click();
+    await expect(AdvertPage.backButton).toHaveText(
+      constants.photoTab.backButton
+    );
+    await AdvertPage.backButton.click();
+    await expect(AdvertPage.advertPageTitle).toBeDisplayed();
     await expect(AdvertPage.mainInformationLabel).toHaveText(
-      mainInformationLabel
+      constants.advert.mainInformationLabel
     );
-    await AdvertPage.verifyLabelNumberIsCorrect(mainInformationLabel, "1");
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.mainInformationLabel,
+      "1"
+    );
     await expect(
-      await AdvertPage.verifyLabelIsActive(mainInformationLabel)
+      await AdvertPage.verifyLabelIsActive(
+        constants.advert.mainInformationLabel
+      )
     ).toEqual(true);
-    await expect(AdvertPage.photosLabel).toHaveText(photosLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(photosLabel, "2");
-    await expect(await AdvertPage.verifyLabelIsActive(photosLabel)).toEqual(
-      false
+    await expect(AdvertPage.photosLabel).toHaveText(
+      constants.advert.photoLabel
     );
-    await expect(AdvertPage.servicesLabel).toHaveText(servicesLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(servicesLabel, "3");
-    await expect(await AdvertPage.verifyLabelIsActive(servicesLabel)).toEqual(
-      false
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.photoLabel,
+      "2"
     );
-    await expect(AdvertPage.priceLabel).toHaveText(priceLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(priceLabel, "4");
-    await expect(await AdvertPage.verifyLabelIsActive(priceLabel)).toEqual(
-      false
+    await expect(
+      await AdvertPage.verifyLabelIsActive(constants.advert.photoLabel)
+    ).toEqual(false);
+    await expect(AdvertPage.servicesLabel).toHaveText(
+      constants.advert.servicesLabel
     );
-    await expect(AdvertPage.contactsLabel).toHaveText(contactsLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(contactsLabel, "5");
-    await expect(await AdvertPage.verifyLabelIsActive(contactsLabel)).toEqual(
-      false
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.servicesLabel,
+      "3"
     );
+    await expect(
+      await AdvertPage.verifyLabelIsActive(constants.advert.servicesLabel)
+    ).toEqual(false);
+    await expect(AdvertPage.priceLabel).toHaveText(constants.advert.priceLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.priceLabel,
+      "4"
+    );
+    await expect(
+      await AdvertPage.verifyLabelIsActive(constants.advert.priceLabel)
+    ).toEqual(false);
+    await expect(AdvertPage.contactsLabel).toHaveText(
+      constants.advert.contactsLabel
+    );
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.contactsLabel,
+      "5"
+    );
+    await expect(
+      await AdvertPage.verifyLabelIsActive(constants.advert.contactsLabel)
+    ).toEqual(false);
     await expect(AdvertPage.categorySelectField).toBeExisting();
     await expect(AdvertPage.advertNameField).toBeExisting();
     await expect(AdvertPage.producerField).toBeExisting();
@@ -134,91 +168,124 @@ describe("Rentzila", () => {
     await expect(AdvertPage.technicalCharacteristicsField).toBeExisting();
     await expect(AdvertPage.detailedDescriptionField).toBeExisting();
     await expect(AdvertPage.locationField).toBeExisting();
-    
   });
-  it("C393-Verify \"Далі\" button", async () => {
-    await MainPage.telegramCrossButton.click()
-    await expect(AdvertPage.nextButton).toHaveText("Далі")
-    await AdvertPage.nextButton.click()
-    let photosLabel = "фотографії";
-    await expect(await AdvertPage.verifyLabelIsActive(photosLabel)).toEqual(
-      true
-    );
-    await expect(await AdvertPage.verifyClueTextIsRed()).toEqual(true)
-    const filePath = 'test/data/photo1.jpg'
-    await uploadFile(filePath)
-    await AdvertPage.nextButton.click()
-    await expect(AdvertPage.servicesTitle).toHaveText("Послуги")
-    await expect(AdvertPage.advertPageTitle).toHaveText("Створити оголошення");
-    let mainInformationLabel = "основна інформація";
-    let servicesLabel = "послуги";
-    let priceLabel = "вартість";
-    let contactsLabel = "контакти";
-    await expect(AdvertPage.mainInformationLabel).toHaveText(
-      mainInformationLabel
-    );
-    await AdvertPage.verifyLabelNumberIsCorrect(mainInformationLabel, "1");
+
+  it('C393-Verify "Далі" button', async () => {
+    await MainPage.telegramCrossButton.click();
+    await expect(AdvertPage.nextButton).toHaveText(constants.advert.nextButton);
+    await AdvertPage.nextButton.click();
     await expect(
-      await AdvertPage.verifyLabelIsActive(mainInformationLabel)
+      await AdvertPage.verifyLabelIsActive(constants.advert.photoLabel)
+    ).toEqual(true);
+    await expect(await AdvertPage.verifyClueTextIsRed()).toEqual(true);
+    const filePath = "data/photo1.jpg";
+    await AdvertPage.uploadFile(filePath);
+    await AdvertPage.nextButton.click();
+    await expect(AdvertPage.servicesTitle).toHaveText(
+      constants.mainPage.proposes
+    );
+    await expect(AdvertPage.advertPageTitle).toHaveText(
+      constants.advert.advertPageTitle
+    );
+    await expect(AdvertPage.mainInformationLabel).toHaveText(
+      constants.advert.mainInformationLabel
+    );
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.mainInformationLabel,
+      "1"
+    );
+    await expect(
+      await AdvertPage.verifyLabelIsActive(
+        constants.advert.mainInformationLabel
+      )
     ).toEqual(false);
-    await expect(AdvertPage.photosLabel).toHaveText(photosLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(photosLabel, "2");
-    await expect(await AdvertPage.verifyLabelIsActive(photosLabel)).toEqual(
-      false
+    await expect(AdvertPage.photosLabel).toHaveText(
+      constants.advert.photoLabel
     );
-    await expect(AdvertPage.servicesLabel).toHaveText(servicesLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(servicesLabel, "3");
-    await expect(await AdvertPage.verifyLabelIsActive(servicesLabel)).toEqual(
-      true
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.photoLabel,
+      "2"
     );
-    await expect(AdvertPage.priceLabel).toHaveText(priceLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(priceLabel, "4");
-    await expect(await AdvertPage.verifyLabelIsActive(priceLabel)).toEqual(
-      false
+    await expect(
+      await AdvertPage.verifyLabelIsActive(constants.advert.photoLabel)
+    ).toEqual(false);
+    await expect(AdvertPage.servicesLabel).toHaveText(
+      constants.advert.servicesLabel
     );
-    await expect(AdvertPage.contactsLabel).toHaveText(contactsLabel);
-    await AdvertPage.verifyLabelNumberIsCorrect(contactsLabel, "5");
-    await expect(await AdvertPage.verifyLabelIsActive(contactsLabel)).toEqual(
-      false
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.servicesLabel,
+      "3"
     );
-
+    await expect(
+      await AdvertPage.verifyLabelIsActive(constants.advert.servicesLabel)
+    ).toEqual(true);
+    await expect(AdvertPage.priceLabel).toHaveText(constants.advert.priceLabel);
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.priceLabel,
+      "4"
+    );
+    await expect(
+      await AdvertPage.verifyLabelIsActive(constants.advert.priceLabel)
+    ).toEqual(false);
+    await expect(AdvertPage.contactsLabel).toHaveText(
+      constants.advert.contactsLabel
+    );
+    await AdvertPage.verifyLabelNumberIsCorrect(
+      constants.advert.contactsLabel,
+      "5"
+    );
+    await expect(
+      await AdvertPage.verifyLabelIsActive(constants.advert.contactsLabel)
+    ).toEqual(false);
   });
-  it("C593- Upload multiple images", async () => {
-    await expect(AdvertPage.photoParagraph).toHaveText("Фото технічного засобу *")
-    await expect(AdvertPage.photoParagraphAsterisk).toBeDisplayed()
-    await expect(AdvertPage.clueText).toHaveText(clueMessage)
-    let filePath = 'test/data/photo1.jpg'
-    await uploadFile(filePath)
-    filePath = 'test/data/photo2.jpg'
-    await uploadFile(filePath)
-    filePath = 'test/data/photo3.jpg'
-    await uploadFile(filePath)
-    await expect(AdvertPage.mainImageLabel).toHaveText("Головне")
 
+  it("C593- Upload multiple images", async () => {
+    await expect(AdvertPage.photoParagraph).toHaveText(
+      constants.photoTab.potoParagraph
+    );
+    await expect(AdvertPage.photoParagraphAsterisk).toBeDisplayed();
+    await expect(AdvertPage.clueText).toHaveText(
+      constants.photoTab.clueMessage
+    );
+    let filePath = "data/photo1.jpg";
+    await AdvertPage.uploadFile(filePath);
+    filePath = "data/photo2.jpg";
+    await AdvertPage.uploadFile(filePath);
+    filePath = "data/photo3.jpg";
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.mainImageLabel).toHaveText(
+      constants.photoTab.mainImageLabel
+    );
   });
 
   it("C594- Drag and drop images", async () => {
-    await expect(AdvertPage.photoParagraph).toHaveText("Фото технічного засобу *")
-    await expect(AdvertPage.photoParagraphAsterisk).toBeDisplayed()
-    await expect(AdvertPage.clueText).toHaveText(clueMessage)
-    let filePath = 'test/data/photo1.jpg'
-    await uploadFile(filePath)
-    filePath = 'test/data/photo2.jpg'
-    await uploadFile(filePath)
-    filePath = 'test/data/photo3.jpg'
-    await uploadFile(filePath)
-    await expect(AdvertPage.mainImageLabel).toHaveText("Головне")
-    await AdvertPage.unitImages[1].dragAndDrop(await AdvertPage.unitImages[0])
-    await expect(AdvertPage.mainImageLabel).toHaveText("Головне")
-    
+    await expect(AdvertPage.photoParagraph).toHaveText(
+      constants.photoTab.potoParagraph
+    );
+    await expect(AdvertPage.photoParagraphAsterisk).toBeDisplayed();
+    await expect(AdvertPage.clueText).toHaveText(
+      constants.photoTab.clueMessage
+    );
+    let filePath = "data/photo1.jpg";
+    await AdvertPage.uploadFile(filePath);
+    filePath = "data/photo2.jpg";
+    await AdvertPage.uploadFile(filePath);
+    filePath = "data/photo3.jpg";
+    await AdvertPage.uploadFile(filePath);
+    await expect(AdvertPage.mainImageLabel).toHaveText(
+      constants.photoTab.mainImageLabel
+    );
+    await AdvertPage.unitImages[1].dragAndDrop(await AdvertPage.unitImages[0]);
+    await expect(AdvertPage.mainImageLabel).toHaveText(
+      constants.photoTab.mainImageLabel
+    );
   });
 
   it("C595- Delete images", async () => {
-    for (let i = 1; i<= 12; i++){
-      let filePath = 'test/data/photo'+i+'.jpg'
-    await uploadFile(filePath)
+    for (let i = 1; i <= 12; i++) {
+      let filePath = "data/photo" + i + ".jpg";
+      await AdvertPage.uploadFile(filePath);
     }
-
     for (let i = 12; i > 0; i--) {
       switch (i) {
         case 12:
@@ -240,7 +307,6 @@ describe("Rentzila", () => {
           await expect(await AdvertPage.unitImages.length).toEqual(4);
           break;
       }
-
       await AdvertPage.imageBlock.$('img[data-testid="unitImage"]').moveTo();
       let deleteIcon = await AdvertPage.imageBlock.$(
         'div[data-testid="deleteImage"]'
@@ -248,10 +314,6 @@ describe("Rentzila", () => {
       await expect(deleteIcon).toBeDisplayed();
       await deleteIcon.click();
     }
-
-    await AdvertPage.checkNoFileIsUploaded()
-
+    await AdvertPage.checkNoFileIsUploaded();
   });
-
-
 });
