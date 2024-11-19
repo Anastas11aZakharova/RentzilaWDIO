@@ -17,7 +17,10 @@ export const config: Options.Testrunner = {
         ],
         photoTab: [
              './test/specs/photoTab.ts'
-        ]
+        ],
+        priceTab: [
+            './test/specs/priceTab.ts'
+       ]
     },
     maxInstances: 10,
     capabilities: [

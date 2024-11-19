@@ -253,6 +253,40 @@ class AdvertPage extends Page {
     return $('div[data-testid="imageBlock"]');
   }
 
+  public get paymentTypeTitle() {
+    return $('//div[text()=\'Спосіб оплати \']');
+  }
+  public get paymentTypeAsterisk() {
+    return $('//div[text()=\'Спосіб оплати \']//span');
+  }
+  public get paymentField() {
+    return $('div[data-testid="div_CustomSelect"]');
+  }
+  public get paymentTypeDropdownElements() {
+    return $$('li[data-testid="item-customSelect"]');
+  }
+  public get minimumOrderCostTitle() {
+    return $('//div[text()=\'Вартість мінімального замовлення \']');
+  }
+  public get minimumOrderCostAsterisk() {
+    return $('//div[text()=\'Вартість мінімального замовлення \']//span');
+  }
+  public get minimumOrderCostField() {
+    return $('input[placeholder="Наприклад, 1000"]');
+  }
+  public get currencyField() {
+    return $("//div[contains(concat(' ',normalize-space(@class),' '),'currency')]/input");
+  }
+  public get costOfYourServicesLine() {
+    return $("div=Вартість Ваших послуг");
+  }
+  public get costOfYourServicesLineAsterisk() {
+    return $('//div[text()=\'Вартість Ваших послуг \']//span');
+  }
+  public get costOfYourServicesText() {
+    return $('div=За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб');
+  }
+
   public async verifyLabelNumberIsCorrect(label: string, number: string) {
     label = label.charAt(0).toUpperCase() + label.slice(1);
     await expect(
@@ -356,7 +390,18 @@ class AdvertPage extends Page {
       }
   }
 
-  
+  public async verifyMinimumOrderCostFieldBorderIsRed(): Promise<boolean> {
+    let cls=await this.minimumOrderCostField.getAttribute("class")
+    if (cls.includes("error")) 
+      {
+          return true 
+      } 
+      else
+      {
+          return false
+      }
+  }
+
   public async uploadFile(filePath: string) {
     const remoteFilePath = await browser.uploadFile(filePath);
     browser.execute(function () {

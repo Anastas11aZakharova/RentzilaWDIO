@@ -53,5 +53,16 @@
     "backButton": "Назад",
     "potoParagraph": "Фото технічного засобу *",
     "mainImageLabel": "Головне"
+  },
+  "priceTab": {
+    "paymentTypeTitle": "Спосіб оплати *",
+    "paymentField": "Готівкою / на картку",
+    "firstPaymentTypeDropdownElement": "Безготівковий розрахунок (без ПДВ)",
+    "secondPaymentTypeDropdownElement": "Безготівковий розрахунок (з ПДВ)",
+    "minimumOrderCostTitle": "Вартість мінімального замовлення *",
+    "costOfYourServicesText": "За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб"
+
+
+    
   }
 }
