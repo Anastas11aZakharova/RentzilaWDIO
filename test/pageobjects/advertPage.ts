@@ -219,7 +219,38 @@ class AdvertPage extends Page {
   }
 
   public get photoLabel() {
-    return $("button=Підтвердити вибір");
+    return $("span=Фотографії");
+  }
+
+  public get errorPopUp() {
+    return $('div[data-testid="errorPopup"]');
+  }
+  public get understandButton() {
+    return $("button=Зрозуміло");
+  }
+  public get unitImages() {
+    return $$('img[data-testid="unitImage"]');
+  }
+  public get backButton() {
+    return $('button[data-testid="prevButton"]');
+  }
+  public get clueText() {
+    return $('div[data-testid="description"]');
+  }
+  public get servicesTitle() {
+    return $("div=Послуги");
+  }
+  public get photoParagraph() {
+    return $('div[class*="ImagesUnitFlow_paragraph"]');
+  }
+  public get photoParagraphAsterisk() {
+    return $("//div[@data-testid='ImagesUnitFlow']//span[text()=\'*\']");
+  }
+  public get mainImageLabel() {
+    return $("//div[@data-testid='imageBlock'][1]/div[@data-testid='mainImageLabel']");
+  }
+  public get imageBlock() {
+    return $('div[data-testid="imageBlock"]');
   }
 
   public async verifyLabelNumberIsCorrect(label: string, number: string) {
@@ -295,6 +326,49 @@ class AdvertPage extends Page {
     } else {
       return false;
     }
+  }
+
+  public async checkOnlyOneImageIsUploaded(){
+    for (let i = 0; i < await this.unitImages.length; i++) {
+      if (i==0){
+        expect(await this.unitImages[i].getAttribute("src")).not.toEqual("")
+      } else {
+        expect(await this.unitImages[i].getAttribute("src")).toEqual("")
+      }
+    }
+  }
+
+  public async checkNoFileIsUploaded(){
+    for (let i = 0; i < await this.unitImages.length; i++) {
+        expect(await this.unitImages[i].getAttribute("src")).toEqual("")
+    }
+  }
+
+  public async verifyClueTextIsRed(): Promise<boolean> {
+    let cls=await this.clueText.getAttribute("class")
+    if (cls.includes("error")) 
+      {
+          return true 
+      } 
+      else
+      {
+          return false
+      }
+  }
+
+  
+  public async uploadFile(filePath: string) {
+    const remoteFilePath = await browser.uploadFile(filePath);
+    browser.execute(function () {
+      document.evaluate(
+        "//input[@type='file']",
+        document,
+        null,
+        XPathResult.FIRST_ORDERED_NODE_TYPE,
+        null
+      ).singleNodeValue.style.display = "block";
+    });
+    await $("//input[@type='file']").setValue(remoteFilePath);
   }
 }
 
