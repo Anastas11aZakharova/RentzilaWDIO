@@ -60,7 +60,14 @@
     "firstPaymentTypeDropdownElement": "Безготівковий розрахунок (без ПДВ)",
     "secondPaymentTypeDropdownElement": "Безготівковий розрахунок (з ПДВ)",
     "minimumOrderCostTitle": "Вартість мінімального замовлення *",
-    "costOfYourServicesText": "За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб"
+    "costOfYourServicesText": "За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб",
+    "minPriceerrorMessage": "Мінімальна вартiсть має бути не менше 1000 грн",
+    "fieldIsMandatoryErrorMessage": "Це поле обов’язкове",
+    "servicesTitle": "Вартість Ваших послуг *",
+    "servicesCostDescription": "За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб",
+    "servicesField": "Наприклад: Рихлення грунту, буріння",
+    "nameOfTheServices": "Асфальтування",
+    "addCostButton": "Додати вартість"
 
 
     
