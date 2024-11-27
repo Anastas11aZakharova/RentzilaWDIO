@@ -67,9 +67,15 @@
     "servicesCostDescription": "За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб",
     "servicesField": "Наприклад: Рихлення грунту, буріння",
     "nameOfTheServices": "Асфальтування",
-    "addCostButton": "Додати вартість"
-
-
-    
+    "addCostButton": "Додати вартість",
+    "spaceInside": "123 456",
+    "spaceInTheEnd": "123456 ",
+    "space": " ",
+    "letters": "abc",
+    "specialSymbols": "!@#$%",
+    "moreThanNineSymbols": "1234567890",
+    "firstEntredValue": "123456",
+    "emptyValue": "",
+    "secondEntredValue": "123456789"
   }
 }

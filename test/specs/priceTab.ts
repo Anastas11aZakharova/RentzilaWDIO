@@ -207,18 +207,18 @@ describe("Rentzila", () => {
     await expect(AdvertPage.minimumOrderCostTitle).toHaveText(
       constants.priceTab.minimumOrderCostTitle
     );
-    await AdvertPage.minimumOrderCostField.setValue("123 456");
-    await expect(AdvertPage.minimumOrderCostField).toHaveValue("123456");
-    await AdvertPage.minimumOrderCostField.setValue("123456 ");
-    await expect(AdvertPage.minimumOrderCostField).toHaveValue("123456");
-    await AdvertPage.minimumOrderCostField.setValue(" ");
-    await expect(AdvertPage.minimumOrderCostField).toHaveValue("");
-    await AdvertPage.minimumOrderCostField.setValue("abc");
-    await expect(AdvertPage.minimumOrderCostField).toHaveValue("");
-    await AdvertPage.minimumOrderCostField.setValue("!@#$%");
-    await expect(AdvertPage.minimumOrderCostField).toHaveValue("");
-    await AdvertPage.minimumOrderCostField.setValue("1234567890");
-    await expect(AdvertPage.minimumOrderCostField).toHaveValue("123456789");
+    await AdvertPage.minimumOrderCostField.setValue(constants.priceTab.spaceInside);
+    await expect(AdvertPage.minimumOrderCostField).toHaveValue(constants.priceTab.firstEntredValue);
+    await AdvertPage.minimumOrderCostField.setValue(constants.priceTab.spaceInTheEnd);
+    await expect(AdvertPage.minimumOrderCostField).toHaveValue(constants.priceTab.firstEntredValue);
+    await AdvertPage.minimumOrderCostField.setValue(constants.priceTab.space);
+    await expect(AdvertPage.minimumOrderCostField).toHaveValue(constants.priceTab.emptyValue);
+    await AdvertPage.minimumOrderCostField.setValue(constants.priceTab.letters);
+    await expect(AdvertPage.minimumOrderCostField).toHaveValue(constants.priceTab.emptyValue);
+    await AdvertPage.minimumOrderCostField.setValue(constants.priceTab.specialSymbols);
+    await expect(AdvertPage.minimumOrderCostField).toHaveValue(constants.priceTab.emptyValue);
+    await AdvertPage.minimumOrderCostField.setValue(constants.priceTab.moreThanNineSymbols);
+    await expect(AdvertPage.minimumOrderCostField).toHaveValue(constants.priceTab.secondEntredValue);
   });
 
   it('C637-Verify UI of the "Вартість Ваших послуг *" section', async () => {
@@ -272,17 +272,17 @@ describe("Rentzila", () => {
     await AdvertPage.priceLabel.click();
     await AdvertPage.addCostButton.click();
     await expect(AdvertPage.servicePriceInputField).toBeDisplayed();
-    await AdvertPage.servicePriceInputField.setValue("123 456");
-    await expect(AdvertPage.servicePriceInputField).toHaveValue("123456");
-    await AdvertPage.servicePriceInputField.setValue("123456 ");
-    await expect(AdvertPage.servicePriceInputField).toHaveValue("123456");
-    await AdvertPage.servicePriceInputField.setValue(" ");
-    await expect(AdvertPage.servicePriceInputField).toHaveValue("");
-    await AdvertPage.servicePriceInputField.setValue("abc");
-    await expect(AdvertPage.servicePriceInputField).toHaveValue("");
-    await AdvertPage.servicePriceInputField.setValue("!@#$%");
-    await expect(AdvertPage.minimumOrderCostField).toHaveValue("");
-    await AdvertPage.servicePriceInputField.setValue("1234567890");
-    await expect(AdvertPage.servicePriceInputField).toHaveValue("123456789");
+    await AdvertPage.servicePriceInputField.setValue(constants.priceTab.spaceInside);
+    await expect(AdvertPage.servicePriceInputField).toHaveValue(constants.priceTab.firstEntredValue);
+    await AdvertPage.servicePriceInputField.setValue(constants.priceTab.spaceInTheEnd);
+    await expect(AdvertPage.servicePriceInputField).toHaveValue(constants.priceTab.firstEntredValue);
+    await AdvertPage.servicePriceInputField.setValue(constants.priceTab.space);
+    await expect(AdvertPage.servicePriceInputField).toHaveValue(constants.priceTab.emptyValue);
+    await AdvertPage.servicePriceInputField.setValue(constants.priceTab.letters);
+    await expect(AdvertPage.servicePriceInputField).toHaveValue(constants.priceTab.emptyValue);
+    await AdvertPage.servicePriceInputField.setValue(constants.priceTab.specialSymbols);
+    await expect(AdvertPage.minimumOrderCostField).toHaveValue(constants.priceTab.emptyValue);
+    await AdvertPage.servicePriceInputField.setValue(constants.priceTab.moreThanNineSymbols);
+    await expect(AdvertPage.servicePriceInputField).toHaveValue(constants.priceTab.secondEntredValue);
   });
 });
