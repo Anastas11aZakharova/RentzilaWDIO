@@ -72,10 +72,10 @@
     "spaceInTheEnd": "123456 ",
     "space": " ",
     "letters": "abc",
-    "specialSymbols": "!@#$%",
+    "specialSymbols": "!@#$%.,",
     "moreThanNineSymbols": "1234567890",
-    "firstEntredValue": "123456",
+    "sixSymbolsEntredValue": "123456",
     "emptyValue": "",
-    "secondEntredValue": "123456789"
+    "nineSymbolsEntredValue": "123456789"
   }
 }
