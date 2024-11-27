@@ -225,32 +225,143 @@ class AdvertPage extends Page {
   public get errorPopUp() {
     return $('div[data-testid="errorPopup"]');
   }
+
   public get understandButton() {
     return $("button=Зрозуміло");
   }
+
   public get unitImages() {
     return $$('img[data-testid="unitImage"]');
   }
+
   public get backButton() {
     return $('button[data-testid="prevButton"]');
   }
+
   public get clueText() {
     return $('div[data-testid="description"]');
   }
+
   public get servicesTitle() {
     return $("div=Послуги");
   }
+
   public get photoParagraph() {
     return $('div[class*="ImagesUnitFlow_paragraph"]');
   }
+
   public get photoParagraphAsterisk() {
-    return $("//div[@data-testid='ImagesUnitFlow']//span[text()=\'*\']");
+    return $("//div[@data-testid='ImagesUnitFlow']//span[text()='*']");
   }
+
   public get mainImageLabel() {
-    return $("//div[@data-testid='imageBlock'][1]/div[@data-testid='mainImageLabel']");
+    return $(
+      "//div[@data-testid='imageBlock'][1]/div[@data-testid='mainImageLabel']"
+    );
   }
+
   public get imageBlock() {
     return $('div[data-testid="imageBlock"]');
+  }
+
+  public get paymentTypeTitle() {
+    return $("//div[text()='Спосіб оплати ']");
+  }
+
+  public get paymentTypeAsterisk() {
+    return $("//div[text()='Спосіб оплати ']//span");
+  }
+
+  public get paymentField() {
+    return $('div[data-testid="div_CustomSelect"]');
+  }
+
+  public get paymentTypeDropdownElements() {
+    return $$('li[data-testid="item-customSelect"]');
+  }
+
+  public get minimumOrderCostTitle() {
+    return $("//div[text()='Вартість мінімального замовлення ']");
+  }
+
+  public get minimumOrderCostAsterisk() {
+    return $("//div[text()='Вартість мінімального замовлення ']//span");
+  }
+
+  public get minimumOrderCostField() {
+    return $('input[placeholder="Наприклад, 1000"]');
+  }
+
+  public get currencyField() {
+    return $(
+      "//div[contains(concat(' ',normalize-space(@class),' '),'currency')]/input"
+    );
+  }
+
+  public get costOfYourServicesLine() {
+    return $("div=Вартість Ваших послуг");
+  }
+
+  public get costOfYourServicesLineAsterisk() {
+    return $("//div[text()='Вартість Ваших послуг ']//span");
+  }
+
+  public get costOfYourServicesText() {
+    return $(
+      "div=За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб"
+    );
+  }
+
+  public get servicesField() {
+    return $('input[placeholder="Наприклад: Рихлення грунту, буріння"]');
+  }
+
+  public get serviceDropdownItem() {
+    return $('div[data-testid="searchItem-servicesUnitFlow"]');
+  }
+
+  public get selectedServise() {
+    return $('div[class*="ServicesUnitFlow_serviceText"]');
+  }
+
+  public get addCostButton() {
+    return $('button[data-testid="addPriceButton_ServicePrice"]');
+  }
+
+  public get addCostPlusButton() {
+    return $(
+      "//button[@data-testid='addPriceButton_ServicePrice']//*[local-name()='svg']"
+    );
+  }
+
+  public get selectedServisePriceTab() {
+    return $('div[data-testid="div_ServicePrice"]');
+  }
+
+  public get deleteButton() {
+    return $('div[data-testid="div_removePrice_RowUnitPrice"]');
+  }
+
+  public get servicePriceInputField() {
+    return $("(//input[@data-testid='priceInput_RowUnitPrice'])[3]");
+  }
+
+  public get serviceCurrencyInput() {
+    return $("(//input[@data-testid='priceInput_RowUnitPrice'])[4]");
+  }
+  
+  public get customerSelectValueInput() {
+    return $("(//div[@data-testid='div_CustomSelect'])[2]");
+  }
+
+  public get minPriceerrorMessage() {
+    return $("//div[text()='Мінімальна вартiсть має бути не менше 1000 грн']");
+  }
+
+  public get fieldIsMandatoryErrorMessage() {
+    return $(
+      "//input[@placeholder='Наприклад, 1000']/../following-sibling::div[text()='Це поле обов’язкове']"
+    );
   }
 
   public async verifyLabelNumberIsCorrect(label: string, number: string) {
@@ -273,7 +384,7 @@ class AdvertPage extends Page {
       return false;
     }
   }
-  
+
   public async verifyModelNameBorderIsRed(): Promise<boolean> {
     let cls = await this.modelNameField.getAttribute("class");
     if (cls.includes("inputError")) {
@@ -282,7 +393,7 @@ class AdvertPage extends Page {
       return false;
     }
   }
-  
+
   public async verifyCategoryFieldBorderIsRed(): Promise<boolean> {
     let cls = await this.categorySelectField.getAttribute("class");
     if (cls.includes("error")) {
@@ -328,35 +439,42 @@ class AdvertPage extends Page {
     }
   }
 
-  public async checkOnlyOneImageIsUploaded(){
-    for (let i = 0; i < await this.unitImages.length; i++) {
-      if (i==0){
-        expect(await this.unitImages[i].getAttribute("src")).not.toEqual("")
+  public async checkOnlyOneImageIsUploaded() {
+    for (let i = 0; i < (await this.unitImages.length); i++) {
+      if (i == 0) {
+        expect(await this.unitImages[i].getAttribute("src")).not.toEqual("");
       } else {
-        expect(await this.unitImages[i].getAttribute("src")).toEqual("")
+        expect(await this.unitImages[i].getAttribute("src")).toEqual("");
       }
     }
   }
 
-  public async checkNoFileIsUploaded(){
-    for (let i = 0; i < await this.unitImages.length; i++) {
-        expect(await this.unitImages[i].getAttribute("src")).toEqual("")
+  public async checkNoFileIsUploaded() {
+    for (let i = 0; i < (await this.unitImages.length); i++) {
+      expect(await this.unitImages[i].getAttribute("src")).toEqual("");
     }
   }
 
   public async verifyClueTextIsRed(): Promise<boolean> {
-    let cls=await this.clueText.getAttribute("class")
-    if (cls.includes("error")) 
-      {
-          return true 
-      } 
-      else
-      {
-          return false
-      }
+    let cls = await this.clueText.getAttribute("class");
+    if (cls.includes("error")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  
+  public async verifyMinimumOrderCostFieldBorderIsRed(): Promise<boolean> {
+    let cls = await this.minimumOrderCostField
+      .parentElement()
+      .getAttribute("class");
+    if (cls.includes("Error")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   public async uploadFile(filePath: string) {
     const remoteFilePath = await browser.uploadFile(filePath);
     browser.execute(function () {

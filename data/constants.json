@@ -53,5 +53,29 @@
     "backButton": "Назад",
     "potoParagraph": "Фото технічного засобу *",
     "mainImageLabel": "Головне"
+  },
+  "priceTab": {
+    "paymentTypeTitle": "Спосіб оплати *",
+    "paymentField": "Готівкою / на картку",
+    "firstPaymentTypeDropdownElement": "Безготівковий розрахунок (без ПДВ)",
+    "secondPaymentTypeDropdownElement": "Безготівковий розрахунок (з ПДВ)",
+    "minimumOrderCostTitle": "Вартість мінімального замовлення *",
+    "costOfYourServicesText": "За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб",
+    "minPriceerrorMessage": "Мінімальна вартiсть має бути не менше 1000 грн",
+    "fieldIsMandatoryErrorMessage": "Це поле обов’язкове",
+    "servicesTitle": "Вартість Ваших послуг *",
+    "servicesCostDescription": "За бажанням Ви можете додати вартість конкретних послуг, які надає технічний засіб",
+    "servicesField": "Наприклад: Рихлення грунту, буріння",
+    "nameOfTheServices": "Асфальтування",
+    "addCostButton": "Додати вартість",
+    "spaceInside": "123 456",
+    "spaceInTheEnd": "123456 ",
+    "space": " ",
+    "letters": "abc",
+    "specialSymbols": "!@#$%.,",
+    "moreThanNineSymbols": "1234567890",
+    "sixSymbolsEntredValue": "123456",
+    "emptyValue": "",
+    "nineSymbolsEntredValue": "123456789"
   }
 }
